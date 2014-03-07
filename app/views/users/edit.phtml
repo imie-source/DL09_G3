@@ -1,0 +1,187 @@
+<div class="page-header">
+    <h1>
+        <?php echo ucwords($user->name).' '.strtoupper($user->surname) ?>
+        <small>
+            <i class="icon-double-angle-right"></i>
+            <?php echo $profile->name ?>
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div>
+            <div id="user-profile-1" class="user-profile row">
+                <div class="col-xs-12 col-sm-3 center">
+                    <div id="plupload">
+                        <span class="profile-picture" id="droparea">
+                            <?php 
+                                echo $this->tag->image(array(
+                                    'img/avatars/'.$user->avatar,
+                                    'alt' => ucwords($user->name).' '.strtoupper($user->surname),
+                                    'class' => 'img-responsive'
+                                )); 
+                            ?>
+                        </span>
+                        <div id="progressbar" class="progress hidden" data-percent="0%" width="100%"><div id="progressbar-inner" class="progress-bar" style="width: 0%"></div></div>
+                        <div class="space-4"></div>
+                        <?php if($updateAllowed): ?>
+                        <a href="#" id="browse" class="btn btn-info"><i class="icon-picture"></i> Changer d'image...</a>
+                        <?php endif; ?>
+                        <div class="space-4"></div>
+                        
+                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                            <div class="inline position-relative">
+                                <span class="white"><?php echo ucwords($user->name).' '.strtoupper($user->surname); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-9">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h4 class="blue smaller">
+                                <i class="icon-user orange"></i>
+                                Mes Informations
+                            </h4>
+
+                            <div class="widget-toolbar action-buttons">
+                                <a href="#" data-action="collapse">
+                                    <i class="icon-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-8">
+                                <div class="profile-user-info profile-user-info-striped">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Adresse </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="address"><?php echo ucwords($user->address); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Ville </div>
+                                        <div class="profile-info-value">
+                                            <i class="icon-map-marker light-orange bigger-110"></i>
+                                            <span class="editable" id="zip_code"><?php echo $user->zipcode; ?></span>
+                                            <span class="editable" id="city"><?php echo ucwords($user->city); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Mobile </div>
+                                        <div class="profile-info-value">
+                                            <i class="icon-mobile-phone light-orange bigger-110"></i>
+                                            <span class="editable" id="mobile"><?php echo $user->mobile; ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Email </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="email"><?php echo $user->email; ?></span>
+                                        </div>
+                                    </div>  
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Date de naissance </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="dateBirth"><?php echo ($user->date_birth != null) ? \Nannyster\Controllers\ControllerBase::returnDateTime(strtotime($user->date_birth), 'date') : ''; ?></span>
+                                        </div>
+                                    </div>                                      
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Promotion </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="type"><?php echo $promotion->name; ?></span>
+                                        </div>
+                                    </div>                                    
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Type de compte </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="type"><?php echo $profile->name; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="space-20"></div>
+
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-small">
+                                <h4 class="blue smaller">
+                                    <i class="icon-cog orange"></i>
+                                    Paramètres de mon compte
+                                </h4>
+
+                                <div class="widget-toolbar action-buttons">
+                                    <a href="#" data-action="collapse">
+                                        <i class="icon-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main padding-8">
+                                    <div class="profile-user-info profile-user-info-striped">
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> Confidentialité </div>
+                                            <div class="profile-info-value">
+                                                <span class="editable" id="visibility"><?php echo $user->private_informations; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> Notifications par email </div>
+                                            <div class="profile-info-value">
+                                                <span class="editable" id="notifParam"><?php echo $user->email_notification; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php if ($profile->name == 'Nourrice'): ?>
+                        <div class="space-20"></div>
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-small">
+                                <h4 class="blue smaller">
+                                    <i class="icon-search orange"></i>
+                                    Paramètres de l'annuaire <?php echo $this->config->application->siteTitle; ?>
+                                </h4>
+
+                                <div class="widget-toolbar action-buttons">
+                                    <a href="#" data-action="collapse">
+                                        <i class="icon-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main padding-8">
+                                    <div class="profile-user-info profile-user-info-striped">
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> Visibilité</div>
+                                            <div class="profile-info-value">
+                                                <span class="editable" id="annuaireVisibility"><?php echo $user->directory_visible; ?></span>
+                                            </div>
+                                        </div>  
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> Coordonnées </div>
+                                            <div class="profile-info-value">
+                                                <span class="editable" id="annuaireInfo"><?php echo $user->directory_private_informations; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+<script type="text/javascript">
+var pkey = '<?php echo $user->_id; ?>';
+</script>

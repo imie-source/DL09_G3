@@ -1,0 +1,267 @@
+<div class="page-header">
+    <?php if($updateAllowed): ?>
+    <h1>
+        Mon Profil
+        <small>
+            <i class="icon-double-angle-right"></i>
+            Voir et modifier mes informations personnelles
+        </small>
+    </h1>
+<?php else: ?>
+    <h1>
+        <?php echo ucwords($user->name).' '.strtoupper($user->surname) ?>
+        <small>
+            <i class="icon-double-angle-right"></i>
+            <?php echo $profile->name ?>
+        </small>
+    </h1>
+<?php endif; ?>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div>
+            <div id="user-profile-1" class="user-profile row">
+                <div class="col-xs-12 col-sm-3 center">
+                    <div id="plupload">
+                        <span class="profile-picture" id="droparea">
+                            <?php 
+                                echo $this->tag->image(array(
+                                    'img/avatars/'.$user->avatar,
+                                    'alt' => ucwords($user->name).' '.strtoupper($user->surname),
+                                    'class' => 'img-responsive'
+                                )); 
+                            ?>
+                        </span>
+                        <div id="progressbar" class="progress hidden" data-percent="0%" width="100%"><div id="progressbar-inner" class="progress-bar" style="width: 0%"></div></div>
+                        <div class="space-4"></div>
+                        <?php if($updateAllowed): ?>
+                        <a href="#" id="browse" class="btn btn-info"><i class="icon-picture"></i> Changer d'image...</a>
+                        <?php endif; ?>
+                        <div class="space-4"></div>
+                        
+                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                            <div class="inline position-relative">
+                                <span class="white"><?php echo ucwords($user->name).' '.strtoupper($user->surname); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-9">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h4 class="blue smaller">
+                                <i class="icon-user orange"></i>
+                                Mes Informations
+                            </h4>
+
+                            <div class="widget-toolbar action-buttons">
+                                <a href="#" data-action="collapse">
+                                    <i class="icon-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-8">
+                                <div class="profile-user-info profile-user-info-striped">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Adresse </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="address"><?php echo ucwords($user->address); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Ville </div>
+                                        <div class="profile-info-value">
+                                            <i class="icon-map-marker light-orange bigger-110"></i>
+                                            <span class="editable" id="zip_code"><?php echo $user->zipcode; ?></span>
+                                            <span class="editable" id="city"><?php echo ucwords($user->city); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Mobile </div>
+                                        <div class="profile-info-value">
+                                            <i class="icon-mobile-phone light-orange bigger-110"></i>
+                                            <span class="editable" id="mobile"><?php echo $user->mobile; ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Email </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="email"><?php echo $user->email; ?></span>
+                                        </div>
+                                    </div>  
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Date de naissance </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="dateBirth"><?php echo ($user->date_birth != null) ? \Nannyster\Controllers\ControllerBase::returnDateTime(strtotime($user->date_birth), 'date') : ''; ?></span>
+                                        </div>
+                                    </div>                                      
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Promotion </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="type"><?php echo (isset($promotion->name) ? $promotion->name : ''); ?></span>
+                                        </div>
+                                    </div>                                    
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Type de compte </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="type"><?php echo $profile->name; ?></span>
+                                        </div>
+                                    </div>
+                                    <?php if($updateAllowed): ?>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Mot de passe </div>
+                                        <div class="profile-info-value">
+                                            <?php 
+                                                echo $this->tag->linkTo(array(
+                                                    'users/changePassword',
+                                                    '<i class="icon-key"></i> Modifier mon mot de passe ',
+                                                    'class' => 'btn btn-danger btn-xs'));
+                                            ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            <?php if($updateAllowed): ?>
+                        <div class="space-20"></div>
+    
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-small">
+                                <h4 class="blue smaller">
+                                    <i class="icon-cog orange"></i>
+                                    Paramètres de mon compte
+                                </h4>
+
+                                <div class="widget-toolbar action-buttons">
+                                    <a href="#" data-action="collapse">
+                                        <i class="icon-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main padding-8">
+                                    <div class="profile-user-info profile-user-info-striped">
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> Confidentialité </div>
+                                            <div class="profile-info-value">
+                                                <span class="editable" id="visibility"><?php echo $user->private_informations; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> Notifications par email </div>
+                                            <div class="profile-info-value">
+                                                <span class="editable" id="notifParam"><?php echo $user->email_notification; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        </div>
+                         <?php endif; ?>
+                        <div class="space-20"></div>
+                </div>
+                <div class="col-xs-12 col-sm-12">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h4 class="blue smaller">
+                                <i class="icon-signal orange"></i>
+                                Mes Compétences <?php if($updateAllowed){echo $this->tag->linkTo(array('skills/useredit', '<i class="icon-signal"></i> Editer mes compétences', 'class' => 'btn btn-danger btn-xs'));} ?>
+                            </h4>
+
+                            <div class="widget-toolbar action-buttons">
+
+                                <a href="#" data-action="collapse">
+                                    <i class="icon-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main padding-16">
+                                <div class="clearfix">
+                                    <div class="col-md-2 center">
+                                        <div class="easy-pie-chart percentage easyPieChart" data-percent="45" data-color="#CA5952">
+                                            <span class="percent">45</span>%</div>
+
+                                        <div class="space-2"></div>
+                                        HTML5
+                                    </div>
+
+                                    <div class="col-md-2 center">
+                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="90" data-color="#59A84B">
+                                            <span class="percent">90</span>%</div>
+
+                                        <div class="space-2"></div>
+                                        PHP5
+                                    </div>
+
+                                    <div class="col-md-2 center">
+                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="80" data-color="#9585BF">
+                                            <span class="percent">80</span>%</div>
+
+                                        <div class="space-2"></div>
+                                        Javascript/jQuery
+                                    </div>
+
+                                    <div class="col-md-2 center">
+                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="80" data-color="#2A91D8">
+                                            <span class="percent">80</span>%</div>
+
+                                        <div class="space-2"></div>
+                                        Java
+                                    </div>
+
+                                    <div class="col-md-2 center">
+                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="80" data-color="#F2BB46">
+                                            <span class="percent">80</span>%</div>
+
+                                        <div class="space-2"></div>
+                                        Phalcon PHP
+                                    </div>
+
+                                    <div class="col-md-2 center">
+                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="10" data-color="#CA5952">
+                                            <span class="percent">10</span>%</div>
+
+                                        <div class="space-2"></div>
+                                        Zend
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+<script type="text/javascript">
+var pkey = '<?php echo $user->_id; ?>';
+
+$(document).ready(function() {
+    $('.easy-pie-chart.percentage').each(function(){
+        var barColor = $(this).data('color') || '#555';
+        var trackColor = '#E2E2E2';
+        var size = parseInt($(this).data('size')) || 72;
+        $(this).easyPieChart({
+          barColor: barColor,
+          trackColor: trackColor,
+          scaleColor: false,
+          lineCap: 'butt',
+          lineWidth: parseInt(size/10),
+          animate:true,
+          size: size
+        }).css('color', barColor);
+        });
+});
+  
+</script>

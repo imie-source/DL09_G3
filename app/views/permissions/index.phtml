@@ -1,0 +1,49 @@
+<h2>Définition des permissions<?php echo (isset($profile) ? ' pour '.$profile->name : ''); ?></h2>
+
+<div class="well" align="center">
+	<form method="post">
+		<table class="perms">
+			<tr>
+				<td><label for="profileId">Profil </label></td>
+				<td>
+					<select name="profile_id" id="profile_id">
+						<option value="">...</option>
+						<?php foreach($profiles as $profil): ?>
+						<option value="<?php echo $profil->_id ?>"<?php echo (isset($profile) && $profil->name == $profile->name ? ' selected' : ''); ?>><?php echo $profil->name ?></option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+				<td><?php echo $this->tag->submitButton(array('Rechercher', 'class' => 'btn btn-primary btn-xs')); ?></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<?php if ($this->request->isPost() && $profile) { ?>
+<form method="post">
+	<input type="hidden" name="profile_id" value="<?php echo $profile->_id ?>"/>
+<?php echo $this->tag->submitButton(array('Mettre à jour', 'class' => 'btn btn-primary')); ?>
+<?php foreach ($this->acl->getResources() as $resource => $actions) { ?>
+
+	<h3><?php echo ucwords($resource); ?></h3>
+	
+	<table class="table table-bordered table-striped" align="center">
+		<thead>
+			<tr>
+				<th width="5%"></th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($actions as $action) { ?>
+			<tr>
+				<td align="center"><input type="checkbox" name="permissions[]" id="<?php echo $action.'.'.$resource; ?>" value="<?php echo $resource . '.' . $action; ?>"  <?php if (isset($permissions[$resource . '.' . $action])) { ?> checked="checked" <?php } ?>></td>
+				<td><label for="<?php echo $action.'.'.$resource; ?>"><?php echo ucfirst($this->acl->getActionDescription($action)) . ' / ' . ucfirst($resource); ?></label></td>
+			</tr>
+			<?php } ?>
+		</tbody>
+	</table>
+
+<?php } ?>
+</form>
+<?php } ?>

@@ -1,0 +1,318 @@
+<div class="navbar navbar-default navbar-fixed-top" id="navbar">
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<?php 
+						echo $this->tag->linkTo(array(
+							'dashboard',
+							'<i class="icon-group"></i> '.$this->config->application->siteTitle,
+							'class' => 'navbar-brand'));
+					?><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="/users/view" class="dropdown-toggle">
+										<?php 
+											echo $this->tag->image(array(
+												'img/avatars/thumbs/'.$identity['avatar'],
+												'alt' => ucwords($identity['name']).' '.strtoupper($identity['surname']),
+												'class' => 'nav-user-photo'
+											)); 
+										?>
+								<span class="user-info">
+									<small>Bienvenue,</small>
+									<?php echo ucwords($identity['name']).' '.strtoupper($identity['surname']); ?>
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<?php 
+										echo $this->tag->linkTo(array(
+											'users/view',
+											'<i class="icon-user"></i> Profil'
+										));
+									?>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<?php 
+										echo $this->tag->linkTo(array(
+											'session/logout',
+											'<i class="icon-off"></i> Déconnexion'
+										));
+									?>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar sidebar-fixed" id="sidebar">
+
+					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+								<?php 
+									echo $this->tag->linkTo(array(
+										'dashboard',
+										'<i class="icon-home"></i>',
+										'class' => 'btn btn-success',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Tableau de bord'
+									));
+								?>
+								<?php 
+									echo $this->tag->linkTo(array(
+										'users/view',
+										'<i class="icon-user"></i>',
+										'class' => 'btn btn-info',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Mon Profile'
+									));
+								?>
+								<?php 
+									echo $this->tag->linkTo(array(
+										'calendar',
+										'<i class="icon-calendar"></i>',
+										'class' => 'btn btn-warning',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Mon Agenda'
+									));
+								?>
+								<?php 
+									echo $this->tag->linkTo(array(
+										'contracts',
+										'<i class="icon-file-text"></i>',
+										'class' => 'btn btn-danger',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Mes Contrats'
+									));
+								?>
+						</div>
+
+						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+							<span class="btn btn-success"></span>
+
+							<span class="btn btn-info"></span>
+
+							<span class="btn btn-warning"></span>
+
+							<span class="btn btn-danger"></span>
+						</div>
+					</div><!-- #sidebar-shortcuts -->
+
+					<ul class="nav nav-list">
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'administration', 'index')): ?>
+						<li class="administration">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'administration',
+									'<i class="icon-desktop"></i><span class="menu-text"> Administration </span>'
+								));
+							?>
+						</li>
+						<?php endif; ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'dashboard', 'index')): ?>
+						<li class="dashboard">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'dashboard',
+									'<i class="icon-dashboard"></i><span class="menu-text"> Tableau de bord </span>'
+								));
+							?>
+						</li>
+						<?php endif; ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'index')): ?>
+						<li class="users">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'users',
+									'<i class="icon-user"></i><span class="menu-text"> Utilisateurs </span>'
+								));
+							?>
+						</li>
+						<?php endif; ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'index')): ?>
+						<li class="projets">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'projects',
+									'<i class="icon-folder-open"></i><span class="menu-text"> Projets </span>'
+								));
+							?>
+						</li>
+						<?php endif; ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'skills', 'index')): ?>
+						<li class="skills">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'skills',
+									'<i class="icon-signal"></i><span class="menu-text"> Compétences </span>'
+								));
+							?>
+						</li>
+						<?php endif; ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'notifications', 'index')): ?>
+						<li class="notifications">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'notifications',
+									'<i class="icon-bell-alt icon-animated-bell"></i><span class="menu-text"> Notifications </span><span class="badge badge-important">3</span>',
+									'class' => 'dropdown-toggle',
+									'data-toggle' => 'dropdown'
+								));
+							?>
+							<ul class="pull-left dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="icon-warning-sign"></i>
+									8 Notifications
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-pink icon-comment"></i>
+												New Comments
+											</span>
+											<span class="pull-right badge badge-info">+12</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="btn btn-xs btn-primary icon-user"></i>
+										Bob just signed up as an editor ...
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
+												New Orders
+											</span>
+											<span class="pull-right badge badge-success">+8</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-info icon-twitter"></i>
+												Followers
+											</span>
+											<span class="pull-right badge badge-info">+11</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										See all notifications
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<?php endif; ?>
+						
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i> 
+								<?php 
+									echo $this->tag->linkTo(array(
+										'dashboard',
+										'Accueil'));
+								?>
+							</li>
+							<?php
+								if (isset($breadcrumbs)):
+									foreach ($breadcrumbs as $k => $v):
+									?>
+									<?php if (array_key_exists('last', $v)): ?>
+										<li class="active"><?php echo $k; ?></li>
+									<?php else: ?>
+										<li>
+											<?php 
+												echo $this->tag->linkTo(array(
+													$v['controller'].'/'.$v['action'],
+													$k));
+											?>
+										</li>
+									<?php endif; ?>
+									<?php
+									endforeach;
+								endif;
+							?>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Rechercher ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+
+					<div class="page-content">
+						<noscript>
+							<div class="alert alert-danger"><i class="icon-warning-sign bigger-300" style="float: left; margin-right: 5px;"></i> Il semble que vous avez désactivé l'execution de javacript. Afin de vous procurer une expérience de navigation optimale, le site <?php echo $this->config->application->siteTitle; ?> utilise le javascript. Une majorité de fonctionnalités ne seront donc pas accessibles. Nous vous recommendons donc fortement d'activer l'execution de javascript sur votre machine. Pour cela, rendez-vous dans la section paramètres de votre navigateur.</div>
+						</noscript>
+						<?php echo (isset($showAlert) ? $showAlert : ''); ?>
+						<?php echo $this->flash->output(); ?>
+						<?php echo $this->flashSession->output(); ?>
+						<?php echo $this->getContent(); ?>
+					</div>
+					<div class="footer">
+						<?php echo '2013 - '.date('Y'); ?> &copy; <?php echo $this->config->application->siteTitle; ?>
+					</div>
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->

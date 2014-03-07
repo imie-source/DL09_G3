@@ -1,0 +1,339 @@
+<div class="navbar navbar-default" id="navbar">
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<?php 
+						echo $this->tag->linkTo(array(
+							'index',
+							'<i class="icon-group"></i> Nannyster',
+							'class' => 'navbar-brand'));
+					?><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue">
+							<a href="javascript:void(0);" id="login-button">Se connecter</a>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+
+					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+								<?php 
+									echo $this->tag->linkTo(array(
+										'index',
+										'<i class="icon-home"></i>',
+										'class' => 'btn btn-success',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Accueil'
+									));
+								?>
+								<?php 
+									echo $this->tag->linkTo(array(
+										'blog',
+										'<i class="icon-comment"></i>',
+										'class' => 'btn btn-info',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Blog Nannyster'
+									));
+								?>
+								<?php 
+									echo $this->tag->linkTo(array(
+										'directory',
+										'<i class="icon-book"></i>',
+										'class' => 'btn btn-warning',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Annuaire Nannyster'
+									));
+								?>
+								<?php 
+									echo $this->tag->linkTo(array(
+										'contracts',
+										'<i class="icon-file-text"></i>',
+										'class' => 'btn btn-danger',
+										'data-rel' => 'tooltip',
+										'data-placement' => 'bottom',
+										'data-original-title' => 'Mes Contrats'
+									));
+								?>
+						</div>
+
+						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+							<span class="btn btn-success"></span>
+
+							<span class="btn btn-info"></span>
+
+							<span class="btn btn-warning"></span>
+
+							<span class="btn btn-danger"></span>
+						</div>
+					</div><!-- #sidebar-shortcuts -->
+
+					<ul class="nav nav-list">
+						<li class="home">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'index',
+									'<i class="icon-home"></i><span class="menu-text"> Accueil </span>'
+								));
+							?>
+						</li>
+
+						<li class="blog">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'blog',
+									'<i class="icon-comment"></i><span class="menu-text"> Blog </span>'
+								));
+							?>
+						</li>
+
+						<li calss="directory">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'directory',
+									'<i class="icon-book"></i><span class="menu-text"> Annuaire </span>'
+								));
+							?>
+						</li>
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i> 
+								<?php 
+									echo $this->tag->linkTo(array(
+										'index',
+										'Accueil'));
+								?>
+							</li>
+							<?php
+								if (isset($breadcrumbs)):
+									foreach ($breadcrumbs as $k => $v):
+									?>
+									<?php if ($v['last']): ?>
+										<li class="active"><?php echo $k; ?></li>
+									<?php else: ?>
+										<li>
+											<?php 
+												echo $this->tag->linkTo(array(
+													$v['controller'].'/'.$v['action'],
+													$k));
+											?>
+										</li>
+									<?php endif; ?>
+									<?php
+									endforeach;
+								endif;
+							?>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Rechercher ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+
+					<div class="page-content">
+						<?php echo $this->flash->output(); ?>
+						<?php echo $this->flashSession->output(); ?>
+						<?php echo $this->getContent(); ?>
+					</div>
+					<div class="main-container login-custom hidden" id="login-window">
+						<div class="main-content">
+							<div class="row">
+								<div class="col-sm-10">
+									<div class="login-container">
+										<div class="space-6"></div>
+
+										<div class="position-relative">
+											<div id="login-box" class="login-box visible widget-box no-border">
+												<div class="close close-custom" id="login-close-button">&times;</div>
+												<div class="widget-body">
+													<div class="widget-main">
+														<h4 class="header blue lighter bigger">
+															<i class="icon-coffee blue"></i>
+															Vos informations de connexion
+														</h4>
+
+														<div class="space-6"></div>
+														<?php echo Phalcon\Tag::form(array("session/login", "method" => "post")); ?>
+														<fieldset>
+															<label class="block clearfix">
+																<span class="block input-icon input-icon-right">
+																	<?php echo $formLogin->render('email') ?>
+																	<i class="icon-user"></i>
+																</span>
+															</label>
+
+															<label class="block clearfix">
+																<span class="block input-icon input-icon-right">
+																	<?php echo $formLogin->render('password') ?>
+																	<i class="icon-lock"></i>
+																</span>
+															</label>
+
+															<div class="space"></div>
+
+															<div class="clearfix">
+																<label class="inline">
+																	<?php echo $formLogin->render('remember') ?>
+																	<span class="lbl">  <?php echo $formLogin->getLabel('remember'); ?></span>
+																</label>
+																<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+																	<i class="icon-key"></i>
+																	Connexion
+																</button>
+															</div>
+															<div class="space-4"></div>
+														</fieldset>
+														<?php echo Phalcon\Tag::endForm(); ?>
+
+															<!--<div class="social-or-login center">
+																<span class="bigger-110">Ou connectez-vous avec</span>
+															</div>
+
+															<div class="social-login center">
+																<a class="btn btn-primary">
+																	<i class="icon-facebook"></i>
+																</a>
+
+																<a class="btn btn-info">
+																	<i class="icon-twitter"></i>
+																</a>
+
+																<a class="btn btn-danger">
+																	<i class="icon-google-plus"></i>
+																</a>
+															</div>-->
+														</div><!-- /widget-main -->
+
+														<div class="toolbar center">
+															<a href="javascript:void(0);" class="forgot-password-link">
+																<i class="icon-arrow-left"></i>
+																J'ai oublié mon mot de passe
+															</a>
+														</div>
+													</div><!-- /widget-body -->
+												</div><!-- /login-box -->
+
+												<div id="forgot-box" class="forgot-box widget-box no-border">
+													<div class="close close-custom" id="lost-close-button">&times;</div>
+													<div class="widget-body">
+														<div class="widget-main">
+															<h4 class="header red lighter bigger">
+																<i class="icon-key"></i>
+																Récupérer votre mot de passe
+															</h4>
+
+															<div class="space-6"></div>
+															<p>
+																Entrer votre email pour recevoir les instructions de réinitialisation de votre mot de passe
+															</p>
+
+															<?php echo Phalcon\Tag::form(array("session/forgotpassword", "method" => "post")); ?>
+																<fieldset>
+																	<label class="block clearfix">
+																		<span class="block input-icon input-icon-right">
+																			<?php echo $formForgotPassword->render('email'); ?>
+																			<i class="icon-envelope"></i>
+																		</span>
+																	</label>
+
+																	<div class="clearfix">
+																		<button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
+																			<i class="icon-lightbulb"></i>
+																			Envoyer!
+																		</button>
+																	</div>
+																</fieldset>
+															<?php echo Phalcon\Tag::endForm(); ?>
+														</div><!-- /widget-main -->
+
+														<div class="toolbar center">
+															<a href="javascript:void(0);" class="back-to-login-link">
+																Revenir à la page de connexion
+																<i class="icon-arrow-right"></i>
+															</a>
+														</div>
+													</div><!-- /widget-body -->
+												</div><!-- /forgot-box -->
+				                        	</div><!-- /position-relative -->
+				                        </div>
+				                    </div><!-- /.col -->
+				                </div><!-- /.row -->
+				            </div>
+				        </div><!-- /.main-container -->
+					<script type="text/javascript">
+					function show_box(id) {
+						jQuery('.widget-box.visible').removeClass('visible');
+						jQuery('#'+id).addClass('visible');
+					}
+
+					$('#login-button').click( function(){
+						$('#login-box').removeClass('hidden');
+						$('#forgot-box').addClass('hidden');
+						$('#login-window').removeClass('hidden');
+					});
+
+					$('.forgot-password-link').click( function(){
+						$('#login-box').addClass('hidden');
+						$('#forgot-box').removeClass('hidden');
+						$('#login-window').removeClass('hidden');
+					});
+
+					$('.back-to-login-link').click( function(){
+						$('#login-box').removeClass('hidden');
+						$('#forgot-box').addClass('hidden');
+						$('#login-window').removeClass('hidden');
+					});
+
+					$('#login-close-button').click(function(){
+						$('#login-window').addClass('hidden');
+					});
+
+					$('#lost-close-button').click(function(){
+						$('#login-window').addClass('hidden');
+					});
+					</script>
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->

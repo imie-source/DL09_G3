@@ -1,0 +1,42 @@
+.errorMessage, .successMessage, .noticeMessage, .warningMessage{
+    font-size: 14px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+.errorMessage{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+}
+.successMessage{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.noticeMessage{
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.warningMessage{
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #fbeed5;
+}
+.no-margin{
+    margin: 0px !important;
+}
+#surname, #wedding_surname{
+    text-transform: uppercase;
+}
+#firstname{
+    text-transform: capitalize;
+}
+.footer{
+    background-color: #f2f2f2;
+    margin-top : 50px;
+    padding: 20px;
+    width: 100%;
+    bottom: 0px;
+}

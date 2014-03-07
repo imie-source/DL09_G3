@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<?php echo $this->tag->getTitle(); ?>
+
+	<meta name="description" content="overview &amp; stats" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- basic styles -->
+	<?php echo $this->assets->outputCss('basicCss'); ?>
+
+	<!-- theme styles -->
+	<?php echo $this->assets->outputCss('themeCss'); ?>
+
+	<!-- extras styles -->
+	<?php echo $this->assets->outputCss(); ?>
+
+	<!-- jQuery -->
+	<?php echo $this->assets->outputJs('jQuery'); ?>
+
+	<!--[if IE]>
+	<?php echo $this->assets->outputJs('jQueryIE'); ?>
+	<![endif]-->
+
+	<!-- basic scripts -->
+	<?php echo $this->assets->outputJs('basicJs'); ?>
+
+
+	<!-- theme scripts -->
+	<?php echo $this->assets->outputJs('themeJs'); ?>
+
+</head>
+
+<body class="navbar-fixed breadcrumbs-fixed">
+
+	<?php echo $this->getContent(); ?>
+
+	<!--[if lte IE 8]>
+	{{ javascript_include('js/excanvas.js') }}
+	<![endif]-->
+
+	<!-- extras js -->
+	<?php echo $this->assets->outputJs(); ?>
+
+	<!-- Menu active class designer -->
+	<?php if(isset($activeClass)): ?>
+		<script type="text/javascript">
+		$('.<?php echo $activeClass; ?>').addClass('active');
+		</script>
+	<?php endif; ?>
+	<?php if (isset($openTab)): ?>
+		<script type="text/javascript">
+		$('.<?php echo $openTab; ?>').addClass('open');
+		$('.<?php echo $openTab; ?> > ul.submenu').attr('style', 'display: block;');
+		</script>
+	<?php endif; ?>
+</body>
+</html>
