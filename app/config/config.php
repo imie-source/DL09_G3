@@ -1,13 +1,6 @@
 <?php
 
 return new \Phalcon\Config(array(
-    'database' => array(
-        'adapter'     => 'Mysql',
-        'host'        => 'localhost',
-        'username'    => 'root',
-        'password'    => 'root',
-        'dbname'      => 'nannyster',
-    ),
     'application' => array(
         'controllersDir' => APP_DIR . '/controllers/',
         'modelsDir'      => APP_DIR . '/models/',
@@ -23,13 +16,13 @@ return new \Phalcon\Config(array(
     ),
     'mail' => array(
         'fromName' => 'SPASM',
-        'fromEmail' => 'no-reply@spsm.fr',
+        'fromEmail' => 'no-reply@spasm.fr',
         'smtp' => array(
             'server' => 'smtp.gmail.com',
             'port' => 465, //587
             'security' => 'ssl',
-            'username' => 'kevin.balini@gmail.com',
-            'password' => 'MP7REccg'
+            'username' => '',
+            'password' => ''
         )
     ),
     'amazon' => array(
