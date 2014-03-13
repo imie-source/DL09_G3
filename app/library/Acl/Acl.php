@@ -139,8 +139,8 @@ class Acl extends Component
      */
     public function isAllowed($profile, $controller, $action)
     {
-        return true;
-        //return $this->getAcl()->isAllowed($profile, $controller, $action);
+        //return true;
+        return $this->getAcl()->isAllowed($profile, $controller, $action);
     }
 
     /**
