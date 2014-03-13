@@ -31,7 +31,7 @@ class ControllerBase extends Controller
             // If there is no identity available the user is redirected to index/index
             if (!is_array($identity)) {
                 //$profile = Profiles::find(array(array('name' => 'Guest')));
-                $identity['profile_name'] = 'Guest';
+                $identity['profile_name'] = 'Utilisateur';
 /*
                 $this->flash->error('Vous devez être connecté pour accéder à cette partie du site!');
 
