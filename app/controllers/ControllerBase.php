@@ -41,7 +41,7 @@ class ControllerBase extends Controller
                 ));
                 return false;*/
             //}
-
+            }
             // Check if the user have permission to the current option
             $actionName = $dispatcher->getActionName();
 
@@ -68,7 +68,6 @@ class ControllerBase extends Controller
 
                 return false;
             }
-        }
     }
 
     public function initialize(){
