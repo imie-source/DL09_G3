@@ -31,7 +31,7 @@ class ControllerBase extends Controller
             // If there is no identity available the user is redirected to index/index
             if (!is_array($identity)) {
                 //$profile = Profiles::find(array(array('name' => 'Guest')));
-                $identity['profile_name'] = 'Utilisateur';
+                $identity['profile_name'] = 'Invite';
 /*
                 $this->flash->error('Vous devez être connecté pour accéder à cette partie du site!');
 
@@ -77,11 +77,6 @@ class ControllerBase extends Controller
             $identity = $this->auth->getIdentity();
             $this->view->identity = $identity;
             $this->view->setTemplateBefore('private');
-        }
-        else{
-            $form = new LoginForm();
-            $this->view->formLogin = $form;
-            $this->view->setTemplateBefore('public');
         }
     	//Last part of the title
         $this->tag->setTitle($this->config->application->siteTitle);
