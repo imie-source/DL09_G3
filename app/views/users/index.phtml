@@ -1,0 +1,137 @@
+<div class="page-header">
+	<h1>
+		Liste des utilisateurs
+		<small>
+			<i class="icon-double-angle-right"></i>
+
+		</small>
+	</h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+	<div class="col-xs-12">
+		<!-- PAGE CONTENT BEGINS -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="table-responsive">
+					<table id="user-table" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th class="center">
+									<label>
+										<input type="checkbox" class="ace" />
+										<span class="lbl"></span>
+									</label>
+								</th>
+								<th>Prénom NOM</th>
+								<th>
+									Compétences
+								</th>
+								<th class="hidden-480">Type</th>
+								<th>
+									Promotions
+								</th>
+
+
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<?php foreach($users as $user): ?>
+							<tr>
+								<td class="center">
+									<label>
+										<input type="checkbox" class="ace" />
+										<span class="lbl"></span>
+									</label>
+								</td>
+
+								<td>
+									<?php
+										echo $this->tag->linkTo(array(
+								          'users/view/'.$user->_id,
+									      ucwords($user->name).' '.strtoupper($user->surname),
+									      'target' => '_blank'
+								          ));
+									?>
+								</td>
+								<td>
+									<?php
+										echo $this->tag->linkTo(array(
+								          'users/view/'.$user->_id,
+									      'hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello',
+									      'class'=>'ellipsis',
+									      'target' => '_blank',
+									      'data-rel'=>'tooltip',
+									      'data-original-title'=>'hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,hello,'
+
+								          ));
+									?>
+								</td>
+								<td><?php
+									foreach ($profiles as $profile) {
+										if($user->profile_id == $profile->_id){
+											echo '<span class="label label-sm label-'.$profile->style.'">'.$profile->name.'</span>';
+											break;
+										}
+									}
+								 ?></td>
+								<td><?php
+									foreach ($promotions as $promotion) {
+										if($user->promotion_id == $promotion->_id){
+											echo $promotion->name;
+											break;
+										}
+									}
+								 ?></td>
+
+
+								<td>
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<?php
+											echo $this->tag->linkTo(array(
+									          	'users/edit/'.$user->_id,
+										      	'<i class="icon-pencil bigger-130"></i>',
+										      	'class' => 'green',
+										      	'data-rel' => 'tooltip',
+										      	'title' => 'Lui proposer un projet'
+									          ));
+										?>
+									</div>
+
+									<div class="visible-xs visible-sm hidden-md hidden-lg">
+										<div class="inline position-relative">
+											<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+												<i class="icon-caret-down icon-only bigger-120"></i>
+											</button>
+
+											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+												
+												<li>
+													<?php
+														echo $this->tag->linkTo(array(
+												          	'users/edit/'.$user->_id,
+													      	'<span class="green"><i class="icon-pencil bigger-120"></i></span>',
+													      	'class' => 'green',
+													      	'data-rel' => 'tooltip',
+													      	'title' => 'Lui proposer un projet'
+												          ));
+													?>
+												</li>
+
+												<li>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.col -->
+</div><!-- /.row -->

@@ -12976,4 +12976,9 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     .ace-settings-container, body.breadcrumbs-fixed .ace-settings-container {
     top: 65px;
 }
+.ellipsis{
+
+   
+    text-overflow:ellipsis;
+}
 }
