@@ -1,1 +1,0 @@
-{ "options" : { "create" : "promotions" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "spasm.promotions", "name" : "_id_" } ] }
