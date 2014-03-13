@@ -14,6 +14,9 @@ class SkillsController extends ControllerBase
                 'last' => true)
         ));
 
+	    $this->assets->addJs('js/fuelux/data/fuelux.tree-sampledata.js');
+	    $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
+	    $this->assets->addJs('js/skills/index.js');
 	}
 
 }
