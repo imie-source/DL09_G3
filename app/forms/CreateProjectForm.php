@@ -20,64 +20,52 @@ class CreateProjectForm extends Form
 	public function initialize()
 	{
 		//Nom projet
-		$project_name = new Text('project_name', array(
+		$name = new Text('name', array(
 			'placeholder' => 'Nom de projet',
 			'class' => 'form-control'
 			));
-		$project_name->addValidators(array(
+		$name->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Le nom du projet est requis'
             ))
         ));
-			$this->add($project_name);
-
-		//Chef de projet
-		$project_master = new Text('project_master', array(
-			'placeholder' => 'Chef de projet',
-			'class' => 'form-control'
-			));
-		$project_master->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Le nom du chef de projet est requis'
-            ))
-        ));
-			$this->add($project_master);
+			$this->add($name);
 
 		//Nb personnes
-		$nb_project_users = new Text('nb_project_users', array(
-			'placeholder' => 'Nombre de participants',
+		$nb_users_max = new Text('nb_users_max', array(
+			'placeholder' => 'Nombre de participants maximum',
 			'class' => 'form-control',
 			'id' => 'nbUsers'
 			));
-				$this->add($nb_project_users);
+				$this->add($nb_users_max);
 
 		//date de début du projet
-		$project_start_date = new Text('project_start_date', array(
+		$start_date = new Text('start_date', array(
 			'class' => 'form-control',
 			'placeholder' => 'Date de début',
 			'id' => 'date'
 			));
-		$project_start_date->addValidators(array(
+		$start_date->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Une date de début de projet est requise'
             ))
         ));
-        	$this->add($project_start_date);
+        	$this->add($start_date);
 
 		//date de fin du projet
-		$project_end_date = new Text('project_end_date', array(
+		$end_date = new Text('end_date', array(
 			'class' => 'form-control',
 			'placeholder' => 'Date de fin',
 			'id' => 'date1'
 			));
-			$this->add($project_end_date);
+			$this->add($end_date);
 
 		//déscription du projet
-		$project_description = new Textarea('project_description', array(
+		$description = new Textarea('description', array(
 			'class' => 'form-control',
 			'placeholder' => 'déscription du projet',
 			));
-			$this->add($project_description);
+			$this->add($description);
 
 		$this->add(new Submit('go', array(
             'class' => 'btn btn-success'
