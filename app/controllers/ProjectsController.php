@@ -17,15 +17,15 @@ class ProjectsController extends ControllerBase
 		$this->assets->addJs('js/jquery.maskedinput.min.js');
 		if($this->request->isPost()){
 			$data = $this->request->getPost();
-			$project = new Project;
+			$project = new Projects();
 			$project->assign($data);
 			if ($project->save()) {
-				$this->flash->success('votre projet à bien été ajouté');
-				return $this->response->redirect('project/view/'.$project->_id);
+				$this->flash->success('votre projet à bien été proposé');
+				return $this->response->redirect('projects/view/'.$project->_id);
 			}
 
-			$this->flash->error('L\'utilisateur n\'existe pas!');
-			$this->dispatcher->forward(array('controller' => 'project', 'action' => 'create'));
+			$this->flash->error('votre projetn\'a pu être proposé!');
+			$this->dispatcher->forward(array('controller' => 'projects', 'action' => 'create'));
 				}
 
 
