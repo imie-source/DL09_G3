@@ -2,9 +2,7 @@
 
 namespace Nannyster\Controllers;
 
-use Nannyster\Models\Users;
 use Nannyster\Forms\LoginForm;
-use Nannyster\Forms\SignUpForm;
 use Nannyster\Forms\ForgotPasswordForm;
 
 class IndexController extends ControllerBase
@@ -18,10 +16,8 @@ class IndexController extends ControllerBase
             $form = new LoginForm();
             $this->view->formLogin = $form;
             $this->view->setTemplateBefore('launch');
-    }
 
-    public function testAction(){
-    	$this->view->setVar('dir', var_dump($this->view->setLayout('default.phtml')));
+
     }
 
 }

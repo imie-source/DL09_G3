@@ -65,7 +65,8 @@ class Acl extends Component
             'logout'
         ),
         'skills' => array(
-            'index'
+            'index',
+            'ajaxTreeFinder'
         ),
         'user_control' => array(
             'confirmEmail',

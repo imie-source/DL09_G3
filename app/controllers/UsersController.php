@@ -574,68 +574,7 @@ class UsersController extends ControllerBase
         return true;
     }
 
-    /**
-     * Retrieve each mother account for a new contract
-     */
-    public function ajaxMotherUsersForNewContractAction() {
-      if($this->request->isPost()){
-        if($this->request->isAjax()){
-          $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
-          $data = $this->request->getPost();
-
-          $users = Users::find(array(array(
-            'civility' => 'Mme',
-            'fullname' => array('$regex' => $data['q']),
-            '_id' => array('$nin' => array(new \MongoId($this->auth->getId()))),
-            'active' => 'Y'
-          )));
-
-          if ($users) {
-                foreach ($users as $user) {
-                    echo '<a href="#" id="user-result-span" class="user-result-span" data-id="' . $user->_id . '" data-firstname="'.ucwords($user->firstname).'" data-surname="'.strtoupper($user->surname).'" data-address="'.ucwords($user->address).'" data-zip-code="'.$user->zipcode.'" data-city="'.ucwords($user->city).'" data-phone="'.$user->phone.'" data-mobile="'.$user->mobile.'" data-email="'.$user->email.'" data-pajemploi="'.strtoupper($user->nopajemploi).'">' . ucwords($user->firstname).' '.strtoupper($user->surname).' <span class="user-result-ville">(' . ucwords($user->city) . ')</span></a>';
-                }
-                return true;
-            }
-            else{
-                echo '<span class="user-no-result-span">Aucun résultat</span>';
-                return true;
-            }
-        }
-      }
-      $this->response->redirect('contracts');
-    }
-
-    /**
-     * Retrieve each father account for a new contract
-     */
-    public function ajaxFatherUsersForNewContractAction() {
-      if($this->request->isPost()){
-        if($this->request->isAjax()){
-          $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
-          $data = $this->request->getPost();
-
-          $users = Users::find(array(array(
-            'civility' => 'Mr',
-            'fullname' => array('$regex' => $data['q']),
-            '_id' => array('$nin' => array(new \MongoId($this->auth->getId()))),
-            'active' => 'Y'
-          )));
-
-          if ($users) {
-                foreach ($users as $user) {
-                    echo '<a href="#" id="user-result-span" class="user-result-span" data-id="' . $user->_id . '" data-firstname="'.ucwords($user->firstname).'" data-surname="'.strtoupper($user->surname).'" data-address="'.ucwords($user->address).'" data-zip-code="'.$user->zipcode.'" data-city="'.ucwords($user->city).'" data-phone="'.$user->phone.'" data-mobile="'.$user->mobile.'" data-email="'.$user->email.'" data-pajemploi="'.strtoupper($user->nopajemploi).'">' . ucwords($user->firstname).' '.strtoupper($user->surname).' <span class="user-result-ville">(' . ucwords($user->city) . ')</span></a>';
-                }
-                return true;
-            }
-            else{
-                echo '<span class="user-no-result-span">Aucun résultat</span>';
-                return true;
-            }
-        }
-      }
-      $this->response->redirect('contracts');
-    }
-
+  
     public function deleteAction($id){
       if($id != null){
         if(self::validateMongoId($id)){
@@ -652,4 +591,22 @@ class UsersController extends ControllerBase
       $this->flash->error('L\'utilisateur n\'existe pas!');
       $this->response->redirect('users/manage');
     }
-}
+
+ public function indexAction(){
+    $this->tag->prependTitle('Manager d\'utilisateurs - ');
+    $user = $this->auth->getUser();
+    $this->view->setVar('breadcrumbs', array(
+      'Liste des utilisateurs' => array(
+                'last' => true)
+        ));
+    $this->assets->addJs('js/jquery.dataTables.min.js');
+    $this->assets->addJs('js/jquery.dataTables.bootstrap.js');
+    $this->assets->addJs('js/bootbox.min.js');
+    $this->assets->addJs('js/users/manage.js');
+
+    $this->view->setVar('users', Users::find());
+    $this->view->setVar('profiles', Profiles::find());
+    $this->view->setVar('promotions', Promotions::find());
+ }
+
+ }
