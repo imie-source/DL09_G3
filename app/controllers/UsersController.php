@@ -255,44 +255,6 @@ class UsersController extends ControllerBase
     $this->view->setVar('user', $user);
   }
 
-	public function ajaxUsersForNewMailAction() {
-		if($this->request->isPost()){
-			if($this->request->isAjax()){
-
-        //response view without layout
-        $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
-
-        //Define User MongoId to avoid returning his name in users result list
-        $arrayMongoId[] = $this->auth->getId();
-
-        $data = $this->request->getPost();
-        if(array_key_exists('e', $this->request->getPost()) > 0){
-          foreach ($data['e']['id'] as $key) {
-            $arrayMongoId[] = new \MongoId($key);
-          }
-          $users = Users::find(array(array('fullname' => array('$regex' => $data['q']),
-                                           '_id' => array('$nin' => $arrayMongoId),
-                                           'active' => 'Y')));
-        }
-        else{
-				  $users = Users::find(array(array('fullname' => array('$regex' => $data['q']),
-                                           '_id' => array('$nin' => $arrayMongoId),
-                                           'active' => 'Y')));
-        }
-        if(count($users) > 0){
-          foreach ($users as $key) {
-            echo '<a href="#" id="user-result-span" class="user-result-span" data-id="'.$key->_id.'" data-name="'.ucfirst($key->firstname).' '.(($key->wedding_surname != null) ? strtoupper($key->wedding_surname) : strtoupper($key->surname)).'">'.ucfirst($key->firstname).' '.(($key->wedding_surname != null) ? strtoupper($key->wedding_surname) : strtoupper($key->surname)).' <span class="user-result-ville">('.$key->city.')</span></a>';
-          }
-        }
-        else{
-            echo '<span class="user-no-result-span">Aucun résultat</span>';
-        }
-        die();
-			}
-		}
-		$this->response->redirect('dashboard');
-    }
-
     public function ajaxProfileEditorAction() {
       if($this->request->isPost()){
         if ($this->request->isAjax()) {
@@ -429,87 +391,6 @@ class UsersController extends ControllerBase
         }
       }
     }
-/*
-    public function ajaxImageEditorOldAction() {
-
-
-        if ($this->request->isPost()) {
-          if($this->request->isAjax()){
-            $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
-            //retrieve user identity
-            $user = $this->auth->getIdentity();
-            if ($_FILES['file']) {
-                $image = $_FILES['file'];
-                //upload folder - make sure to create one in webroot
-                $uploadFolder = "img/avatars";
-                //full path to upload folder
-                $uploadPath = BASE_DIR . $uploadFolder;
-
-
-                if ($image['type'] == "image/png" || $image['type'] == "image/jpeg" || $image['type'] == "image/gif") {
-                    if ($image['type'] == "image/png") {
-                        $ext = 'png';
-                    } else if ($image['type'] == "image/jpeg") {
-                        $ext = 'jpeg';
-                    } else if ($image['type'] == "image/gif") {
-                        $ext = 'gif';
-                    }
-                    //check if there wasn't errors uploading file on serwer
-                    if ($image['error'] == 0) {
-                        //image file name
-                        $imageName = self::uuidV4() . '.' . $ext;
-                        //check if file exists in upload folder
-                        if (file_exists($uploadPath . '/' . $imageName)) {
-                            //create full filename with timestamp
-                            $imageName = date('His') . $imageName;
-                        }
-                        //create full path with image name
-                        $full_image_path = $uploadPath . '/' . $imageName;
-
-                        //upload image to upload folder
-                        if (move_uploaded_file($image['tmp_name'], $full_image_path)) {
-                            $this->resize('img/avatars/' . $imageName, $ext, 'img/avatars/thumbs/' . $imageName, 48, 48);
-                            if (file_exists('img/avatars/' . $user['avatar']) && $user['avatar'] != 'default.jpg') {
-                                unlink('img/avatars/' . $user['avatar']);
-                            }
-                            if (file_exists('img/avatars/thumbs/' . $user['avatar']) && $user['avatar'] != 'default.jpg') {
-                                unlink('img/avatars/thumbs/' . $user['avatar']);
-                            }
-                            $_SESSION['auth-identity']['avatar'] = $imageName;
-                            $user = Users::findById(new \MongoId($user['id']));
-                            $user->avatar = $imageName;
-                            $user->save();
-                            return json_encode(array(
-                              'error' => false,
-                              'message' => 'Votre photo a bien été téléchargée',
-                              'newImage' => $imageName
-                            ));
-                        } else {
-                            return json_encode(array(
-                              'error' => true,
-                              'message' => 'Il y a eu une erreur lors du téléchargement de votre photo. Veuillez recommencer',
-                              'oldImage' => $user['avatar']
-                            ));
-                        }
-                    } else {
-                        return json_encode(array(
-                          'error' => true,
-                          'message' => 'Il y a eu une erreur lors du téléchargement de votre photo. Veuillez recommencer',
-                          'oldImage' => $user['avatar']
-                        ));
-                    }
-                } else {
-                    return json_encode(array(
-                      'error' => true,
-                      'message' => 'Votre photo comporte des incohérences dans sa structure. Par sécurité nous ne pouvons pas l\'enregistrer. Si le problème persiste, veuillez nous contacter.',
-                      'oldImage' => $user['avatar']
-                    ));
-                }
-            }
-          }
-        }
-        $this->response->redirect('dashboard');
-    }*/
 
     private function resize($img, $ext, $dest, $largeur = 0, $hauteur = 0) {
 
