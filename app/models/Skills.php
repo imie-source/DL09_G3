@@ -4,7 +4,7 @@ namespace Nannyster\Models;
 
 use Phalcon\Mvc\Collection;
 
-class Skills extends Models
+class Skills extends Collection
 {
 
 	public $_id;
