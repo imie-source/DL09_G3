@@ -25,6 +25,12 @@ class Profiles extends Collection
      */
     public $active;
 
+    /**
+     *
+     * @var string
+     */
+    public $style;
+
     public static function returnArrayForSelect($obj){
         $val = new Collection;
         foreach ($obj as $v) {
