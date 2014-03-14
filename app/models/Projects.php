@@ -2,24 +2,19 @@
 
 namespace Nannyster\Models;
 
-use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Collection;
 
 
-class Projects extends Models
+
+class Projects extends Collection
 {
 
     public $_id;
-
     public $name;
-
-    public $active;
-
+    public $descriptions;
     public $progress;
-
     public $start_date;
-
     public $end_date;
-
-    public $status_date;
+    public $status_name;
 
 }
