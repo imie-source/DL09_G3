@@ -16,6 +16,7 @@ class Projects extends Collection
     public $start_date;
     public $end_date;
     public $status_name;
+    public $project_master;
 
 
 

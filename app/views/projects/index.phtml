@@ -68,11 +68,9 @@
 								
 								<!-- /.col Date de Fin -->
 								<td><?php
-									echo $this->tag->linkTo(array(
-								    'projects/view/'.$project->_id,
-									ucwords($project->end_date),
-									'target' => '_blank'
-								      ));
+
+									echo $project->end_date;
+
 								 ?>
 								</td>
 								
@@ -83,11 +81,7 @@
 								
 								<!-- /.col Statut -->
 								<td><?php
-									echo $this->tag->linkTo(array(
-								    'projects/view/'.$project->_id,
-									ucwords($project->status_name),
-									'target' => '_blank'
-								    ));
+									echo $project->status_name;
 									?>
 								</td>
 
