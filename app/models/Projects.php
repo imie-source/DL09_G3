@@ -24,8 +24,7 @@ class Projects extends Collection
 public function beforeValidationOnCreate(){
 	$this->project_master=$this->auth->getId();
 
-}    
-
+}
 
 
 public function assign($data){
