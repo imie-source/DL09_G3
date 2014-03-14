@@ -238,6 +238,16 @@
 							</ul>
 						</li>
 						<?php endif; ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'team', 'index')): ?>
+						<li class="team">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'team',
+									'<i class="icon-male"></i><span class="menu-text"> La Dream Team </span>'
+								));
+							?>
+						</li>
+						<?php endif; ?>
 						
 					</ul><!-- /.nav-list -->
 
@@ -304,7 +314,7 @@
 						<?php echo $this->getContent(); ?>
 					</div>
 					<div class="footer">
-						<?php echo '2013 - '.date('Y'); ?> &copy; <?php echo $this->config->application->siteTitle; ?>
+						<?php echo '2013 - '.date('Y'); ?> &copy; <?php echo $this->config->application->siteTitle; ?><span class="pull-right">Fièrement satelisé par La Dream Team (où presque ...)</span>
 					</div>
 				</div><!-- /.main-content -->
 			</div><!-- /.main-container-inner -->

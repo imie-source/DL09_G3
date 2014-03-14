@@ -1,6 +1,11 @@
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     font-family: 'Ubuntu' !important;
 }
+.team-fig{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
 .special-dl dt{
     width: 120px !important;
 }

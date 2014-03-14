@@ -172,7 +172,7 @@
                         <div class="widget-header widget-header-small">
                             <h4 class="blue smaller">
                                 <i class="icon-signal orange"></i>
-                                Mes Compétences <?php if($updateAllowed){echo $this->tag->linkTo(array('users/skills', '<i class="icon-signal"></i> Ajouter des compétences', 'class' => 'btn btn-danger btn-xs'));} ?>
+                                Mes Compétences <?php if($updateAllowed){echo $this->tag->linkTo(array('users/skills', '<i class="icon-plus"></i> Ajouter des compétences', 'class' => 'btn btn-danger btn-xs'));} ?>
                             </h4>
 
                             <div class="widget-toolbar action-buttons">
@@ -195,11 +195,11 @@
                                         <div class="space-2"></div>
                                         <?php 
                                             echo $skills[$i]->name->name.
-                                            '&nbsp'.
+                                            '<br/>'.
                                             $this->tag->linkTo(array(
                                                 'users/skillDelete/'.$skills[$i]->_id,
                                                 '<i class="icon-remove"></i>',
-                                                'class' => 'btn btn-danger btn-minier',
+                                                'class' => 'btn btn-minier',
                                                 'data-rel' => 'tooltip',
                                                 'data-original-title' => 'Supprimer cette compétence!'
                                             )).
