@@ -3,8 +3,14 @@
 		Projets
 		<small>
 			<i class="icon-double-angle-right"></i>
-			<button type="button" class="btn btn-primary btn-sm btn-danger pull-right" data-toggle="button">+ Ajouter un projet</button>
-		</small>
+			<?php
+										echo $this->tag->linkTo(array(
+								          'projects/create',
+								          '<i class="icon-plus"></i>Ajouter un projet',
+								          'class' => 'btn btn-sm btn-danger pull-right'
+								          ));
+									?>
+					</small>
 	</h1>
 
 </div><!-- /.page-header -->

@@ -9,9 +9,62 @@
 </div><!-- /.page-header -->
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-md-6 col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-            
+            <?php echo Phalcon\Tag::form(array("CreateprojectForm", "method" => "post")); ?>
+                                            <fieldset>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <?php echo $formCreate->render('project_name') ?>
+                                                        <i class="icon-keyboard"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <?php echo $formCreate->render('project_master') ?>
+                                                        <i class="icon-user"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <?php echo $formCreate->render('nb_project_users') ?>
+                                                        <i class="icon-group"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <?php echo $formCreate->render('project_start_date') ?>
+                                                        <i class="icon-calendar"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <?php echo $formCreate->render('project_end_date') ?>
+                                                        <i class="icon-calendar"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <?php echo $formCreate->render('project_description') ?>
+                                                        <i class="icon-file-text-alt"></i>
+                                                    </span>
+                                                </label>
+                                                
+                                                    <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                                        <i class="icon-key"></i>
+                                                        valider
+                                                    </button>
+                                                </div>
+
+                                                <div class="space-4"></div>
+                                            </fieldset>
+                                        <?php echo Phalcon\Tag::endForm(); ?>
+       
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
 </div><!-- /.row -->

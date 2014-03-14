@@ -22,4 +22,11 @@ class Projects extends Models
 
     public $status_date;
 
+
+
+public function assign($data){
+        foreach ($data as $k => $v) {
+            $this->$k = $v;
+        }
+    }
 }
