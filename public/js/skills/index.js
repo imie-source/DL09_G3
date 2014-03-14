@@ -1,14 +1,14 @@
 $(document).ready(function() {
-	$(document).on("click", ".icon-remove, .icon-ok", function (event) {
-        event.preventDefault();
-		event.stopPropagation();
-        console.log(event.target);
-    });
-    $(document).on("click", ".tree-folder-header", function (event) {
-    	event.target = 'icon-plus';
-        event.preventDefault();
-		event.stopPropagation();
-        console.log(event.target);
+    $( "body" ).click(function( event ) {
+        if(event.target.id = 'folder-selector'){
+            folderCheckClick = true;
+        	$(document).on("click", ".icon-remove, .icon-ok", function (event) {
+                console.log(event.target);
+            });
+        }
+        else{
+            folderCheckClick = false;
+        }
     });
 	var DataSourceTree = function (options) {
                 this.url = options.url;
