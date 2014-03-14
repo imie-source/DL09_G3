@@ -1,1 +1,0 @@
-{ "options" : { "create" : "profiles" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "spasm.profiles", "name" : "_id_" } ] }

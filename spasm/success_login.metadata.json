@@ -1,1 +1,0 @@
-{ "options" : { "create" : "success_login" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "spasm.success_login", "name" : "_id_" } ] }
