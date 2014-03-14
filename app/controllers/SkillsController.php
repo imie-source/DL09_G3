@@ -18,6 +18,7 @@ class SkillsController extends ControllerBase
         ));
 
 	    $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
+	    $this->assets->addJs('js/jquery.raty.js');
 	    $this->assets->addJs('js/skills/index.js');
 	}
 
@@ -48,7 +49,8 @@ class SkillsController extends ControllerBase
 						'valide' => 'Y')));
 
 					if($additionalParams){
-						$skills['data'][$i]->name = $skills['data'][$i]->name.' <span class="badge badge-grey" id="badge-nb-sub-cat">'.count($additionalParams).'</span>';
+
+						$skills['data'][$i]->children = count($additionalParams);
 						$skills['data'][$i]->additionalParameters = array('id' => (string) $skills['data'][$i]->_id, 'children' => true, 'itemSelected' => true);
 					}
 					else{

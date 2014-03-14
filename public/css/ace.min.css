@@ -12771,16 +12771,10 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false)!important;
 }
 .tags {
-    display: inline-block;
-    padding: 4px 6px;
+    display: block;
     color: #777;
     vertical-align: middle;
     background-color: #FFF;
-    border: 1px solid #d5d5d5;
-    width: 206px;
-}
-.tags:hover {
-    border-color: #b5b5b5;
 }
 .tags-hover, .tags-hover:hover {
     border-color: #f59942;
@@ -12811,11 +12805,14 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     background-color: #91b8d0;
     color: #FFF;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-    padding: 4px 22px 5px 9px;
+    padding: 4px 9px 5px 9px;
     margin-bottom: 3px;
     margin-right: 3px;
     -webkit-transition: all .2s;
     transition: all .2s;
+}
+.star{
+    display: block !important;
 }
 .tags .tag:empty {
     display: none;

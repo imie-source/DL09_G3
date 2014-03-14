@@ -77,8 +77,9 @@ class Acl extends Component
             'edit',
             'view',
             'delete',
+            'skills',
+            'skillDelete',
             'changePassword',
-            'ajaxUsersForNewMail',
             'ajaxProfileEditor',
             'ajaxAdminProfileEditor',
             'ajaxImageEditor',
@@ -99,6 +100,7 @@ class Acl extends Component
         'edit'                          => 'Edit',
         'delete'                        => 'Delete',
         'view'                          => 'View',
+        'skillDelete'                   => 'Skill Remover',
         'confirmEmail'                  => 'Email confirmation for new user',
         'resetPassword'                 => 'Reset a forgotten password',
         'forgotPassword'                => 'Forgotten Password',
@@ -111,12 +113,12 @@ class Acl extends Component
         'ajaxMessageDeleter'            => 'Delete a conversation',
         'ajaxMutipleRemover'            => 'Delete multiple conversations',
         'ajaxMailboxResponseSender'     => 'Reply to a conversation',
-        'ajaxUsersForNewMail'           => 'Ajax request to find users (for mailbox only)',
         'ajaxProfileEditor'             => 'Ajax request to edit a profile inline',
         'ajaxAdminProfileEditor'        => 'Admin ajax request to edit a profile',
         'ajaxImageEditor'               => 'Ajax request to upload a new user\'s avatar',
         'ajaxMotherUsersForNewContract' => 'Ajax request to retrieve mothers account for a new contract',
-        'ajaxFatherUsersForNewContract' => 'Ajax request to retrieve fathers account for a new contract'
+        'ajaxFatherUsersForNewContract' => 'Ajax request to retrieve fathers account for a new contract',
+        'ajaxSkillsUserUpdater'         => 'Ajax user skills updater'
     );
 
     /**

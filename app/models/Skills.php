@@ -23,4 +23,6 @@ class Skills extends Collection
 
 	public $additionalParameters;
 
+	public $children = 0;
+
 }

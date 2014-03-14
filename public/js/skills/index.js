@@ -1,14 +1,26 @@
 $(document).ready(function() {
-    $( "body" ).click(function( event ) {
-        if(event.target.id = 'folder-selector'){
-            folderCheckClick = true;
-        	$(document).on("click", ".icon-remove, .icon-ok", function (event) {
-                console.log(event.target);
-            });
+    $(document).on('click', '.tree-item', function(event){
+
+        if($(this).hasClass('tree-selected')){
+            if($('#no-skills').length){
+                $('#skills-tags').empty();
+                $('#submit-skills').removeClass('hidden');
+            }
+            $('#skills-tags').append('<span class="tag" id="' + $(this).attr('data-id') + '">' + $(this).attr('data-name') + ' <span class="star" id="star-' + $(this).attr('data-id') + '"></span></span>');
+            $('#skills-tags').append('<input type="hidden" name="skills[' + $(this).attr('data-id') + '][rate]" id="rate-' + $(this).attr('data-id') + '">');
+            $('#skills-tags').append('<script>$("#star-' + $(this).attr('data-id') + '").raty({ path: "/images/", click: function(score, evt){ $("#rate-' + $(this).attr('data-id') + '").val(score); } });</script>');
+            $('#skills-tags').append('<input type="hidden" id="input-' + $(this).attr('data-id') + '" name="skills[' + $(this).attr('data-id') + '][id]" value="' + $(this).attr('data-id') + '">');
+
         }
         else{
-            folderCheckClick = false;
+            $('#' + $(this).attr('data-id')).remove();
+            $('#input-' + $(this).attr('data-id')).remove();
+            if(!$('.tag').length){
+                $('#skills-tags').append('<span id="no-skills">Aucune compétence renseignée</span>');
+                $('#submit-skills').addClass('hidden');
+            }
         }
+        
     });
 	var DataSourceTree = function (options) {
                 this.url = options.url;

@@ -172,7 +172,7 @@
                         <div class="widget-header widget-header-small">
                             <h4 class="blue smaller">
                                 <i class="icon-signal orange"></i>
-                                Mes Compétences <?php if($updateAllowed){echo $this->tag->linkTo(array('skills/useredit', '<i class="icon-signal"></i> Editer mes compétences', 'class' => 'btn btn-danger btn-xs'));} ?>
+                                Mes Compétences <?php if($updateAllowed){echo $this->tag->linkTo(array('users/skills', '<i class="icon-signal"></i> Ajouter des compétences', 'class' => 'btn btn-danger btn-xs'));} ?>
                             </h4>
 
                             <div class="widget-toolbar action-buttons">
@@ -186,53 +186,42 @@
                         <div class="widget-body">
                             <div class="widget-main padding-16">
                                 <div class="clearfix">
+                                    <?php $color = array('CA5952', '59A84B', '9585BF', '2A91D8', 'F2BB46', 'CA5952'); $j = 0; ?>
+                                    <?php for ($i = 0; $i < sizeof($skills); $i++): ?>
                                     <div class="col-md-2 center">
-                                        <div class="easy-pie-chart percentage easyPieChart" data-percent="45" data-color="#CA5952">
-                                            <span class="percent">45</span>%</div>
+                                        <div class="easy-pie-chart percentage easyPieChart" data-percent="<?php echo $skills[$i]->rate * 20; ?>" data-color="#<?php echo $color[$j]; ?>">
+                                            <span class="percent"><?php echo $skills[$i]->rate * 20; ?></span>%</div>
 
                                         <div class="space-2"></div>
-                                        HTML5
+                                        <?php 
+                                            echo $skills[$i]->name->name.
+                                            '&nbsp'.
+                                            $this->tag->linkTo(array(
+                                                'users/skillDelete/'.$skills[$i]->_id,
+                                                '<i class="icon-remove"></i>',
+                                                'class' => 'btn btn-danger btn-minier',
+                                                'data-rel' => 'tooltip',
+                                                'data-original-title' => 'Supprimer cette compétence!'
+                                            )).
+                                            '&nbsp'.
+                                            $this->tag->linkTo(array(
+                                                'users/skillUpdate/'.$skills[$i]->_id,
+                                                '<i class="icon-edit"></i>',
+                                                'class' => 'btn btn-success btn-minier',
+                                                'data-rel' => 'tooltip',
+                                                'data-original-title' => 'Modifier cette compétence!'
+                                            ));
+                                        ?>
                                     </div>
-
-                                    <div class="col-md-2 center">
-                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="90" data-color="#59A84B">
-                                            <span class="percent">90</span>%</div>
-
-                                        <div class="space-2"></div>
-                                        PHP5
-                                    </div>
-
-                                    <div class="col-md-2 center">
-                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="80" data-color="#9585BF">
-                                            <span class="percent">80</span>%</div>
-
-                                        <div class="space-2"></div>
-                                        Javascript/jQuery
-                                    </div>
-
-                                    <div class="col-md-2 center">
-                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="80" data-color="#2A91D8">
-                                            <span class="percent">80</span>%</div>
-
-                                        <div class="space-2"></div>
-                                        Java
-                                    </div>
-
-                                    <div class="col-md-2 center">
-                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="80" data-color="#F2BB46">
-                                            <span class="percent">80</span>%</div>
-
-                                        <div class="space-2"></div>
-                                        Phalcon PHP
-                                    </div>
-
-                                    <div class="col-md-2 center">
-                                        <div class="center easy-pie-chart percentage easyPieChart" data-percent="10" data-color="#CA5952">
-                                            <span class="percent">10</span>%</div>
-
-                                        <div class="space-2"></div>
-                                        Zend
-                                    </div>
+                                    <?php 
+                                        if($j == sizeof($color) - 1){
+                                            $j = 0;
+                                        }
+                                        else{
+                                            $j++;
+                                        }
+                                    ?>
+                                    <?php endfor; ?>
                                 </div>
                             </div>
                         </div>

@@ -5,6 +5,8 @@ namespace Nannyster\Controllers;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Collection;
 use Nannyster\Models\Users;
+use Nannyster\Models\UsersSkills;
+use Nannyster\Models\Skills;
 use Nannyster\Models\Profiles;
 use Nannyster\Models\PasswordChanges;
 use Nannyster\Models\ResetPasswords;
@@ -83,7 +85,7 @@ class UsersController extends ControllerBase
       $this->view->form = $form;
   }
 
-  public function viewAction($id){
+  public function viewAction($id = null){
 
     $this->assets->addJs('js/jquery.slimscroll.min.js');
     $this->assets->addJs('js/jquery-ui-1.10.3.custom.min.js');
@@ -122,7 +124,16 @@ class UsersController extends ControllerBase
         //Retrieve user infos
         $user = Users::findById(new \MongoId($this->auth->getId()));
         $promotion = Promotions::findbyId(new \MongoId($user->promotion_id));
-        //Enabled update
+        $skills = UsersSkills::find(array(array(
+          'user_id' => (string) $this->auth->getId()
+        )));
+
+        if($skills){
+          for ($i = 0; $i < sizeof($skills); $i++) { 
+            $skills[$i]->name = Skills::findById(new \MongoId($skills[$i]->skill_id));
+          }
+        }
+        //Enable update
         $updateAllowed = true;
     }
     //If $id is not defined, we show current logged user
@@ -153,6 +164,7 @@ class UsersController extends ControllerBase
       $this->assets->addJs('js/users/view.js');
     }
 
+
     //Define page title and breadcrumbs
     $this->tag->prependTitle('Profil de '.ucwords($user->name).' '.strtoupper($user->surname).' - ');
     $this->view->setVar('breadcrumbs', array('Profil de '.ucwords($user->name).' '.strtoupper($user->surname) => array('last' => true)));
@@ -162,6 +174,7 @@ class UsersController extends ControllerBase
     $this->view->setVar('profile', $profile);
     $this->view->setVar('user', $user);
     $this->view->setVar('promotion', $promotion);
+    $this->view->setVar('skills', $skills);
   }
 
   public function editAction($id){
@@ -608,5 +621,61 @@ class UsersController extends ControllerBase
     $this->view->setVar('profiles', Profiles::find());
     $this->view->setVar('promotions', Promotions::find());
  }
+
+ public function skillsAction(){
+
+    $this->tag->prependTitle('Mes compétences - ');
+    $this->view->setVar('activeClass', 'skills');
+    $this->view->setVar('breadcrumbs', array(
+        'Mes compétences' => array(
+            'last' => true)
+    ));
+    $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
+    $this->assets->addJs('js/jquery.raty.js');
+    $this->assets->addJs('js/skills/index.js');
+
+    if($this->request->isPost()){
+      $data = $this->request->getPost();
+
+      foreach ($data['skills'] as $skill) {
+        $usersSkill = new UsersSkills();
+        $usersSkill->user_id = (string) $this->auth->getId();
+        $usersSkill->skill_id = $skill['id'];
+        $usersSkill->rate = $skill['rate'];
+
+        $usersSkill->save();
+      }
+      $this->flashSession->success('Vos compétences ont bien été mises à jour!');
+      $this->response->redirect('users/view');
+    }
+  }
+
+  public function skillDeleteAction($id){
+    if(!empty($id)){
+      if(self::validateMongoId($id)){
+        $skill = UsersSkills::findById(new \MongoId($id));
+
+        if($skill){
+          if($skill->delete()){
+            $this->flashSession->success('La compétence a bien été supprimée');
+            $this->response->redirect('users/view');
+          }
+          else{
+            $this->flashSession->error('La compétence n\'a pu être supprimée');
+            $this->response->redirect('users/view');
+          }
+        }
+        else{
+          $this->flashSession->error('Cette compétence ne vous apartient pas!!!');
+          $this->response->redirect('users/view');
+        }
+      }
+      else{
+        $this->flashSession->error('L\'identifiant de cette compétence n\'est pas valide!!!');
+        $this->response->redirect('users/view');
+      }
+    }
+    $this->response->redirect('users/view');
+  }
 
  }

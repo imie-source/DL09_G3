@@ -83,27 +83,27 @@
 										'class' => 'btn btn-info',
 										'data-rel' => 'tooltip',
 										'data-placement' => 'bottom',
-										'data-original-title' => 'Mon Profile'
+										'data-original-title' => 'Mon Profil'
 									));
 								?>
 								<?php 
 									echo $this->tag->linkTo(array(
 										'calendar',
-										'<i class="icon-calendar"></i>',
+										'<i class="icon-folder-open"></i>',
 										'class' => 'btn btn-warning',
 										'data-rel' => 'tooltip',
 										'data-placement' => 'bottom',
-										'data-original-title' => 'Mon Agenda'
+										'data-original-title' => 'Les projets'
 									));
 								?>
 								<?php 
 									echo $this->tag->linkTo(array(
 										'contracts',
-										'<i class="icon-file-text"></i>',
+										'<i class="icon-signal"></i>',
 										'class' => 'btn btn-danger',
 										'data-rel' => 'tooltip',
 										'data-placement' => 'bottom',
-										'data-original-title' => 'Mes Contrats'
+										'data-original-title' => 'Les Compétences'
 									));
 								?>
 						</div>
@@ -145,13 +145,13 @@
 							<?php 
 								echo $this->tag->linkTo(array(
 									'users',
-									'<i class="icon-user"></i><span class="menu-text"> Utilisateurs </span>'
+									'<i class="icon-group"></i><span class="menu-text"> Utilisateurs </span>'
 								));
 							?>
 						</li>
 						<?php endif; ?>
 						<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'index')): ?>
-						<li class="projets">
+						<li class="projects">
 							<?php 
 								echo $this->tag->linkTo(array(
 									'projects',
@@ -298,9 +298,6 @@
 
 
 					<div class="page-content">
-						<noscript>
-							<div class="alert alert-danger"><i class="icon-warning-sign bigger-300" style="float: left; margin-right: 5px;"></i> Il semble que vous avez désactivé l'execution de javacript. Afin de vous procurer une expérience de navigation optimale, le site <?php echo $this->config->application->siteTitle; ?> utilise le javascript. Une majorité de fonctionnalités ne seront donc pas accessibles. Nous vous recommendons donc fortement d'activer l'execution de javascript sur votre machine. Pour cela, rendez-vous dans la section paramètres de votre navigateur.</div>
-						</noscript>
 						<?php echo (isset($showAlert) ? $showAlert : ''); ?>
 						<?php echo $this->flash->output(); ?>
 						<?php echo $this->flashSession->output(); ?>
