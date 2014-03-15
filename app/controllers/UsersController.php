@@ -123,16 +123,6 @@ class UsersController extends ControllerBase
     elseif($this->session->has('auth-identity')){
         //Retrieve user infos
         $user = Users::findById(new \MongoId($this->auth->getId()));
-        $promotion = Promotions::findbyId(new \MongoId($user->promotion_id));
-        $skills = UsersSkills::find(array(array(
-          'user_id' => (string) $this->auth->getId()
-        )));
-
-        if($skills){
-          for ($i = 0; $i < sizeof($skills); $i++) { 
-            $skills[$i]->name = Skills::findById(new \MongoId($skills[$i]->skill_id));
-          }
-        }
         //Enable update
         $updateAllowed = true;
     }
@@ -144,6 +134,15 @@ class UsersController extends ControllerBase
 
     //If user exists
     if($user != false){
+      $promotion = Promotions::findbyId(new \MongoId($user->promotion_id));
+        $skills = UsersSkills::find(array(array(
+          'user_id' => (string) $user->_id
+        )));
+        if($skills){
+          for ($i = 0; $i < sizeof($skills); $i++) { 
+            $skills[$i]->name = Skills::findById(new \MongoId($skills[$i]->skill_id));
+          }
+        }
       $profile = Profiles::findById(new \MongoId($user->profile_id));
     }
 
@@ -496,9 +495,27 @@ class UsersController extends ControllerBase
     $this->assets->addJs('js/jquery.dataTables.min.js');
     $this->assets->addJs('js/jquery.dataTables.bootstrap.js');
     $this->assets->addJs('js/bootbox.min.js');
-    $this->assets->addJs('js/users/manage.js');
+    $this->assets->addJs('js/users/index.js');
 
-    $this->view->setVar('users', Users::find());
+    $users = Users::find();
+    for ($i = 0; $i < sizeof($users); $i++) { 
+      $usersSkills[$i] = UsersSkills::find(array(array(
+        'user_id' => (string) $users[$i]->_id
+      )));
+      if($usersSkills[$i]){
+        for ($j = 0; $j < sizeof($usersSkills[$i]); $j++) { 
+          $skillName[$i][$j] = Skills::findById(new \MongoId($usersSkills[$i][$j]->skill_id));
+        }
+      }
+    }
+    
+
+
+
+
+    $this->view->setVar('users', $users);
+    $this->view->setVar('usersSkills', $usersSkills);
+    $this->view->setVar('skillName', $skillName);
     $this->view->setVar('profiles', Profiles::find());
     $this->view->setVar('promotions', Promotions::find());
  }

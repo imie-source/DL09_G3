@@ -195,22 +195,25 @@
                                         <div class="space-2"></div>
                                         <?php 
                                             echo $skills[$i]->name->name.
-                                            '<br/>'.
-                                            $this->tag->linkTo(array(
-                                                'users/skillDelete/'.$skills[$i]->_id,
-                                                '<i class="icon-remove"></i>',
-                                                'class' => 'btn btn-minier',
-                                                'data-rel' => 'tooltip',
-                                                'data-original-title' => 'Supprimer cette compétence!'
-                                            )).
-                                            '&nbsp'.
-                                            $this->tag->linkTo(array(
-                                                'users/skillUpdate/'.$skills[$i]->_id,
-                                                '<i class="icon-edit"></i>',
-                                                'class' => 'btn btn-success btn-minier',
-                                                'data-rel' => 'tooltip',
-                                                'data-original-title' => 'Modifier cette compétence!'
-                                            ));
+                                            '<br/>';
+
+                                            if($updateAllowed){
+                                                echo $this->tag->linkTo(array(
+                                                    'users/skillDelete/'.$skills[$i]->_id,
+                                                    '<i class="icon-remove"></i>',
+                                                    'class' => 'btn btn-minier',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'Supprimer cette compétence!'
+                                                )).
+                                                '&nbsp'.
+                                                $this->tag->linkTo(array(
+                                                    'users/skillUpdate/'.$skills[$i]->_id,
+                                                    '<i class="icon-edit"></i>',
+                                                    'class' => 'btn btn-success btn-minier',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'Modifier cette compétence!'
+                                                ));
+                                            }
                                         ?>
                                     </div>
                                     <?php 
