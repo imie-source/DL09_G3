@@ -13,16 +13,31 @@ class Skills extends Collection
 
 	public $name;
 
-	public $description;
+	public $description = null;
 
-	public $parent_id;
+	public $parent_id = null;
 
 	public $type = 'folder';
 
-	public $valide;
+	public $valide = 'Y';
 
 	public $additionalParameters;
 
 	public $children = 0;
+
+    public function assign($data){
+        foreach ($data as $k => $v) {
+            $this->$k = $v;
+        }
+    }
+
+    public function beforeValidationOnCreate(){
+    	if($this->description == ''){
+    		$this->description = null;
+    	}
+    	if($this->parent_id == ''){
+    		$this->parent_id = null;
+    	}
+    }
 
 }

@@ -8,6 +8,7 @@ use Nannyster\Auth\Auth;
 use Nannyster\Models\Mailboxes;
 use Nannyster\Forms\LoginForm;
 use Nannyster\Forms\ForgotPasswordForm;
+use Nannyster\Controllers\Notifications;
 
 class ControllerBase extends Controller
 {
@@ -77,6 +78,7 @@ class ControllerBase extends Controller
             $identity = $this->auth->getIdentity();
             $this->view->identity = $identity;
             $this->view->setTemplateBefore('private');
+            $this->view->setVar('notifications', NotificationsController::finder());
         }
     	//Last part of the title
         $this->tag->setTitle($this->config->application->siteTitle);

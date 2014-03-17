@@ -4,6 +4,7 @@ namespace Nannyster\Controllers;
 
 use Phalcon\Mvc\View;
 use Nannyster\Models\Skills;
+use Nannyster\Forms\AddSkillForm;
 
 class SkillsController extends ControllerBase
 {
@@ -16,10 +17,49 @@ class SkillsController extends ControllerBase
             'Compétences' => array(
                 'last' => true)
         ));
-
+        $this->view->setVar('addSkillForm', new AddSkillForm());
 	    $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
 	    $this->assets->addJs('js/jquery.raty.js');
 	    $this->assets->addJs('js/skills/index.js');
+	}
+
+	public function addAction(){
+		if($this->request->isPost()){
+			$data = $this->request->getPost();
+			$skill = new Skills();
+			$skill->assign($data);
+			if($skill->save()){
+				$this->flash->success('La compétence a bien été enregistée');
+				return $this->response->redirect('skills');
+			}
+			else{
+				$this->flash->error('Une erreur est survenue lors de l\'enregistrement de la compétence; Veuillez recomencer.');
+				return $this->dispatcher->forward(array('controller' => 'skills'));
+			}
+		}
+		else{
+			$this->response->redirect('skills');
+		}
+	}
+
+	public function proposeAction(){
+		if($this->request->isPost()){
+			$data = $this->request->getPost();
+			$skill = new Skills();
+			$skill->assign($data);
+			$skill->valide = 'N';
+			if($skill->save()){
+				$this->flash->success('La compétence a bien été proposée. Un administrateur doit encore valider cet ajout');
+				return $this->response->redirect('skills');
+			}
+			else{
+				$this->flash->error('Une erreur est survenue lors de l\'enregistrement de la compétence; Veuillez recomencer.');
+				return $this->dispatcher->forward(array('controller' => 'skills'));
+			}
+		}
+		else{
+			$this->response->redirect('skills');
+		}
 	}
 
 	public function ajaxTreeFinderAction(){

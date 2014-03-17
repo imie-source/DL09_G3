@@ -175,7 +175,7 @@
 							<?php 
 								echo $this->tag->linkTo(array(
 									'notifications',
-									'<i class="icon-bell-alt icon-animated-bell"></i><span class="menu-text"> Notifications </span><span class="badge badge-important">3</span>',
+									'<i class="icon-bell-alt icon-animated-bell"></i><span class="menu-text"> Notifications </span>'.($notifications['total'] > 0 ? '<span class="badge badge-important">'.$notifications['total'].'</span>' : ''),
 									'class' => 'dropdown-toggle',
 									'data-toggle' => 'dropdown'
 								));
@@ -183,56 +183,28 @@
 							<ul class="pull-left dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="icon-warning-sign"></i>
-									8 Notifications
+									<?php echo $notifications['total'] ?> Notification<?php echo $notifications['total'] > 1 ? 's' : ''; ?>
 								</li>
 
 								<li>
 									<a href="#">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-pink icon-comment"></i>
-												New Comments
+												<?php echo $notifications['skills'] > 0 ? '<i class="btn btn-xs no-hover btn-danger icon-signal"></i>' : '<i class="btn btn-xs no-hover btn-default icon-signal"></i>'; ?>
+												<?php  echo $notifications['skills'] ?> compétence<?php echo $notifications['skills'] > 1 ? 's' : ''; ?> à valider
 											</span>
-											<span class="pull-right badge badge-info">+12</span>
 										</div>
 									</a>
 								</li>
 
 								<li>
-									<a href="#">
-										<i class="btn btn-xs btn-primary icon-user"></i>
-										Bob just signed up as an editor ...
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
+									<a href="#" style="color: #555;">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
-												New Orders
+												<?php echo $notifications['projects'] > 0 ? '<i class="btn btn-xs no-hover btn-danger icon-folder-open"></i>' : '<i class="btn btn-xs no-hover btn-default icon-folder-open"></i>'; ?>
+												<?php  echo $notifications['projects'] ?> projet<?php echo $notifications['projects'] > 1 ? 's' : ''; ?> à valider
 											</span>
-											<span class="pull-right badge badge-success">+8</span>
 										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										<div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-info icon-twitter"></i>
-												Followers
-											</span>
-											<span class="pull-right badge badge-info">+11</span>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										See all notifications
-										<i class="icon-arrow-right"></i>
 									</a>
 								</li>
 							</ul>
@@ -310,7 +282,6 @@
 					<div class="page-content">
 						<?php echo (isset($showAlert) ? $showAlert : ''); ?>
 						<?php echo $this->flash->output(); ?>
-						<?php echo $this->flashSession->output(); ?>
 						<?php echo $this->getContent(); ?>
 					</div>
 					<div class="footer">

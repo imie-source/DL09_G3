@@ -530,7 +530,7 @@ class UsersController extends ControllerBase
     ));
     $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
     $this->assets->addJs('js/jquery.raty.js');
-    $this->assets->addJs('js/skills/index.js');
+    $this->assets->addJs('js/users/skills.js');
 
     if($this->request->isPost()){
       $data = $this->request->getPost();

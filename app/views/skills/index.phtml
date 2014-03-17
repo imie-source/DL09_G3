@@ -30,17 +30,47 @@
 			<div class="col-sm-3 col-xs-12">
 				<div class="widget-box">
 					<div class="widget-header header-color-green2">
-						<h4 class="lighter smaller">Votre choix de compétences</h4>
+						<?php if($identity['profile_name'] == 'Utilisateur'): ?>
+						<h4 class="lighter smaller">Proposer une compétence</h4>
+						<?php else: ?>
+						<h4 class="lighter smaller">Ajouter une compétence</h4>
+						<?php endif; ?>
 					</div>
 
 					<div class="widget-body">
 						<div class="widget-main padding-8">
-							<form action="" method="post">
-								<div class="tags" id="skills-tags">
-									<span id="no-skills">Aucune compétence renseignée</span>
-								</div>
-								<button id="submit-skills" type="submit" class="btn btn-primary hidden">Envoyer</button>
-							</form>
+							<?php if($identity['profile_name'] == 'Utilisateur'): ?>
+							<?php echo Phalcon\Tag::form(array("skills/propose", "method" => "post")); ?>
+							<?php else: ?>
+							<?php echo Phalcon\Tag::form(array("skills/add", "method" => "post")); ?>
+							<?php endif; ?>
+							<fieldset>
+								<label class="block clearfix">
+									<span class="block input-icon input-icon-right">
+										<?php echo $addSkillForm->render('name') ?>
+										<i class="icon-signal"></i>
+									</span>
+								</label>
+
+								<label class="block clearfix">
+									<span class="block input-icon input-icon-right">
+										<?php echo $addSkillForm->render('description') ?>
+										<i class="icon-info"></i>
+									</span>
+								</label>
+
+								<label class="block clearfix">
+									<span id="form-parent-skill" class="block input-icon input-icon-right">
+										<input type="text" value="Pas de compétence parent" id="parent-skill-text" readonly>
+										<i class="icon-question-sign orange" data-rel="tooltip" data-original-title="Pour choisir la compétence parent, cochez simplement la compétence voulue dans l'arbre à gauche."></i>
+									</span>
+								</label>
+								<?php echo $addSkillForm->render('parent_id') ?>
+								<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+									Envoyer
+								</button>
+							</fieldset>
+							<?php echo Phalcon\Tag::endForm(); ?>
 						</div>
 					</div>
 				</div>

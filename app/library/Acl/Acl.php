@@ -66,11 +66,16 @@ class Acl extends Component
         ),
         'skills' => array(
             'index',
-            'ajaxTreeFinder'
+            'ajaxTreeFinder',
+            'add',
+            'propose'
         ),
         'user_control' => array(
             'confirmEmail',
             'resetPassword'
+        ),
+        'team' => array(
+            'index'
         ),
         'users' => array(
             'index',
@@ -142,8 +147,8 @@ class Acl extends Component
      */
     public function isAllowed($profile, $controller, $action)
     {
-        return true;
-        //return $this->getAcl()->isAllowed($profile, $controller, $action);
+        //return true;
+        return $this->getAcl()->isAllowed($profile, $controller, $action);
     }
 
     /**
