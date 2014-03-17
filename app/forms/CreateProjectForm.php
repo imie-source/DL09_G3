@@ -4,6 +4,7 @@ namespace Nannyster\Forms;
 
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\div;
 use Phalcon\Forms\Element\Textarea;
 use Phalcon\Forms\Element\Date;
 use Phalcon\Forms\Element\Password;
@@ -33,9 +34,9 @@ class CreateProjectForm extends Form
 
 		//Nb personnes
 		$nb_users_max = new Text('nb_users_max', array(
+			'class' => 'input-mini spinner-input form-control',
 			'placeholder' => 'Nombre de participants maximum',
-			'class' => 'form-control',
-			'id' => 'nbUsers'
+			'id' => 'spinner2'
 			));
 				$this->add($nb_users_max);
 

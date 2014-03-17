@@ -12,7 +12,20 @@ use Nannyster\Models\Projects;
 class ProjectsController extends ControllerBase
 {
 
+
 	public function createAction(){
+
+		$this->tag->prependTitle('Proposer un projet - ');
+    $this->view->setVar('activeClass', 'projects');
+    $this->view->setVar('breadcrumbs', array(
+    		'Projets' => array(
+                'controller' => 'projects',
+                'action' => 'index'),
+            'Proposer un projet' => array(
+                'last' => true)
+
+
+        ));
 		$this->assets->addJs('js/projects/create.js');
 		$this->assets->addJs('js/jquery.maskedinput.min.js');
 		if($this->request->isPost()){

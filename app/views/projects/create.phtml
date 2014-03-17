@@ -1,3 +1,4 @@
+
 <div class="page-header">
     <h1>
         Ajouter un nouveau projet
@@ -20,13 +21,20 @@
                                                     </span>
                                                 </label>
 
-                                                <label class="block clearfix">
-                                                    <span class="block input-icon input-icon-right">
+                                                <div class="ace-spinner touch-spinner" style="width: 140px;">
+                                                    <div class="input-group">
                                                         <?php echo $formCreate->render('nb_users_max') ?>
-                                                        <i class="icon-group"></i>
-                                                    </span>
-                                                </label>
-
+                                                    <div class="spinner-buttons input-group-btn">  
+                                                        <button type="button" class="btn spinner-up btn-xs ">
+                                                            <i class="icon-caret-up"></i>
+                                                                </button>
+                                                        <button type="button" class="btn spinner-down btn-xs ">
+                                                            <i class="icon-caret-down"></i>
+                                                                </button> 
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
                                                         <?php echo $formCreate->render('start_date') ?>
