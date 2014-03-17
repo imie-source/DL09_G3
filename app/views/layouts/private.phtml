@@ -175,7 +175,7 @@
 							<?php 
 								echo $this->tag->linkTo(array(
 									'notifications',
-									'<i class="icon-bell-alt icon-animated-bell"></i><span class="menu-text"> Notifications </span>'.($notifications['total'] > 0 ? '<span class="badge badge-important">'.$notifications['total'].'</span>' : ''),
+									'<i class="icon-bell-alt'.($notifications['total'] > 0 ? ' icon-animated-bell' : '').'"></i><span class="menu-text"> Notifications </span>'.($notifications['total'] > 0 ? '<span class="badge badge-important">'.$notifications['total'].'</span>' : ''),
 									'class' => 'dropdown-toggle',
 									'data-toggle' => 'dropdown'
 								));

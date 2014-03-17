@@ -57,7 +57,8 @@ class Acl extends Component
             'delete'
         ),
         'projects' => array(
-            'index'
+            'index',
+            'create'
         ),
         'session' => array(
             'login',

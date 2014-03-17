@@ -16,8 +16,9 @@ class ProjectsController extends ControllerBase
 	public function createAction(){
 
 		$this->tag->prependTitle('Proposer un projet - ');
-    $this->view->setVar('activeClass', 'projects');
-    $this->view->setVar('breadcrumbs', array(
+        $this->assets->addJs('js/fuelux/fuelux.spinner.min.js');
+        $this->view->setVar('activeClass', 'projects');
+        $this->view->setVar('breadcrumbs', array(
     		'Projets' => array(
                 'controller' => 'projects',
                 'action' => 'index'),
