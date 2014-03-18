@@ -50,11 +50,19 @@
 
 								<!-- /.col Chef de projet -->
 								<td><?php
-										echo $this->tag->linkTo(array(
-								        'projects/view/'.$project->_id,
-									    ucwords($project->project_master),
-									    'target' => '_blank'
-								        ));
+										for ($i=0; $i < sizeof($users); $i++) { 
+											if((string) $users[$i]->_id == $project->project_master){
+												
+												echo $this->tag->linkTo(array(
+										        'projects/view/'.$project->_id,
+											    ucwords($users[$i]->name.' '.$users[$i]->surname),
+											    'target' => '_blank'
+										        ));
+											}
+
+										}
+
+
 									?>
 
 								 </td>
@@ -81,7 +89,18 @@
 								
 								<!-- /.col Statut -->
 								<td><?php
-									echo $project->status_name;
+
+									for ($i = 0 ; $i < sizeof($status) ; $i++){
+										if ((string) $status[$i]->_id == $project->status_name){
+
+										echo $this->tag->linkTo(array(
+								          'projects/view/'.$project->_id,
+									      ucwords($status[$i]->name),
+									      'target' => '_blank'
+								          ));	
+										}
+										
+									}
 									?>
 								</td>
 

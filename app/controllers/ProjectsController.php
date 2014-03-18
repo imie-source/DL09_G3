@@ -6,6 +6,8 @@ namespace Nannyster\Controllers;
 use Nannyster\Forms\CreateProjectForm;
 
 use Nannyster\Models\Projects;
+use Nannyster\Models\ProjectsStatus;
+use Nannyster\Models\Users;
 
 
 
@@ -64,7 +66,9 @@ class ProjectsController extends ControllerBase
     $this->assets->addJs('js/users/manage.js');
 
     $this->view->setVar('projects', Projects::find());
-    
+    $this->view->setVar('users', Users::find());
+    $this->view->setVar('status', ProjectsStatus::find());
+
     }
 
 }
