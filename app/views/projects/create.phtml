@@ -4,7 +4,6 @@
         Ajouter un nouveau projet
         <small>
             <i class="icon-double-angle-right"></i>
-
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -12,40 +11,41 @@
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-            <?php echo Phalcon\Tag::form(array("projects/create", "method" => "post")); ?>
+            <?php echo Phalcon\Tag::form(array("projects/create", "method" => "post", "class" =>"form-horizontal")); ?>
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
+                                                        <label for="name" class="col-sm-3 control-label ">Nom du projet</label>
                                                         <?php echo $formCreate->render('name') ?>
-                                                        <i class="icon-keyboard"></i>
                                                     </span>
                                                 </label>
+                                                
 
-                                                <div class="ace-spinner touch-spinner" style="width: 140px;">
+                                                <label for="spinner2" class="col-sm-3 control-label ">Nombre de participants</label>
+                                                <div id="spinner"class="ace-spinner touch-spinner" style="width: 140px;">
                                                     <div class="input-group">
-                                                        <label for="spinner2">Nombre de participants (max 999) </label>
                                                         <?php echo $formCreate->render('nb_users_max') ?>
                                                     </div>
                                                 </div>
-                                                     
+
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
+                                                        <label for="start_date" class="col-sm-3 control-label ">date de début de projet</label>
                                                         <?php echo $formCreate->render('start_date') ?>
-                                                        <i class="icon-calendar"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
+                                                         <label for="end_date" class="col-sm-3 control-label ">date de fin de projet</label>
                                                         <?php echo $formCreate->render('end_date') ?>
-                                                        <i class="icon-calendar"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
+                                                         <label for="description" class="col-sm-3 control-label ">déscription</label>
                                                         <?php echo $formCreate->render('description') ?>
-                                                        <i class="icon-file-text-alt"></i>
                                                     </span>
                                                 </label>
                                                 

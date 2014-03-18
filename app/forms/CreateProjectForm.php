@@ -22,8 +22,7 @@ class CreateProjectForm extends Form
 	{
 		//Nom projet
 		$name = new Text('name', array(
-			'placeholder' => 'Nom de projet',
-			'class' => 'form-control'
+			'class' => 'col-xs-10 col-sm-5'
 			));
 		$name->addValidators(array(
             new PresenceOf(array(
@@ -35,15 +34,13 @@ class CreateProjectForm extends Form
 		//Nb personnes
 		$nb_users_max = new Text('nb_users_max', array(
 			'class' => 'input-mini spinner-input form-control',
-			'placeholder' => 'Nombre de participants maximum',
 			'id' => 'spinner2'
 			));
 				$this->add($nb_users_max);
 
 		//date de début du projet
 		$start_date = new Text('start_date', array(
-			'class' => 'form-control',
-			'placeholder' => 'Date de début',
+			'class' => 'col-xs-10 col-sm-5',
 			'id' => 'date'
 			));
 		$start_date->addValidators(array(
@@ -55,16 +52,14 @@ class CreateProjectForm extends Form
 
 		//date de fin du projet
 		$end_date = new Text('end_date', array(
-			'class' => 'form-control',
-			'placeholder' => 'Date de fin',
+			'class' => 'col-xs-10 col-sm-5',
 			'id' => 'date1'
 			));
 			$this->add($end_date);
 
 		//déscription du projet
 		$description = new Textarea('description', array(
-			'class' => 'form-control',
-			'placeholder' => 'déscription du projet',
+			'class' => 'col-xs-10 col-sm-5'
 			));
 			$this->add($description);
 
