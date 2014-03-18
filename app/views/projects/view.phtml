@@ -1,0 +1,33 @@
+ <div class="page-header">
+    <?php if($updateAllowed): ?>
+    <h1>
+        Mon Projet
+        <small>
+            <i class="icon-double-angle-right"></i>
+            Voir et modifier les informations de mon projet
+        </small>
+    </h1>
+<?php else: ?>
+	<h1>
+        <?php echo ucwords($projects->name)?>
+        <small>
+            <i class="icon-double-angle-right"></i>
+            <?php echo $projects->status_name ?>
+        </small>
+    </h1>
+<?php endif; ?>
+</div><!-- /.page-header -->
+
+
+
+
+
+
+
+
+
+
+    </div><!-- /.col -->
+</div><!-- /.row -->
+<script type="text/javascript">
+var pkey = '<?php echo $projects->_id; ?>';
