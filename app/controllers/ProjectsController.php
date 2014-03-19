@@ -16,40 +16,101 @@ use Nannyster\Models\Users;
 class ProjectsController extends ControllerBase
 {
 
+  //method used to add a project if the logged person is more than a simple user 
 
 	public function createAction(){
 
-		$this->tag->prependTitle('Proposer un projet - ');                                      
-        $this->assets->addJs('js/fuelux/fuelux.spinner.min.js');
-        $this->view->setVar('activeClass', 'projects');
-        $this->view->setVar('breadcrumbs', array(
-    		'Projets' => array(
-                'controller' => 'projects',
-                'action' => 'index'),
-            'Proposer un projet' => array(
-                'last' => true)
+    $this->tag->prependTitle('Ajouter un projet - ');                                      
+    $this->assets->addJs('js/fuelux/fuelux.spinner.min.js');
+    $this->view->setVar('activeClass', 'projects');
+    $this->view->setVar('breadcrumbs', array(
+      'Projets' => array(
+        'controller' => 'projects',
+        'action' => 'index'),
+      'Ajouter un projet' => array(
+        'last' => true)
 
 
-        ));
-		$this->assets->addJs('js/projects/create.js');
-		$this->assets->addJs('js/jquery.maskedinput.min.js');
-		if($this->request->isPost()){
-			$data = $this->request->getPost();
-			$project = new Projects();
-			$project->assign($data);
-			if ($project->save()) {
-				$this->flash->success('votre projet à bien été proposé');
-				return $this->response->redirect('projects/view/'.$project->_id);
-			}
+      ));
 
-			$this->flash->error('votre projet n\'a pu être proposé!');
-			$this->dispatcher->forward(array('controller' => 'projects', 'action' => 'create'));
-				}
+    $form = new CreateProjectForm();
+    $this->view->formCreate = $form;
+    $this->assets->addJs('js/projects/create.js');
+    $this->assets->addJs('js/jquery.maskedinput.min.js');
+
+    if($this->request->isPost()){
+      $data = $this->request->getPost();
+      $project = new Projects();
+      $project->assign($data);
+      $project->valide='Y';
+      $project->project_master=$this->auth->getId();
+
+          //transforme la variable start_date format fr en array
+      $date_start_fr=explode('/',$project->start_date);
+          //recup les cases du array en les concaténant au format de date anglais afin d'appliquer la fonction strtotime, qui fonctione que au format anglais.
+      $start=strtotime($date_start_fr[1]+$date_start_fr[0]+$date_start_fr[2]);
+          //transforme la variable start_date format fr en array
+      $date_end_fr=explode('/',$project->end_date);
+          //recup les cases du array en les concaténant au format de date anglais afin d'appliquer la fonction strtotime, qui fonctione que au format anglais.
+      $end=strtotime($date_end_fr[1]+$date_end_fr[0]+$date_end_fr[2]);
+
+      if ($start < $end) {
+        if ($project->save()) {
+          $this->flash->success('votre projet à bien été enregistré');
+          return $this->response->redirect('projects/view/'.$project->_id);
+          return true;
+        }
+        else{
+          $this->flash->error('Une erreur de date est survenue lors de l\'enregistrement de votre projet; Veuillez recomencer.');
+          $this->response->redirect('projects/create');
+          return false;
+        }
+      }
+    
+    unset($_POST);   
+    $this->flash->error('Une erreur est survenue lors de l\'enregistrement de votre projet; Veuillez recomencer.');
+    return $this->response->redirect('projects/create');
+    }
+}
+
+				
+
+      //method used to propose a project if the logged person is a simple user 
+
+public function proposeAction(){
+
+  $this->tag->prependTitle('Proposer un projet - ');                                      
+  $this->assets->addJs('js/fuelux/fuelux.spinner.min.js');
+  $this->view->setVar('activeClass', 'projects');
+  $this->view->setVar('breadcrumbs', array(
+    'Projets' => array(
+      'controller' => 'projects',
+      'action' => 'index'),
+    'Proposer un projet' => array(
+      'last' => true)
 
 
-				$form = new CreateProjectForm();
-				$this->view->formCreate = $form;
-			}	
+    ));
+  $this->assets->addJs('js/projects/create.js');
+  $this->assets->addJs('js/jquery.maskedinput.min.js');
+  if($this->request->isPost()){
+    $data = $this->request->getPost();
+    $project = new Projects();
+    $project->assign($data);
+    $project->project_master=$this->auth->getId();
+    if ($project->save()) {
+      $this->flash->success('votre projet à bien été proposé, un administrateur doit encore valider cet ajout');
+      return $this->response->redirect('projects/view/'.$project->_id);
+    }
+
+    $this->flash->error('Une erreur est survenue lors de l\'enregistrement de votre projet; Veuillez recomencer.');
+    $this->dispatcher->forward(array('controller' => 'projects', 'action' => 'create'));
+  }
+
+
+  $form = new CreateProjectForm();
+  $this->view->formCreate = $form;
+} 
 
 	public function indexAction(){
 

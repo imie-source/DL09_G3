@@ -1,17 +1,30 @@
 
 <div class="page-header">
+    <?php if($identity['profile_name'] == 'Utilisateur'): ?>
     <h1>
+        Proposer un nouveau projet
+        <small>
+            <i class="icon-double-angle-right"></i>
+        </small>
+    </h1>
+    <?php else: ?>
+     <h1>
         Ajouter un nouveau projet
         <small>
             <i class="icon-double-angle-right"></i>
         </small>
     </h1>
+    <?php endif; ?>
 </div><!-- /.page-header -->
 
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
+            <?php if($identity['profile_name'] == 'Utilisateur'): ?>
+            <?php echo Phalcon\Tag::form(array("projects/propose", "method" => "post", "class" =>"form-horizontal")); ?>
+            <?php else: ?>
             <?php echo Phalcon\Tag::form(array("projects/create", "method" => "post", "class" =>"form-horizontal")); ?>
+            <?php endif; ?>
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">

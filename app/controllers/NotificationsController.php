@@ -28,7 +28,7 @@ class NotificationsController extends ControllerBase
 			$projectToValide = 0;
 		}
 		else{
-			$skillsToValide = count($skillsToValide);
+			$projectToValide = count($projectToValide);
 		}
 
 		return array('total' => $skillsToValide + $projectToValide, 'skills' => $skillsToValide, 'projects' => $projectToValide);

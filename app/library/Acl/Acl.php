@@ -59,6 +59,7 @@ class Acl extends Component
         'projects' => array(
             'index',
             'create',
+            'propose',
             'view'
         ),
         'session' => array(
