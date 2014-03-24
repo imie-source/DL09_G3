@@ -120,12 +120,21 @@
 					</div><!-- #sidebar-shortcuts -->
 
 					<ul class="nav nav-list">
-						<?php if($this->acl->isAllowed($identity['profile_name'], 'administration', 'index')): ?>
+						<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'import')): ?>
+						<li class="import">
+							<?php 
+								echo $this->tag->linkTo(array(
+									'users/import',
+									'<i class="icon-download-alt"></i> Import utilisateurs'
+								));
+							?>
+						</li>
+						<?php endif; ?><?php if($this->acl->isAllowed($identity['profile_name'], 'permissions', 'index')): ?>
 						<li class="administration">
 							<?php 
 								echo $this->tag->linkTo(array(
-									'administration',
-									'<i class="icon-desktop"></i><span class="menu-text"> Administration </span>'
+									'permissions',
+									'<i class="icon-lock"></i> Permissions'
 								));
 							?>
 						</li>
@@ -187,7 +196,7 @@
 								</li>
 
 								<li>
-									<a href="#">
+									<a href="/skills">
 										<div class="clearfix">
 											<span class="pull-left">
 												<?php echo $notifications['skills'] > 0 ? '<i class="btn btn-xs no-hover btn-danger icon-signal"></i>' : '<i class="btn btn-xs no-hover btn-default icon-signal"></i>'; ?>

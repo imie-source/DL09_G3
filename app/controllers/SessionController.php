@@ -47,6 +47,15 @@ class SessionController extends ControllerBase{
 						'password' => $this->request->getPost('password'),
 						'remember' => $this->request->getPost('remember')
 					));
+					$identity = $this->auth->getIdentity();
+					if($identity['first_connection'] == 'y'){
+			            $_SESSION['auth-identity']['first_connection'] = 'n';
+			            $userConnect = Users::findById(new \MongoId($identity['_id']));
+			            $userConnect->first_connection = 'n';
+			            $userConnect->save();
+			            $this->flash->warning('C\'est votre première connexion. Nous vous conseillons de changer votre mot de passe.');
+			            return $this->response->redirect('users/changePassword');
+			        }
 					return $this->response->redirect('dashboard');
 				}
 			}

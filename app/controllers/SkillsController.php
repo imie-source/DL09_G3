@@ -21,6 +21,27 @@ class SkillsController extends ControllerBase
 	    $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
 	    $this->assets->addJs('js/jquery.raty.js');
 	    $this->assets->addJs('js/skills/index.js');
+	    $identity = $this->auth->getIdentity();
+	    if($this->acl->isAllowed($identity['profile_name'], 'skills', 'delete')){
+	    	$this->assets->addJs('js/skills/remove.js');
+	    }
+
+	    $skillsToValide = Skills::find(array(array(
+			'valide' => 'N')
+		));
+	    if($skillsToValide){
+	    	$parentSkill = array();
+			for ($i = 0; $i < sizeof($skillsToValide); $i++) { 
+	    		if(isset($skillsToValide[$i]->parent_id)){
+					$parentSkill[$i] = Skills::findById(new \MongoId($skillsToValide[$i]->parent_id));
+				}
+				else{
+					$parentSkill[$i] = null;
+				}
+			}
+		}
+		$this->view->setVar('skillsToValide', $skillsToValide);
+		$this->view->setVar('parentSkill', $parentSkill);
 	}
 
 	public function addAction(){
@@ -40,6 +61,49 @@ class SkillsController extends ControllerBase
 		else{
 			$this->response->redirect('skills');
 		}
+	}
+
+	public function valideAction($id){
+		if($id != null){
+			if(self::validateMongoId($id)){
+				$skill = Skills::findById(new \MongoId($id));
+				$skill->valide = 'Y';
+				if($skill->save()){
+					$this->flash->success('La compétence '.$skill->name.' a bien été validée!');
+					return $this->response->redirect('skills');
+				}
+				else{
+					$this->flash->error('Une erreur est survenue lors de la validation de la compétence. Veuillez recommencer!');
+					return $this->response->redirect('skills');
+				}
+			}
+			else{
+				$this->flash->error('L\'identifiant de compétence n\'est pas valide! Pirate');
+				return $this->response->redirect('skills');
+			}
+		}
+		$this->response->redirect('skills');
+	}
+
+	public function deleteAction($id){
+		if($id != null){
+			if(self::validateMongoId($id)){
+				$skill = Skills::findById(new \MongoId($id));
+				if($skill->delete()){
+					$this->flash->success('La compétence '.$skill->name.' a bien été supprimée!');
+					return $this->response->redirect('skills');
+				}
+				else{
+					$this->flash->error('Une erreur est survenue lors de la suppression de la compétence. Veuillez recommencer!');
+					return $this->response->redirect('skills');
+				}
+			}
+			else{
+				$this->flash->error('L\'identifiant de compétence n\'est pas valide! Pirate');
+				return $this->response->redirect('skills');
+			}
+		}
+		$this->response->redirect('skills');
 	}
 
 	public function proposeAction(){

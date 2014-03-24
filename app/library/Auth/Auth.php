@@ -35,10 +35,6 @@ class Auth extends Component
             $this->registerUserThrottling($user->id);
             throw  new Exception('Nous ne parvenons pas à vous authentifier! Vous avez saisi une mauvaise combinaison Email / Mot de passe!');
         }
-
-        // Register the successful login
-        $this->saveSuccessLogin($user);
-
         // Check if the remember me was selected
         if (isset($credentials['remember'])) {
             $this->createRememberEnviroment($user);

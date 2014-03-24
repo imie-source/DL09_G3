@@ -97,7 +97,7 @@
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Date de naissance </div>
                                         <div class="profile-info-value">
-                                            <span class="editable" id="dateBirth"><?php echo ($user->date_birth != null) ? \Nannyster\Controllers\ControllerBase::returnDateTime(strtotime($user->date_birth), 'date') : ''; ?></span>
+                                            <span class="editable" id="dateBirth"><?php echo $user->date_birth ?></span>
                                         </div>
                                     </div>   
                                     <?php endif; ?>                                   
@@ -110,7 +110,7 @@
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Promotion </div>
                                         <div class="profile-info-value">
-                                            <span class="editable" id="type"><?php echo (isset($promotion->name) ? $promotion->name : ''); ?></span>
+                                            <span class="editable" id="type"><?php echo (isset($promotion->name) ? $promotion->name.' / ' : '').ucfirst($school->name); ?></span>
                                         </div>
                                     </div>                                    
                                     <div class="profile-info-row">
@@ -189,6 +189,7 @@
                             <div class="widget-main padding-16">
                                 <div class="clearfix">
                                     <?php $color = array('CA5952', '59A84B', '9585BF', '2A91D8', 'F2BB46', 'CA5952'); $j = 0; ?>
+                                    <?php if($skills): ?>
                                     <?php for ($i = 0; $i < sizeof($skills); $i++): ?>
                                     <div class="col-md-2 center">
                                         <div class="easy-pie-chart percentage easyPieChart" data-percent="<?php echo $skills[$i]->rate * 20; ?>" data-color="#<?php echo $color[$j]; ?>">
@@ -227,6 +228,7 @@
                                         }
                                     ?>
                                     <?php endfor; ?>
+                                <?php endif; ?>
                                 </div>
                             </div>
                         </div>

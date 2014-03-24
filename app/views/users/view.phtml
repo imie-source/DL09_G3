@@ -66,7 +66,7 @@
                         <div class="widget-body">
                             <div class="widget-main padding-8">
                                 <div class="profile-user-info profile-user-info-striped">
-                                    <?php if($updateAllowed || $user->private_informations == 'y'): ?>
+                                    <?php if($updateAllowed || $user->private_informations == 'n'): ?>
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Adresse </div>
                                         <div class="profile-info-value">
@@ -97,7 +97,7 @@
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Date de naissance </div>
                                         <div class="profile-info-value">
-                                            <span class="editable" id="dateBirth"><?php echo ($user->date_birth != null) ? \Nannyster\Controllers\ControllerBase::returnDateTime(strtotime($user->date_birth), 'date') : ''; ?></span>
+                                            <span class="editable" id="dateBirth"><?php echo $user->date_birth ?></span>
                                         </div>
                                     </div>   
                                     <?php endif; ?>                                   
@@ -110,9 +110,9 @@
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Promotion </div>
                                         <div class="profile-info-value">
-                                            <span class="editable" id="type"><?php echo (isset($promotion->name) ? $promotion->name : ''); ?></span>
+                                            <span class="editable" id="type"><?php echo (isset($promotion->name) ? $promotion->name.' / ' : '').ucfirst($school->name); ?></span>
                                         </div>
-                                    </div>                                    
+                                    </div>                                 
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Type de compte </div>
                                         <div class="profile-info-value">

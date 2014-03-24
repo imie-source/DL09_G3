@@ -24,7 +24,7 @@
 								<th>Disponible pour des projets</th>
 								<th class="hidden-480">Type</th>
 								<th>
-									Promotions
+									Promotions / Ecole
 								</th>
 
 
@@ -83,6 +83,14 @@
 									foreach ($promotions as $promotion) {
 										if($users[$i]->promotion_id == $promotion->_id){
 											echo $promotion->name;
+											break;
+										}
+									}
+									echo ' / ';
+
+									foreach ($schools as $school) {
+										if($users[$i]->school_id == $school->_id){
+											echo ucfirst($school->name);
 											break;
 										}
 									}

@@ -71,7 +71,9 @@ class Acl extends Component
             'index',
             'ajaxTreeFinder',
             'add',
-            'propose'
+            'propose',
+            'delete',
+            'valide'
         ),
         'user_control' => array(
             'confirmEmail',
@@ -91,7 +93,8 @@ class Acl extends Component
             'ajaxProfileEditor',
             'ajaxAdminProfileEditor',
             'ajaxImageEditor',
-            'manage'
+            'manage',
+            'import'
 
         )
     );

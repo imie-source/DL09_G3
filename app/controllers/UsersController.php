@@ -12,6 +12,8 @@ use Nannyster\Models\PasswordChanges;
 use Nannyster\Models\ResetPasswords;
 use Nannyster\Forms\ChangePasswordForm;
 use Nannyster\Models\Promotions;
+use Nannyster\Models\Schools;
+use Nannyster\Utils\Slug;
 
 class UsersController extends ControllerBase
 {
@@ -34,6 +36,7 @@ class UsersController extends ControllerBase
     $this->view->setVar('users', Users::find());
     $this->view->setVar('profiles', Profiles::find());
     $this->view->setVar('promotions', Promotions::find());
+    $this->view->setVar('schools', Schools::find());
   }
 
   /**
@@ -144,6 +147,7 @@ class UsersController extends ControllerBase
           }
         }
       $profile = Profiles::findById(new \MongoId($user->profile_id));
+      $school = Schools::findById(new \MongoId($user->school_id));
     }
 
     //Or not, redirecting to dashboard page with an error message
@@ -173,6 +177,7 @@ class UsersController extends ControllerBase
     $this->view->setVar('profile', $profile);
     $this->view->setVar('user', $user);
     $this->view->setVar('promotion', $promotion);
+    $this->view->setVar('school', $school);
     $this->view->setVar('skills', $skills);
   }
 
@@ -223,9 +228,18 @@ class UsersController extends ControllerBase
 
     //If user exists
     if($user != false){
+      $skills = UsersSkills::find(array(array(
+          'user_id' => (string) $user->_id
+        )));
+        if($skills){
+          for ($i = 0; $i < sizeof($skills); $i++) { 
+            $skills[$i]->name = Skills::findById(new \MongoId($skills[$i]->skill_id));
+          }
+        }
       $profiles = Profiles::find();
       $profile = Profiles::findById(new \MongoId($user->profile_id));
       $promotion = Promotions::findbyId(new \MongoId($user->promotion_id));
+      $school = Schools::findById(new \MongoId($user->school_id));
     }
 
     //Or not, redirecting to dashboard page with an error message
@@ -250,7 +264,9 @@ class UsersController extends ControllerBase
     $this->view->setVar('updateAllowed', $updateAllowed);
     $this->view->setVar('profiles', $profiles);
     $this->view->setVar('profile', $profile);
+    $this->view->setVar('skills', $skills);
     $this->view->setVar('promotion', $promotion);
+    $this->view->setVar('school', $school);
     $this->view->setVar('user', $user);
   }
 
@@ -518,6 +534,7 @@ class UsersController extends ControllerBase
     $this->view->setVar('skillName', $skillName);
     $this->view->setVar('profiles', Profiles::find());
     $this->view->setVar('promotions', Promotions::find());
+    $this->view->setVar('schools', Schools::find());
  }
 
  public function skillsAction(){
@@ -576,4 +593,77 @@ class UsersController extends ControllerBase
     $this->response->redirect('users/view');
   }
 
- }
+  public function importAction(){
+
+    if($this->request->isPost()){
+      $datas = $this->request->getPost();
+
+      if($_FILES["file"]["type"] != "text/csv"){
+        $this->flash->error('Le fichier envoyer n\'est pas au format csv');
+        return $this->response->redirect('users/import');
+      }
+      elseif(is_uploaded_file($_FILES['file']['tmp_name'])){
+        
+        $handle = fopen($_FILES['file']['tmp_name'], "r");
+        $data = fgetcsv($handle, 1000, ","); //Remove if CSV file does not have column headings
+        
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+          if(!empty($data[5]) && !empty($data[7])){
+            $user = new Users();
+            $user->_id = null;
+            $user->surname = $data[5];
+            $user->name = $data[7];
+            $user->date_birth = $data[20];
+            $user->address = $data[8].($data[9] != '' ? ', '.$data[9] : '');
+            $user->zipcode = $data[10];
+            $user->city = $data[11];
+            $user->email = $data[14];
+            $user->mobile = $data[12];
+
+            $profile = Profiles::find(array(array(
+              'name' => 'Utilisateur')
+            ));
+            $user->profile_id = $profile[0]->_id;
+
+            $promotion = Promotions::find(array(array(
+              'name' => $data[3])
+            ));
+            if(!$promotion){
+              $promotion = new Promotions();
+              $promotion->name = $data[3];
+              $promotion->save();
+              $user->promotion_id = (string) $promotion->_id;
+              $promoSlug = $promotion->name;
+            }
+            else{
+              $user->promotion_id = (string) $promotion[0]->_id;
+              $promoSlug = $promotion[0]->name;
+            }
+            
+
+            $school = Schools::find(array(array(
+              'name' => strtolower($data[1]))
+            ));
+            if(!$school){
+              $school = new Schools();
+              $school->name = strtolower($data[1]);
+              $school->save();
+              $user->school_id = (string) $school->_id;
+            }
+            else{
+              $user->school_id = (string) $school[0]->_id;
+            }
+
+
+            $user->login = \Nannyster\Utils\Slug::generate($user->name).'.'.\Nannyster\Utils\Slug::generate($user->surname).'.'.\Nannyster\Utils\Slug::generate($promoSlug);
+            $user->password = $this->security->hash('P@ssword');
+            $user->save();
+          }
+        }
+        $this->flash->success('Le ficiher a été importé avec succès!');
+      }
+    }
+
+  }
+
+}

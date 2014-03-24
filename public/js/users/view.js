@@ -22,7 +22,7 @@ jQuery(function($) {
     name: 'date_birth',
     pk: pkey,
     emptytext: 'Date de naissance non renseignée',
-    viewformat: 'dd-mm-yyyy',
+    viewformat: 'dd/mm/yyyy',
     lang: 'fr',
     error: function(data) {
       $.gritter.add({

@@ -18,22 +18,13 @@ class Users extends \Phalcon\Mvc\Collection
     public $email;
     public $mobile;
     public $available = 'y';
-    public $about;
     public $profile_id;
     public $promotion_id;
-    public $private_informations = 'n';
+    public $ecole_id;
+    public $private_informations = 'y';
     public $first_connection = 'y';
     public $avatar = 'default.jpg';
 
-    /**
-     * Before create the user assign a password
-     */
-    public function beforeValidationOnCreate()
-    {
-        $this->profile_id = Profiles::find(array(array(
-            'name' => 'Utilisateur')
-        ));
-    }
 
     /**
      * Send a confirmation e-mail to the user if the account is not active
