@@ -66,6 +66,7 @@
                         <div class="widget-body">
                             <div class="widget-main padding-8">
                                 <div class="profile-user-info profile-user-info-striped">
+                                    <?php if($updateAllowed || $user->private_informations == 'y'): ?>
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Adresse </div>
                                         <div class="profile-info-value">
@@ -98,7 +99,14 @@
                                         <div class="profile-info-value">
                                             <span class="editable" id="dateBirth"><?php echo ($user->date_birth != null) ? \Nannyster\Controllers\ControllerBase::returnDateTime(strtotime($user->date_birth), 'date') : ''; ?></span>
                                         </div>
-                                    </div>                                      
+                                    </div>   
+                                    <?php endif; ?>                                   
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Disponibilité projets </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="available"><?php echo ($updateAllowed ? $user->available : ($user->available == 'y' ? '<span class="label label-success">Oui</span>' : '<span class="label label-danger">Non</span>')); ?></span>
+                                        </div>
+                                    </div>                                       
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Promotion </div>
                                         <div class="profile-info-value">
@@ -151,12 +159,6 @@
                                             <div class="profile-info-name"> Confidentialité </div>
                                             <div class="profile-info-value">
                                                 <span class="editable" id="visibility"><?php echo $user->private_informations; ?></span>
-                                            </div>
-                                        </div>
-                                        <div class="profile-info-row">
-                                            <div class="profile-info-name"> Notifications par email </div>
-                                            <div class="profile-info-value">
-                                                <span class="editable" id="notifParam"><?php echo $user->email_notification; ?></span>
                                             </div>
                                         </div>
                                     </div>

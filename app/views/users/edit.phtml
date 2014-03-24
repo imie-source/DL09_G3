@@ -1,4 +1,13 @@
-<div class="page-header">
+ <div class="page-header">
+    <?php if($updateAllowed): ?>
+    <h1>
+        Mon Profil
+        <small>
+            <i class="icon-double-angle-right"></i>
+            Voir et modifier mes informations personnelles
+        </small>
+    </h1>
+<?php else: ?>
     <h1>
         <?php echo ucwords($user->name).' '.strtoupper($user->surname) ?>
         <small>
@@ -6,6 +15,7 @@
             <?php echo $profile->name ?>
         </small>
     </h1>
+<?php endif; ?>
 </div><!-- /.page-header -->
 
 <div class="row">
@@ -56,6 +66,7 @@
                         <div class="widget-body">
                             <div class="widget-main padding-8">
                                 <div class="profile-user-info profile-user-info-striped">
+                                    <?php if($updateAllowed || $user->private_informations == 'y'): ?>
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Adresse </div>
                                         <div class="profile-info-value">
@@ -88,11 +99,18 @@
                                         <div class="profile-info-value">
                                             <span class="editable" id="dateBirth"><?php echo ($user->date_birth != null) ? \Nannyster\Controllers\ControllerBase::returnDateTime(strtotime($user->date_birth), 'date') : ''; ?></span>
                                         </div>
-                                    </div>                                      
+                                    </div>   
+                                    <?php endif; ?>                                   
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Disponibilité projets </div>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="available"><?php echo ($updateAllowed ? $user->available : ($user->available == 'y' ? '<span class="label label-success">Oui</span>' : '<span class="label label-danger">Non</span>')); ?></span>
+                                        </div>
+                                    </div>                                       
                                     <div class="profile-info-row">
                                         <div class="profile-info-name"> Promotion </div>
                                         <div class="profile-info-value">
-                                            <span class="editable" id="type"><?php echo $promotion->name; ?></span>
+                                            <span class="editable" id="type"><?php echo (isset($promotion->name) ? $promotion->name : ''); ?></span>
                                         </div>
                                     </div>                                    
                                     <div class="profile-info-row">
@@ -101,12 +119,26 @@
                                             <span class="editable" id="type"><?php echo $profile->name; ?></span>
                                         </div>
                                     </div>
+                                    <?php if($updateAllowed): ?>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Mot de passe </div>
+                                        <div class="profile-info-value">
+                                            <?php 
+                                                echo $this->tag->linkTo(array(
+                                                    'users/changePassword',
+                                                    '<i class="icon-key"></i> Modifier mon mot de passe ',
+                                                    'class' => 'btn btn-danger btn-xs'));
+                                            ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                                 </div>
                             </div>
                         </div>
                     </div>
+                            <?php if($updateAllowed): ?>
                         <div class="space-20"></div>
-
+    
                         <div class="widget-box transparent">
                             <div class="widget-header widget-header-small">
                                 <h4 class="blue smaller">
@@ -120,7 +152,6 @@
                                     </a>
                                 </div>
                             </div>
-
                             <div class="widget-body">
                                 <div class="widget-main padding-8">
                                     <div class="profile-user-info profile-user-info-striped">
@@ -130,17 +161,77 @@
                                                 <span class="editable" id="visibility"><?php echo $user->private_informations; ?></span>
                                             </div>
                                         </div>
-                                        <div class="profile-info-row">
-                                            <div class="profile-info-name"> Notifications par email </div>
-                                            <div class="profile-info-value">
-                                                <span class="editable" id="notifParam"><?php echo $user->email_notification; ?></span>
-                                            </div>
-                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                       
+                        </div>
+                         <?php endif; ?>
+                        <div class="space-20"></div>
+                </div>
+                <div class="col-xs-12 col-sm-12">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h4 class="blue smaller">
+                                <i class="icon-signal orange"></i>
+                                Mes Compétences <?php if($updateAllowed){echo $this->tag->linkTo(array('users/skills', '<i class="icon-plus"></i> Ajouter des compétences', 'class' => 'btn btn-danger btn-xs'));} ?>
+                            </h4>
+
+                            <div class="widget-toolbar action-buttons">
+
+                                <a href="#" data-action="collapse">
+                                    <i class="icon-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main padding-16">
+                                <div class="clearfix">
+                                    <?php $color = array('CA5952', '59A84B', '9585BF', '2A91D8', 'F2BB46', 'CA5952'); $j = 0; ?>
+                                    <?php for ($i = 0; $i < sizeof($skills); $i++): ?>
+                                    <div class="col-md-2 center">
+                                        <div class="easy-pie-chart percentage easyPieChart" data-percent="<?php echo $skills[$i]->rate * 20; ?>" data-color="#<?php echo $color[$j]; ?>">
+                                            <span class="percent"><?php echo $skills[$i]->rate * 20; ?></span>%</div>
+
+                                        <div class="space-2"></div>
+                                        <?php 
+                                            echo $skills[$i]->name->name.
+                                            '<br/>';
+
+                                            if($updateAllowed){
+                                                echo $this->tag->linkTo(array(
+                                                    'users/skillDelete/'.$skills[$i]->_id,
+                                                    '<i class="icon-remove"></i>',
+                                                    'class' => 'btn btn-minier',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'Supprimer cette compétence!'
+                                                )).
+                                                '&nbsp'.
+                                                $this->tag->linkTo(array(
+                                                    'users/skillUpdate/'.$skills[$i]->_id,
+                                                    '<i class="icon-edit"></i>',
+                                                    'class' => 'btn btn-success btn-minier',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'Modifier cette compétence!'
+                                                ));
+                                            }
+                                        ?>
+                                    </div>
+                                    <?php 
+                                        if($j == sizeof($color) - 1){
+                                            $j = 0;
+                                        }
+                                        else{
+                                            $j++;
+                                        }
+                                    ?>
+                                    <?php endfor; ?>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
 
@@ -149,4 +240,22 @@
 </div><!-- /.row -->
 <script type="text/javascript">
 var pkey = '<?php echo $user->_id; ?>';
+
+$(document).ready(function() {
+    $('.easy-pie-chart.percentage').each(function(){
+        var barColor = $(this).data('color') || '#555';
+        var trackColor = '#E2E2E2';
+        var size = parseInt($(this).data('size')) || 72;
+        $(this).easyPieChart({
+          barColor: barColor,
+          trackColor: trackColor,
+          scaleColor: false,
+          lineCap: 'butt',
+          lineWidth: parseInt(size/10),
+          animate:true,
+          size: size
+        }).css('color', barColor);
+        });
+});
+  
 </script>

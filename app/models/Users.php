@@ -17,13 +17,12 @@ class Users extends \Phalcon\Mvc\Collection
     public $city;
     public $email;
     public $mobile;
-    public $available;
+    public $available = 'y';
     public $about;
     public $profile_id;
     public $promotion_id;
-    public $private_informations = 'N';
-    public $first_connection = 'Y';
-    public $email_notification = 'Y';
+    public $private_informations = 'n';
+    public $first_connection = 'y';
     public $avatar = 'default.jpg';
 
     /**

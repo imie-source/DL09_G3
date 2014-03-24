@@ -63,7 +63,7 @@
 								</td>
 								<td>
 									<?php
-										if($users[$i]->available == 'Y'){
+										if($users[$i]->available == 'y'){
 											echo '<span class="label label-success">Oui</span>';
 										}
 										else{
@@ -93,11 +93,49 @@
 									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 										<?php
 											echo $this->tag->linkTo(array(
+									          	'projects/add/'.$users[$i]->_id,
+										      	'<i class="icon-list-alt bigger-130"></i>',
+										      	'class' => 'orange',
+										      	'data-rel' => 'tooltip',
+										      	'title' => 'Lui proposer un projet'
+									          ));
+										?>
+									</div>
+
+									<div class="visible-xs visible-sm hidden-md hidden-lg">
+										<div class="inline position-relative">
+											<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+												<i class="icon-caret-down icon-only bigger-120"></i>
+											</button>
+
+											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+												
+												<li>
+													<?php
+														echo $this->tag->linkTo(array(
+												          	'projects/add/'.$users[$i]->_id,
+													      	'<span class="green"><i class="icon-list-alt bigger-120"></i></span>',
+													      	'class' => 'orange',
+													      	'data-rel' => 'tooltip',
+													      	'title' => 'Lui proposer un projet'
+												          ));
+													?>
+												</li>
+
+												<li>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'edit')): ?>
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<?php
+											echo $this->tag->linkTo(array(
 									          	'users/edit/'.$users[$i]->_id,
 										      	'<i class="icon-pencil bigger-130"></i>',
 										      	'class' => 'green',
 										      	'data-rel' => 'tooltip',
-										      	'title' => 'Lui proposer un projet'
+										      	'title' => 'Editer ce profil'
 									          ));
 										?>
 									</div>
@@ -117,7 +155,7 @@
 													      	'<span class="green"><i class="icon-pencil bigger-120"></i></span>',
 													      	'class' => 'green',
 													      	'data-rel' => 'tooltip',
-													      	'title' => 'Lui proposer un projet'
+													      	'title' => 'Editer ce profil'
 												          ));
 													?>
 												</li>
@@ -127,6 +165,7 @@
 											</ul>
 										</div>
 									</div>
+								<?php endif; ?>
 								</td>
 							</tr>
 							<?php endfor; ?>

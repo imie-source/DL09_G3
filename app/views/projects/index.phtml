@@ -28,7 +28,7 @@
 								<th>Chef de projet</th>
 								<th>Avancement</th>
 								<th>Date de fin</th>
-								<th>Nbr Pers.</th>
+								<th>Nbr Pers. Requises / Inscrites</th>
 								<th>Statut</th>
 							</tr>
 						</thead>
@@ -43,26 +43,24 @@
 										echo $this->tag->linkTo(array(
 								          'projects/view/'.$project->_id,
 									      ucwords($project->name),
-									      'target' => '_blank'
+									      'data-rel' => 'tooltip',
+									      'data-original-title' => $project->description
 								          ));
 									?>
 								</td>
 
 								<!-- /.col Chef de projet -->
-								<td><?php
+								<td>
+									<?php
 										for ($i=0; $i < sizeof($users); $i++) { 
 											if((string) $users[$i]->_id == $project->project_master){
 												
 												echo $this->tag->linkTo(array(
-										        'projects/view/'.$project->_id,
-											    ucwords($users[$i]->name.' '.$users[$i]->surname),
-											    'target' => '_blank'
+										        'users/view/'.$users[$i]->_id,
+											    ucwords($users[$i]->name.' '.$users[$i]->surname)
 										        ));
 											}
-
 										}
-
-
 									?>
 
 								 </td>
@@ -83,24 +81,25 @@
 								</td>
 								
 								<!-- /.col Nbr. Personne dans le projet -->
-								<td><?php
-									
-								?></td>
+								<td>
+									<?php
+										echo $project->nb_users_max.' personne'.($project->nb_users_max > 1 ? 's' : '');
+									?>
+									 / 
+									<?php
+										$cpt = 0;
+										for ($i=0; $i < sizeof($usersProjects); $i++) { 
+											if((string) $usersProjects[$i]->project_id == $project->_id){
+												$cpt++;
+											}
+										}
+										echo $cpt.' personne'.($cpt > 1 ? 's' : '').' inscrite'.($cpt > 1 ? 's' : '');
+									?>
+								</td>
 								
 								<!-- /.col Statut -->
 								<td><?php
-
-									for ($i = 0 ; $i < sizeof($status) ; $i++){
-										if ((string) $status[$i]->_id == $project->status_name){
-
-										echo $this->tag->linkTo(array(
-								          'projects/view/'.$project->_id,
-									      ucwords($status[$i]->name),
-									      'target' => '_blank'
-								          ));	
-										}
-										
-									}
+										echo $project->status_name;
 									?>
 								</td>
 

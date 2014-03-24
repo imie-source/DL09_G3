@@ -4,7 +4,7 @@ namespace Nannyster\Models;
 
 use Phalcon\Mvc\Collection;
 
-class ProjectsStatus extends Collection
+class ProjectStatus extends Collection
 {
 
 	public $_id;

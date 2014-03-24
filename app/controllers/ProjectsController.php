@@ -8,8 +8,9 @@ use Phalcon\Mvc\Collection;
 use Nannyster\Forms\CreateProjectForm;
 use Nannyster\Models\ProjectSkills;
 use Nannyster\Models\Projects;
-use Nannyster\Models\ProjectsStatus;
+use Nannyster\Models\ProjectStatus;
 use Nannyster\Models\Users;
+use Nannyster\Models\UsersProjects;
 
 
 
@@ -42,21 +43,21 @@ class ProjectsController extends ControllerBase
       $data = $this->request->getPost();
       $project = new Projects();
       $project->assign($data);
-      $project->valide='Y';
-      $project->project_master=$this->auth->getId();
+      $project->valide = 'Y';
+      $project->project_master = $this->auth->getId();
 
           //transforme la variable start_date format fr en array
-      $date_start_fr=explode('/',$project->start_date);
+      $date_start_fr = explode('/',$project->start_date);
           //recup les cases du array en les concaténant au format de date anglais afin d'appliquer la fonction strtotime, qui fonctione que au format anglais.
-      $start=strtotime($date_start_fr[1]+$date_start_fr[0]+$date_start_fr[2]);
+      $start = strtotime($date_start_fr[1].'-'.$date_start_fr[0].'-'.$date_start_fr[2]);
           //transforme la variable start_date format fr en array
-      $date_end_fr=explode('/',$project->end_date);
+      $date_end_fr = explode('/',$project->end_date);
           //recup les cases du array en les concaténant au format de date anglais afin d'appliquer la fonction strtotime, qui fonctione que au format anglais.
-      $end=strtotime($date_end_fr[1]+$date_end_fr[0]+$date_end_fr[2]);
+      $end = strtotime($date_end_fr[1].'-'.$date_end_fr[0].'-'.$date_end_fr[2]);
 
       if ($start <= $end) {
         if ($project->save()) {
-          $this->flash->success('votre projet à bien été enregistré');
+          $this->flash->success('Votre projet à bien été enregistré');
           return $this->response->redirect('projects/view/'.$project->_id);
           return true;
         }  
@@ -134,11 +135,12 @@ public function proposeAction(){
     $this->assets->addJs('js/jquery.dataTables.min.js');
     $this->assets->addJs('js/jquery.dataTables.bootstrap.js');
     $this->assets->addJs('js/bootbox.min.js');
-    $this->assets->addJs('js/users/manage.js');
+    $this->assets->addJs('js/projects/index.js');
 
     $this->view->setVar('projects', Projects::find());
     $this->view->setVar('users', Users::find());
-    $this->view->setVar('status', ProjectsStatus::find());
+    $this->view->setVar('status', ProjectStatus::find());
+    $this->view->setVar('usersProjects', UsersProjects::find());
 
     }
 

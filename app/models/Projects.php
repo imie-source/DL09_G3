@@ -15,12 +15,9 @@ class Projects extends Collection
     public $progress = 0;
     public $start_date;
     public $end_date;
-    public $status_name;
+    public $status_name = 'En attente de participants';
     public $valide='N';
     public $project_master;
-
-
-
 
 
 public function assign($data){
