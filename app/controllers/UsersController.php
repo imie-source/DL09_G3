@@ -595,6 +595,8 @@ class UsersController extends ControllerBase
 
   public function importAction(){
 
+    $this->assets->addJs('js/users/import.js');
+
     if($this->request->isPost()){
       $datas = $this->request->getPost();
 
