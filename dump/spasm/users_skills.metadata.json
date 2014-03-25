@@ -1,0 +1,1 @@
+{ "options" : { "create" : "users_skills" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "spasm.users_skills", "name" : "_id_" } ] }

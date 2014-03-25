@@ -595,6 +595,12 @@ class UsersController extends ControllerBase
 
   public function importAction(){
 
+    $this->tag->prependTitle('Import d\'utilisateurs - ');
+    $this->view->setVar('activeClass', 'import');
+    $this->view->setVar('breadcrumbs', array(
+        'Import d\'utilisateurs' => array(
+            'last' => true)
+    ));
     $this->assets->addJs('js/users/import.js');
 
     if($this->request->isPost()){

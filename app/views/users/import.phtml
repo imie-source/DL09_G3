@@ -1,7 +1,26 @@
-<form enctype="multipart/form-data" action="" method="post">
-	<div class="widget-main">
-		<div class="ace-file-input ace-file-multiple">
-			<input type="file" id="id-input-file-3">
-		</div>
+<div class="page-header">
+    <h1>
+        Importer des utilisateurs
+        <small>
+            <i class="icon-double-angle-right"></i>
+            Renseigner de nouveau etudiants
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+		<form enctype="multipart/form-data" action="" method="post">
+			<select class="form-control" id="form-field-select-1" name="file_type">
+				<option value="">Choisisez les type de fichier à importer</option>
+				<option value="stage">Fichier Stagiaires</option>
+				<option value="alter">Fichier Alternants</option>
+			</select>
+			<br/>
+			<div class="ace-file-input ace-file-multiple">
+				<input type="file" id="id-input-file-3">
+			</div>
+			<input type="submit" class="btn btn-info" value="Envoyer">
+		</form>
 	</div>
-</form>
+</div>
