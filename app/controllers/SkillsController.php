@@ -20,6 +20,7 @@ class SkillsController extends ControllerBase
         $this->view->setVar('addSkillForm', new AddSkillForm());
 	    $this->assets->addJs('js/fuelux/fuelux.tree.min.js');
 	    $this->assets->addJs('js/jquery.raty.js');
+    	$this->assets->addJs('js/bootbox.min.js');
 	    $this->assets->addJs('js/skills/index.js');
 	    $identity = $this->auth->getIdentity();
 	    if($this->acl->isAllowed($identity['profile_name'], 'skills', 'delete')){

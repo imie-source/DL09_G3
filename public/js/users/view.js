@@ -187,12 +187,12 @@ jQuery(function($) {
     value: $('#visibility').html(),
     source: [
     {
-      value: 'Y', 
+      value: 'y', 
       text: 'Vos informations personnelles ne sont visibles que par vous'
     },
 
     {
-      value: 'N', 
+      value: 'n', 
       text: 'Vos informations personnelles sont visibles par tous'
     }
     ],
@@ -200,10 +200,10 @@ jQuery(function($) {
     name: 'private_informations',
     pk: pkey,
     display: function(value) {
-      if (value == 'Y') {
+      if (value == 'y') {
         $(this).text('Vos informations personnelles ne sont visibles que par vous');
       }
-      if (value == 'N') {
+      if (value == 'n') {
         $(this).text('Vos informations personnelles sont visibles par tous');
       }
     },

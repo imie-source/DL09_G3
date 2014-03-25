@@ -1,4 +1,14 @@
 $(document).ready(function() {
+    $(document).on('click', 'a.btn-skill-remover', function(event) {
+        event.preventDefault();
+        var location = $(this).attr('href');
+        bootbox.confirm("Etes-vous sûr de vouloir supprimer cette compétence?", function(confirmed) {
+            if(confirmed) {
+            window.location.replace(location);
+            }
+        });
+    });
+
     $(document).on('click', '.tree-item', function(event){
 
         if($(this).hasClass('tree-selected')){

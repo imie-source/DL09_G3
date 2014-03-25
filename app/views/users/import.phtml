@@ -1,26 +1,97 @@
-<div class="page-header">
-    <h1>
-        Importer des utilisateurs
-        <small>
-            <i class="icon-double-angle-right"></i>
-            Renseigner de nouveau etudiants
-        </small>
-    </h1>
-</div><!-- /.page-header -->
-
 <div class="row">
-    <div class="col-xs-12">
-		<form enctype="multipart/form-data" action="" method="post">
-			<select class="form-control" id="form-field-select-1" name="file_type">
-				<option value="">Choisisez les type de fichier à importer</option>
-				<option value="stage">Fichier Stagiaires</option>
-				<option value="alter">Fichier Alternants</option>
-			</select>
-			<br/>
-			<div class="ace-file-input ace-file-multiple">
-				<input type="file" id="id-input-file-3">
+	<div class="col-md-6 col-xs-12">
+		<div class="page-header">
+		    <h1>
+		        Importer des utilisateurs
+		    </h1>
+		</div><!-- /.page-header -->
+
+		<div class="row">
+		    <div class="col-xs-12">
+				<form enctype="multipart/form-data" action="/users/import" method="post">
+					<select class="form-control" id="form-field-select-1" name="file_type">
+						<option value="">Choisissez les type de fichier à importer</option>
+						<option value="stage">Fichier Stagiaires</option>
+						<option value="alter">Fichier Alternants</option>
+					</select>
+					<br/>
+					<div class="ace-file-input ace-file-multiple">
+						<input type="file" id="id-input-file-3" name="file">
+					</div>
+					<button class="btn btn-info" type="submit">
+						<i class="icon-ok bigger-110"></i>
+						Envoyer
+					</button>
+				</form>
 			</div>
-			<input type="submit" class="btn btn-info" value="Envoyer">
-		</form>
+		</div>
+	</div>
+	<div class="col-md-6 col-xs-12">
+		<div class="page-header">
+		    <h1>
+		        Créer un administrateur
+		    </h1>
+		</div><!-- /.page-header -->
+
+		<div class="row">
+		    <div class="col-xs-12">
+		    	<?php echo Phalcon\Tag::form(array("users/import", "method" => "post", "class" => "form-horizontal")); ?>
+					<input type="hidden" name="file_type" value="admin">
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('login'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('name'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('surname'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('address'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('zipcode'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('city'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('date_birth'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('email'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('mobile'); ?>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">&nbsp;</label>
+						<?php echo $form->render('school_id'); ?>
+					</div>
+					<button class="btn btn-info pull-right" type="submit">
+						<i class="icon-ok bigger-110"></i>
+						Envoyer
+					</button>
+				<?php echo Phalcon\Tag::endForm(); ?>
+			</div>
+		</div>
 	</div>
 </div>
