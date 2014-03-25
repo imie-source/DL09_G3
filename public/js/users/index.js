@@ -3,7 +3,7 @@ jQuery(function($) {
 	"aoColumns": [
       { "bSortable": true },
       null, null, null, null,
-	  { "bSortable": false }
+      { "bSortable": false }
 	] } );
 	
 	

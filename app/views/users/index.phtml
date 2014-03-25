@@ -26,8 +26,6 @@
 								<th>
 									Promotions / Ecole
 								</th>
-
-
 								<th></th>
 							</tr>
 						</thead>
@@ -82,11 +80,10 @@
 								<td><?php
 									foreach ($promotions as $promotion) {
 										if($users[$i]->promotion_id == $promotion->_id){
-											echo $promotion->name;
+											echo $promotion->name.' / ';
 											break;
 										}
 									}
-									echo ' / ';
 
 									foreach ($schools as $school) {
 										if($users[$i]->school_id == $school->_id){
@@ -101,51 +98,35 @@
 									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 										<?php
 											echo $this->tag->linkTo(array(
-									          	'projects/add/'.$users[$i]->_id,
-										      	'<i class="icon-list-alt bigger-130"></i>',
-										      	'class' => 'orange',
+									          	'users/view/'.$users[$i]->_id,
+										      	'<i class="icon-search bigger-130"></i>',
+										      	'class' => 'green',
 										      	'data-rel' => 'tooltip',
-										      	'title' => 'Lui proposer un projet'
+										      	'title' => 'Voir le profil de '.$users[$i]->name.' '.$users[$i]->surname
 									          ));
 										?>
-									</div>
-
-									<div class="visible-xs visible-sm hidden-md hidden-lg">
-										<div class="inline position-relative">
-											<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-												<i class="icon-caret-down icon-only bigger-120"></i>
-											</button>
-
-											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												
-												<li>
-													<?php
-														echo $this->tag->linkTo(array(
-												          	'projects/add/'.$users[$i]->_id,
-													      	'<span class="green"><i class="icon-list-alt bigger-120"></i></span>',
-													      	'class' => 'orange',
-													      	'data-rel' => 'tooltip',
-													      	'title' => 'Lui proposer un projet'
-												          ));
-													?>
-												</li>
-
-												<li>
-												</li>
-											</ul>
-										</div>
-									</div>
 									<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'edit')): ?>
-									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 										<?php
 											echo $this->tag->linkTo(array(
 									          	'users/edit/'.$users[$i]->_id,
 										      	'<i class="icon-pencil bigger-130"></i>',
-										      	'class' => 'green',
+										      	'class' => 'orange',
 										      	'data-rel' => 'tooltip',
-										      	'title' => 'Editer ce profil'
+										      	'title' => 'Editer le profil de '.$users[$i]->name.' '.$users[$i]->surname
 									          ));
 										?>
+									<?php endif; ?>
+									<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'delete')): ?>
+										<?php
+											echo $this->tag->linkTo(array(
+									          	'users/delete/'.$users[$i]->_id,
+										      	'<i class="icon-trash bigger-130"></i>',
+										      	'class' => 'red',
+										      	'data-rel' => 'tooltip',
+										      	'title' => 'Supprimer '.$users[$i]->name.' '.$users[$i]->surname
+									          ));
+										?>
+									<?php endif; ?>
 									</div>
 
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -155,25 +136,46 @@
 											</button>
 
 											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												
+												<li>
+													<?php
+														echo $this->tag->linkTo(array(
+												          	'users/view/'.$users[$i]->_id,
+													      	'<i class="icon-search bigger-130"></i>',
+													      	'class' => 'green',
+													      	'data-rel' => 'tooltip',
+													      	'title' => 'Voir le profil de '.$users[$i]->name.' '.$users[$i]->surname
+												          ));
+													?>
+												</li>
+												<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'edit')): ?>
 												<li>
 													<?php
 														echo $this->tag->linkTo(array(
 												          	'users/edit/'.$users[$i]->_id,
-													      	'<span class="green"><i class="icon-pencil bigger-120"></i></span>',
-													      	'class' => 'green',
+													      	'<i class="icon-pencil bigger-130"></i>',
+													      	'class' => 'orange',
 													      	'data-rel' => 'tooltip',
-													      	'title' => 'Editer ce profil'
+													      	'title' => 'Editer le profil de '.$users[$i]->name.' '.$users[$i]->surname
 												          ));
 													?>
 												</li>
-
+												<?php endif; ?>
+												<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'delete')): ?>
 												<li>
+													<?php
+														echo $this->tag->linkTo(array(
+												          	'users/delete/'.$users[$i]->_id,
+													      	'<i class="icon-trash bigger-130"></i>',
+													      	'class' => 'red',
+													      	'data-rel' => 'tooltip',
+													      	'title' => 'Supprimer '.$users[$i]->name.' '.$users[$i]->surname
+												          ));
+													?>
 												</li>
+												<?php endif; ?>
 											</ul>
 										</div>
 									</div>
-								<?php endif; ?>
 								</td>
 							</tr>
 							<?php endfor; ?>

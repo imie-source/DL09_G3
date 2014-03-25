@@ -11,33 +11,13 @@ use Nannyster\Models\Profiles;
 use Nannyster\Models\PasswordChanges;
 use Nannyster\Models\ResetPasswords;
 use Nannyster\Forms\ChangePasswordForm;
+use Nannyster\Forms\AddAdminForm;
 use Nannyster\Models\Promotions;
 use Nannyster\Models\Schools;
 use Nannyster\Utils\Slug;
 
 class UsersController extends ControllerBase
 {
-	public function manageAction(){
-
-    $this->tag->prependTitle('Manager d\'utilisateurs - ');
-    $user = $this->auth->getUser();
-    $this->view->setVar('breadcrumbs', array(
-            'Administration' => array(
-                'controller' => 'administration',
-                'action' => 'index'),
-            'gestion des utilisateurs' => array(
-                'last' => true)
-        ));
-    $this->assets->addJs('js/jquery.dataTables.min.js');
-    $this->assets->addJs('js/jquery.dataTables.bootstrap.js');
-    $this->assets->addJs('js/bootbox.min.js');
-    $this->assets->addJs('js/users/manage.js');
-
-    $this->view->setVar('users', Users::find());
-    $this->view->setVar('profiles', Profiles::find());
-    $this->view->setVar('promotions', Promotions::find());
-    $this->view->setVar('schools', Schools::find());
-  }
 
   /**
    * Users must use this action to change its password
@@ -492,13 +472,13 @@ class UsersController extends ControllerBase
           if($user){
             if($user->delete()){
               $this->flash->success('L\'utilisateur a bien été supprimé');
-              return $this->response->redirect('users/manage');
+              return $this->response->redirect('users');
             }
           }
         }
       }
       $this->flash->error('L\'utilisateur n\'existe pas!');
-      $this->response->redirect('users/manage');
+      $this->response->redirect('users');
     }
 
  public function indexAction(){
@@ -602,76 +582,177 @@ class UsersController extends ControllerBase
             'last' => true)
     ));
     $this->assets->addJs('js/users/import.js');
+    $form = new AddAdminForm();
+    $this->view->setVar('form', $form);
 
     if($this->request->isPost()){
       $datas = $this->request->getPost();
 
-      if($_FILES["file"]["type"] != "text/csv"){
-        $this->flash->error('Le fichier envoyer n\'est pas au format csv');
-        return $this->response->redirect('users/import');
-      }
-      elseif(is_uploaded_file($_FILES['file']['tmp_name'])){
-        
-        $handle = fopen($_FILES['file']['tmp_name'], "r");
-        $data = fgetcsv($handle, 1000, ","); //Remove if CSV file does not have column headings
-        
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-          if(!empty($data[5]) && !empty($data[7])){
-            $user = new Users();
-            $user->_id = null;
-            $user->surname = $data[5];
-            $user->name = $data[7];
-            $user->date_birth = $data[20];
-            $user->address = $data[8].($data[9] != '' ? ', '.$data[9] : '');
-            $user->zipcode = $data[10];
-            $user->city = $data[11];
-            $user->email = $data[14];
-            $user->mobile = $data[12];
-
-            $profile = Profiles::find(array(array(
-              'name' => 'Utilisateur')
-            ));
-            $user->profile_id = $profile[0]->_id;
-
-            $promotion = Promotions::find(array(array(
-              'name' => $data[3])
-            ));
-            if(!$promotion){
-              $promotion = new Promotions();
-              $promotion->name = $data[3];
-              $promotion->save();
-              $user->promotion_id = (string) $promotion->_id;
-              $promoSlug = $promotion->name;
-            }
-            else{
-              $user->promotion_id = (string) $promotion[0]->_id;
-              $promoSlug = $promotion[0]->name;
-            }
+      if(!empty($datas['file_type'])){
+        if($datas['file_type'] == 'stage'){
+          if($_FILES["file"]["type"] != "text/csv"){
+            $this->flash->error('Le fichier envoyer n\'est pas au format csv');
+            return $this->response->redirect('users/import');
+          }
+          elseif(is_uploaded_file($_FILES['file']['tmp_name'])){
             
+            $handle = fopen($_FILES['file']['tmp_name'], "r");
+            $data = fgetcsv($handle, 1000, ","); //Remove if CSV file does not have column headings
+            
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+              if(!empty($data[5]) && !empty($data[7])){
+                $user = new Users();
+                $user->_id = null;
+                $user->surname = $data[5];
+                $user->name = $data[7];
+                $user->date_birth = $data[20];
+                $user->address = $data[8].($data[9] != '' ? ', '.$data[9] : '');
+                $user->zipcode = $data[10];
+                $user->city = $data[11];
+                $user->email = $data[14];
+                $user->mobile = $data[12];
 
-            $school = Schools::find(array(array(
-              'name' => strtolower($data[1]))
-            ));
-            if(!$school){
-              $school = new Schools();
-              $school->name = strtolower($data[1]);
-              $school->save();
-              $user->school_id = (string) $school->_id;
+                $profile = Profiles::find(array(array(
+                  'name' => 'Utilisateur')
+                ));
+                $user->profile_id = $profile[0]->_id;
+
+                $promotion = Promotions::find(array(array(
+                  'name' => $data[3])
+                ));
+                if(!$promotion){
+                  $promotion = new Promotions();
+                  $promotion->name = $data[3];
+                  $promotion->save();
+                  $user->promotion_id = (string) $promotion->_id;
+                  $promoSlug = $promotion->name;
+                }
+                else{
+                  $user->promotion_id = (string) $promotion[0]->_id;
+                  $promoSlug = $promotion[0]->name;
+                }
+                
+
+                $school = Schools::find(array(array(
+                  'name' => strtolower($data[1]))
+                ));
+                if(!$school){
+                  $school = new Schools();
+                  $school->name = strtolower($data[1]);
+                  $school->save();
+                  $user->school_id = (string) $school->_id;
+                }
+                else{
+                  $user->school_id = (string) $school[0]->_id;
+                }
+
+
+                $user->login = \Nannyster\Utils\Slug::generate($user->name).'.'.\Nannyster\Utils\Slug::generate($user->surname).'.'.\Nannyster\Utils\Slug::generate($promoSlug);
+                $user->password = $this->security->hash('P@ssword');
+                $user->save();
+              }
             }
-            else{
-              $user->school_id = (string) $school[0]->_id;
-            }
-
-
-            $user->login = \Nannyster\Utils\Slug::generate($user->name).'.'.\Nannyster\Utils\Slug::generate($user->surname).'.'.\Nannyster\Utils\Slug::generate($promoSlug);
-            $user->password = $this->security->hash('P@ssword');
-            $user->save();
+            $this->flash->success('Le ficiher stagiaires a été importé avec succès!');
           }
         }
-        $this->flash->success('Le ficiher a été importé avec succès!');
+        elseif($datas['file_type'] == 'alter'){
+          if($_FILES["file"]["type"] != "text/csv"){
+            $this->flash->error('Le fichier envoyer n\'est pas au format csv');
+            return $this->response->redirect('users/import');
+          }
+          elseif(is_uploaded_file($_FILES['file']['tmp_name'])){
+            
+            $handle = fopen($_FILES['file']['tmp_name'], "r");
+            $data = fgetcsv($handle, 1000, ","); //Remove if CSV file does not have column headings
+            
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+              if(!empty($data[74]) && !empty($data[76])){
+                $user = new Users();
+                $user->_id = null;
+                $user->surname = $data[74];
+                $user->name = $data[76];
+                $user->date_birth = $data[77];
+                $user->address = $data[80].($data[81] != '' ? ', '.$data[81] : '');
+                $user->zipcode = $data[82];
+                $user->city = $data[83];
+                $user->email = $data[86];
+                $user->mobile = $data[84];
+
+                $profile = Profiles::find(array(array(
+                  'name' => 'Utilisateur')
+                ));
+                $user->profile_id = $profile[0]->_id;
+
+                $promotion = Promotions::find(array(array(
+                  'name' => $data[3])
+                ));
+                if(!$promotion){
+                  $promotion = new Promotions();
+                  $promotion->name = $data[3];
+                  $promotion->save();
+                  $user->promotion_id = (string) $promotion->_id;
+                  $promoSlug = $promotion->name;
+                }
+                else{
+                  $user->promotion_id = (string) $promotion[0]->_id;
+                  $promoSlug = $promotion[0]->name;
+                }
+                
+
+                $school = Schools::find(array(array(
+                  'name' => strtolower($data[1]))
+                ));
+                if(!$school){
+                  $school = new Schools();
+                  $school->name = strtolower($data[1]);
+                  $school->save();
+                  $user->school_id = (string) $school->_id;
+                }
+                else{
+                  $user->school_id = (string) $school[0]->_id;
+                }
+
+
+                $user->login = \Nannyster\Utils\Slug::generate($user->name).'.'.\Nannyster\Utils\Slug::generate($user->surname).'.'.\Nannyster\Utils\Slug::generate($promoSlug);
+                $user->password = $this->security->hash('P@ssword');
+                $user->save();
+              }
+            }
+            $this->flash->success('Le ficiher alternants a été importé avec succès!');
+          }
+        }
+        elseif($datas['file_type'] == 'admin'){
+          if(!$form->isValid($this->request->getPost())){
+            $error = '<ul>';
+                  foreach ($form->getMessages() as $message) {
+                $error.= '<li>'.$message.'</li>';
+              }
+            $error .= '</ul>';
+            $this->flash->error($error);
+            return false;;
+          }
+          // Request is valid
+          else{
+            $user = new Users();
+            $user->assign($datas);
+            $profile = Profiles::find(array(array(
+                'name' => 'Administrateur')
+              ));
+            $user->profile_id = $profile[0]->_id;
+            $user->password = $this->security->hash('P@ssword');
+            if($user->save()){
+              $this->flash->success('Un nouvel administrateur a bien été créé!');
+            }
+            else{
+              $this->flash->error('Une erreur est survenue lors de la création du nouvel administrateur');
+            }
+          }
+        }
+      }
+      else{
+        $this->flash->error('Vous devez renseigner le type de fichier à importer!');
       }
     }
-
   }
 
 }

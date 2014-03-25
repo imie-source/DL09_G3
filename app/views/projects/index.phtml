@@ -3,14 +3,16 @@
 		Projets
 		<small>
 			<i class="icon-double-angle-right"></i>
+			<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'create')): ?>
 			<?php
-										echo $this->tag->linkTo(array(
-								          'projects/create',
-								          '<i class="icon-plus"></i>Ajouter un projet',
-								          'class' => 'btn btn-sm btn-danger pull-right'
-								          ));
-									?>
-					</small>
+				echo $this->tag->linkTo(array(
+		          'projects/create',
+		          '<i class="icon-plus"></i>Ajouter un projet',
+		          'class' => 'btn btn-sm btn-danger pull-right'
+		          ));
+			?>
+		<?php endif; ?>
+		</small>
 	</h1>
 </div><!-- /.page-header -->
 
