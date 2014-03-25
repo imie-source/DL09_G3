@@ -117,15 +117,18 @@
 										?>
 									<?php endif; ?>
 									<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'delete')): ?>
+									<?php if($identity['_id'] != (string) $users[$i]->_id): ?>
 										<?php
 											echo $this->tag->linkTo(array(
 									          	'users/delete/'.$users[$i]->_id,
 										      	'<i class="icon-trash bigger-130"></i>',
 										      	'class' => 'red',
 										      	'data-rel' => 'tooltip',
+										      	'id' => 'del-user',
 										      	'title' => 'Supprimer '.$users[$i]->name.' '.$users[$i]->surname
 									          ));
 										?>
+									<?php endif; ?>
 									<?php endif; ?>
 									</div>
 
@@ -161,6 +164,7 @@
 												</li>
 												<?php endif; ?>
 												<?php if($this->acl->isAllowed($identity['profile_name'], 'users', 'delete')): ?>
+												<?php if($identity['_id'] != (string) $users[$i]->_id): ?>
 												<li>
 													<?php
 														echo $this->tag->linkTo(array(
@@ -168,10 +172,12 @@
 													      	'<i class="icon-trash bigger-130"></i>',
 													      	'class' => 'red',
 													      	'data-rel' => 'tooltip',
+										      				'id' => 'del-user',
 													      	'title' => 'Supprimer '.$users[$i]->name.' '.$users[$i]->surname
 												          ));
 													?>
 												</li>
+												<?php endif; ?>
 												<?php endif; ?>
 											</ul>
 										</div>

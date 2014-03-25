@@ -1,4 +1,15 @@
 jQuery(function($) {
+
+	$("a#del-user").on(ace.even_click, function(event) {
+	    event.preventDefault();
+	    var location = $(this).attr('href');
+	    bootbox.confirm("Etes-vous sûr de vouloir supprimer cet utilisateur?", function(confirmed) {
+	        if(confirmed) {
+	        window.location.replace(location);
+	        }
+	    });
+	});
+
 	var oTable1 = $('#user-table').dataTable( {
 	"aoColumns": [
       { "bSortable": true },
