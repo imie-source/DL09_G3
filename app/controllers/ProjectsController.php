@@ -195,7 +195,11 @@ public function proposeAction(){
 
     //If project exists
     if($projects != false){
-     // $progress = progress::findbyId(new \MongoId($projects->progress));
+      $userProject = UsersProjects::find(array(array(
+        'user_id' =>(string)$user->_id,
+        'project_id'=>(string)$project->_id
+        ))); 
+      $progress = Projects::findbyId(new \MongoId($projects->progress));
         if($skills){
           for ($i = 0; $i < sizeof($skills); $i++) { 
             $skills[$i]->name = Skills::findById(new \MongoId($skills[$i]->skill_id));
@@ -233,6 +237,8 @@ public function proposeAction(){
     //Pass vars to view
     $this->view->setVar('updateAllowed', $updateAllowed);
     $this->view->setVar('projects', $projects);
+    $this->view->setVar('user', $user);
+    $this->view->setVar('userProject', $userProject);
     
   }
 }

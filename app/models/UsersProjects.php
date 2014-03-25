@@ -10,7 +10,7 @@ class UsersProjects extends Collection
 	public $_id;
 	public $project_id;
 	public $user_id;
-	public $is_valide = 'n';
+	public $is_valid = 'n';
 
 	
 

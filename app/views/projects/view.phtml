@@ -24,20 +24,13 @@
         </div>
 
         <div class="body">
-                <div class="name">
-                <a href="#">John</a>
-            </div>
+            <?php foreach ($userProject as $usersProject){ 
+                    if($usersProject->user_id == $users->_id){
+                     echo '<div class="name">'.$users->name.'</div>';
+                     break;
+                    }
+                 }   
+                ?>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-    </div><!-- /.col -->
-</div><!-- /.row -->
-<script type="text/javascript">
-var pkey = '<?php echo $projects->_id; ?>';
