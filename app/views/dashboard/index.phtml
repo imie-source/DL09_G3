@@ -1,428 +1,139 @@
+<div class="page-header">
+	<h1>
+		Tableau de bord
+		<small>
+			<i class="icon-double-angle-right"></i>
+			Toutes les infos essentielles
+		</small>
+	</h1>
+</div><!-- /.page-header -->
 
-	<div class="page-header">
-		<h1>
-			Tableau de bord
-			<small>
-				<i class="icon-double-angle-right"></i>
-				Toutes les infos essentielles
-			</small>
-		</h1>
-	</div><!-- /.page-header -->
+<div class="row">
+	<div class="col-xs-12">
+		<!-- PAGE CONTENT BEGINS -->
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="widget-box transparent" id="recent-box">
+					<div class="widget-header">
+						<h4 class="lighter smaller">
+							<i class="icon-rss orange"></i>
+							Projets
+						</h4>
 
-	<div class="row">
-		<div class="col-xs-12">
-			<!-- PAGE CONTENT BEGINS -->
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="widget-box transparent" id="recent-box">
-						<div class="widget-header">
-							<h4 class="lighter smaller">
-								<i class="icon-rss orange"></i>
-								Projets
-							</h4>
+						<div class="widget-toolbar no-border">
+							<ul class="nav nav-tabs" id="recent-tab">
+								<li class="active">
+									<a data-toggle="tab" href="#task-tab">Les projets</a>
+								</li>
 
-							<div class="widget-toolbar no-border">
-								<ul class="nav nav-tabs" id="recent-tab">
-									<li class="active">
-										<a data-toggle="tab" href="#task-tab">Mes projets</a>
-									</li>
-
-									<li>
-										<a data-toggle="tab" href="#member-tab">Nouveaux projets</a>
-									</li>
-								</ul>
-							</div>
+								<li>
+									<a data-toggle="tab" href="#member-tab">Mes projets</a>
+								</li>
+							</ul>
 						</div>
-
-						<div class="widget-body">
-							<div class="widget-main padding-4">
-								<div class="tab-content padding-8 overflow-visible">
-									<div id="task-tab" class="tab-pane active">
-										<ul id="tasks" class="item-list">
-											<li class="item-orange clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Answering customer questions</span>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main padding-4">
+							<div class="tab-content padding-8 overflow-visible">
+								<div id="task-tab" class="tab-pane active">
+									<ul id="tasks" class="item-list">
+										<?php foreach($projects as $project):?>
+										<li class="item-orange clearfix">
+											<label class="inline">
+												<input type="checkbox" class="ace" />
+												<span class="lbl"> 
+													<?php
+													echo $this->tag->linkTo(array(
+														'projects/view/'.$project->_id,
+														ucwords($project->name),
+														'data-rel' => 'tooltip',
+														'data-original-title' => $project->description
+														));?>
+													</span>
 												</label>
-
 												<div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
-													<span class="percent">42</span>%
+													<span class="percent"><?php echo $project->progress.'%'?></span>
 												</div>
 											</li>
+										</li>
 
-											<li class="item-red clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Fixing bugs</span>
-												</label>
-
-												<div class="pull-right action-buttons">
-													<a href="#" class="blue">
-														<i class="icon-pencil bigger-130"></i>
-													</a>
-
-													<span class="vbar"></span>
-
-													<a href="#" class="red">
-														<i class="icon-trash bigger-130"></i>
-													</a>
-
-													<span class="vbar"></span>
-
-													<a href="#" class="green">
-														<i class="icon-flag bigger-130"></i>
-													</a>
-												</div>
-											</li>
-
-											<li class="item-default clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Adding new features</span>
-												</label>
-
-												<div class="inline pull-right position-relative dropdown-hover">
-													<button class="btn btn-minier bigger btn-primary">
-														<i class="icon-cog icon-only bigger-120"></i>
-													</button>
-
-													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
-														<li>
-															<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
-																<span class="green">
-																	<i class="icon-ok bigger-110"></i>
-																</span>
-															</a>
-														</li>
-
-														<li>
-															<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																<span class="red">
-																	<i class="icon-trash bigger-110"></i>
-																</span>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-
-											<li class="item-blue clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Upgrading scripts used in template</span>
-												</label>
-											</li>
-
-											<li class="item-grey clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Adding new skins</span>
-												</label>
-											</li>
-
-											<li class="item-green clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Updating server software up</span>
-												</label>
-											</li>
-
-											<li class="item-pink clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Cleaning up</span>
-												</label>
-											</li>
-										</ul>
-									</div>
-
-									<div id="member-tab" class="tab-pane">
-										<h4 class="smaller lighter green">
-											<i class="icon-list"></i>
-											Sortable Lists
-										</h4>
-
-										<ul id="tasks" class="item-list">
-											<li class="item-orange clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Answering customer questions</span>
-												</label>
-
-												<div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
-													<span class="percent">42</span>%
-												</div>
-											</li>
-
-											<li class="item-red clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Fixing bugs</span>
-												</label>
-
-												<div class="pull-right action-buttons">
-													<a href="#" class="blue">
-														<i class="icon-pencil bigger-130"></i>
-													</a>
-
-													<span class="vbar"></span>
-
-													<a href="#" class="red">
-														<i class="icon-trash bigger-130"></i>
-													</a>
-
-													<span class="vbar"></span>
-
-													<a href="#" class="green">
-														<i class="icon-flag bigger-130"></i>
-													</a>
-												</div>
-											</li>
-
-											<li class="item-default clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Adding new features</span>
-												</label>
-
-												<div class="inline pull-right position-relative dropdown-hover">
-													<button class="btn btn-minier bigger btn-primary">
-														<i class="icon-cog icon-only bigger-120"></i>
-													</button>
-
-													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
-														<li>
-															<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
-																<span class="green">
-																	<i class="icon-ok bigger-110"></i>
-																</span>
-															</a>
-														</li>
-
-														<li>
-															<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																<span class="red">
-																	<i class="icon-trash bigger-110"></i>
-																</span>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</li>
-
-											<li class="item-blue clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Upgrading scripts used in template</span>
-												</label>
-											</li>
-
-											<li class="item-grey clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Adding new skins</span>
-												</label>
-											</li>
-
-											<li class="item-green clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Updating server software up</span>
-												</label>
-											</li>
-
-											<li class="item-pink clearfix">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"> Cleaning up</span>
-												</label>
-											</li>
-										</ul>
-									</div><!-- member-tab -->
-								</div>
-							</div><!-- /widget-main -->
-						</div><!-- /widget-body -->
-					</div><!-- /widget-box -->
-				</div><!-- /span -->
-
-				<div class="col-sm-6">
-					<div class="widget-box ">
-						<div class="widget-header">
-							<h4 class="lighter smaller">
-								<i class="icon-comment blue"></i>
-								Exemple d'un wiki projet
-							</h4>
-						</div>
-
-						<div class="widget-body">
-							<div class="widget-main no-padding">
-								<div class="dialogs">
-									<div class="itemdiv dialogdiv">
-										<div class="user">
-											<?php 
-												echo $this->tag->image(array(
-													'img/avatars/avatar1.png',
-													'alt' => 'Alex'
-												)); 
-											?>
-										</div>
-
-										<div class="body">
-											<div class="time">
-												<i class="icon-time"></i>
-												<span class="green">4 sec</span>
-											</div>
-
-											<div class="name">
-												<a href="#">Alexa</a>
-											</div>
-											<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
-
-											<div class="tools">
-												<a href="#" class="btn btn-minier btn-info">
-													<i class="icon-only icon-share-alt"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-
-									<div class="itemdiv dialogdiv">
-										<div class="user">
-											<?php 
-												echo $this->tag->image(array(
-													'img/avatars/avatar.png',
-													'alt' => 'Alex'
-												)); 
-											?>
-										</div>
-
-										<div class="body">
-											<div class="time">
-												<i class="icon-time"></i>
-												<span class="blue">38 sec</span>
-											</div>
-
-											<div class="name">
-												<a href="#">John</a>
-											</div>
-											<div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
-
-											<div class="tools">
-												<a href="#" class="btn btn-minier btn-info">
-													<i class="icon-only icon-share-alt"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-
-									<div class="itemdiv dialogdiv">
-										<div class="user">
-											<?php 
-												echo $this->tag->image(array(
-													'img/avatars/user.jpg',
-													'alt' => 'Alex'
-												)); 
-											?>
-										</div>
-
-										<div class="body">
-											<div class="time">
-												<i class="icon-time"></i>
-												<span class="orange">2 min</span>
-											</div>
-
-											<div class="name">
-												<a href="#">Bob</a>
-												<span class="label label-info arrowed arrowed-in-right">admin</span>
-											</div>
-											<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
-
-											<div class="tools">
-												<a href="#" class="btn btn-minier btn-info">
-													<i class="icon-only icon-share-alt"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-
-									<div class="itemdiv dialogdiv">
-										<div class="user">
-											<?php 
-												echo $this->tag->image(array(
-													'img/avatars/avatar4.png',
-													'alt' => 'Alex'
-												)); 
-											?>
-										</div>
-
-										<div class="body">
-											<div class="time">
-												<i class="icon-time"></i>
-												<span class="grey">3 min</span>
-											</div>
-
-											<div class="name">
-												<a href="#">Jim</a>
-											</div>
-											<div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
-
-											<div class="tools">
-												<a href="#" class="btn btn-minier btn-info">
-													<i class="icon-only icon-share-alt"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-
-									<div class="itemdiv dialogdiv">
-										<div class="user">
-											<?php 
-												echo $this->tag->image(array(
-													'img/avatars/avatar1.png',
-													'alt' => 'Alex'
-												)); 
-											?>
-										</div>
-
-										<div class="body">
-											<div class="time">
-												<i class="icon-time"></i>
-												<span class="green">4 min</span>
-											</div>
-
-											<div class="name">
-												<a href="#">Alexa</a>
-											</div>
-											<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-
-											<div class="tools">
-												<a href="#" class="btn btn-minier btn-info">
-													<i class="icon-only icon-share-alt"></i>
-												</a>
-											</div>
-										</div>
-									</div>
+									<?php endforeach; ?>
 								</div>
 
-								<form>
-									<div class="form-actions">
-										<div class="input-group">
-											<input placeholder="Tapez votre message ici ..." type="text" class="form-control" name="message" />
-											<span class="input-group-btn">
-												<button class="btn btn-sm btn-info no-radius" type="button">
-													<i class="icon-share-alt"></i>
-													Send
-												</button>
-											</span>
-										</div>
-									</div>
-								</form>
-							</div><!-- /widget-main -->
-						</div><!-- /widget-body -->
-					</div><!-- /widget-box -->
-				</div><!-- /span -->
-			</div><!-- /row -->
+								<div id="member-tab" class="tab-pane">
+									<ul id="tasks" class="item-list">
+										<div class="widget-body">
+											<div class="widget-main padding-4">
+												<div class="tab-content padding-8 overflow-visible">
+													<div id="task-tab" class="tab-pane active">
+														<ul id="tasks" class="item-list">
+															<?php for($i=0; $i < sizeof($usersProjects); $i++){
+																if ((string) $usersProjects[$i]->user_id == $this->auth->getId()) {
+															?>
+															<li class="item-orange clearfix">
+																<label class="inline">
+																	<input type="checkbox" class="ace" />
+																	<span class="lbl"> 
+																		<?php
+																		echo $this->tag->linkTo(array(
+																			'projects/view/'.$project->_id,
+																			ucwords($project->name),
+																			'data-rel' => 'tooltip',
+																			'data-original-title' => $project->description
+																			));?>
+																		</span>
+																	</label>
+																	<div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+																		<span class="percent"><?php echo $project->progress.'%'?></span>
+																	</div>
+																</li>
+															<?php }}; ?>
+														</div>
 
-			<!-- PAGE CONTENT ENDS -->
-		</div><!-- /.col -->
-	</div><!-- /.row -->
+
+
+
+														<div class="inline pull-right position-relative dropdown-hover">
+
+														</div>
+
+
+													</ul>
+												</div><!-- member-tab -->
+											</div>
+										</div><!-- /widget-main -->
+									</div><!-- /widget-body -->
+								</div><!-- /widget-box -->
+							</div><!-- /span -->
+
+							<div class="col-sm-3 col-xs-12">
+				<div class="widget-box">
+					<div class="widget-header header-color-green2">
+						<h4 class="lighter smaller">Compétences aléatoires</h4>
+					</div>
+
+					<div class="widget-body">
+						<div class="widget-main padding-8">
+							<form action="" method="post">
+							<?php for($i=0; $i < sizeof($skills); $i++){ ?>
+								<div class="tags" id="skills-tags">
+									<?php
+													echo $this->tag->linkTo(array(
+														'skills/view/'.$skills[$i]->_id,
+														ucwords($skills[$i]->name),
+														'data-rel' => 'tooltip',
+														'data-original-title' => $skills[$i]->description
+														));?>
+								</div>
+								<?php }; ?>
+								<button id="submit-skills" type="submit" class="btn btn-sm btn-danger ">M'ajouter ces compétences</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+											<!-- PAGE CONTENT ENDS -->
+										</div><!-- /.col -->
+									</div><!-- /.row -->
