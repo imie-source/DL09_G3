@@ -229,7 +229,7 @@ jQuery(function($) {
     source: [
     {
       value: 'y', 
-      text: 'Vous êtes disponbiles pour les projets'
+      text: 'Vous êtes disponibles pour les projets'
     },
 
     {
@@ -242,7 +242,7 @@ jQuery(function($) {
     pk: pkey,
     display: function(value) {
       if (value == 'y') {
-        $(this).text('Vous êtes disponbiles pour les projets');
+        $(this).text('Vous êtes disponibles pour les projets');
       }
       if (value == 'n') {
         $(this).text('Vous n\'êtes pas disponibles pour les projets');

@@ -49,22 +49,20 @@ class Acl extends Component
         'permissions' => array(
             'index'
         ),
-        'profiles' => array(
-            'index',
-            'search',
-            'edit',
-            'create',
-            'delete'
-        ),
         'projects' => array(
             'index',
             'create',
             'propose',
-            'view'
+            'view',
+            'valide',
+            'delete',
+            'addUser',
+            'removeUser',
+            'masterRemoveUser',
+            'addWiki'
         ),
         'session' => array(
             'login',
-            'forgotPassword',
             'logout'
         ),
         'skills' => array(
@@ -74,10 +72,6 @@ class Acl extends Component
             'propose',
             'delete',
             'valide'
-        ),
-        'user_control' => array(
-            'confirmEmail',
-            'resetPassword'
         ),
         'team' => array(
             'index'
@@ -93,7 +87,6 @@ class Acl extends Component
             'ajaxProfileEditor',
             'ajaxAdminProfileEditor',
             'ajaxImageEditor',
-            'manage',
             'import'
 
         )
@@ -116,6 +109,10 @@ class Acl extends Component
         'resetPassword'                 => 'Reset a forgotten password',
         'forgotPassword'                => 'Forgotten Password',
         'changePassword'                => 'Change password',
+        'addUser'                       => 'S\'ajouter à un projet',
+        'removeUser'                    => 'Se supprimer d\'un projet',
+        'addWiki'                       => 'Ajouter un message au wiki',
+        'masterRemoveUser'              => 'Autoriser le chef de projet à supprimer les participants',
         'ajaxCalendarFinder'            => 'Ajax request to retrieve calendar events',
         'ajaxAddEvent'                  => 'Ajax request adding new date in planning',
         'ajaxCreate'                    => 'Ajax request to complete each step of a new contract',

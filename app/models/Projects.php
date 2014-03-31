@@ -18,6 +18,7 @@ class Projects extends Collection
     public $status_name = 'En attente de participants';
     public $valide='N';
     public $project_master;
+    public $wiki = null;
 
 
 public function assign($data){
