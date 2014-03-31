@@ -2,16 +2,25 @@
 	<h1>
 		Projets
 		<small>
-			<i class="icon-double-angle-right"></i>
+			<i class="icon-double-angle-right"></i> Tous les projets
 			<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'create')): ?>
-			<?php
-				echo $this->tag->linkTo(array(
-		          'projects/create',
-		          '<i class="icon-plus"></i>Ajouter un projet',
-		          'class' => 'btn btn-sm btn-danger pull-right'
-		          ));
-			?>
-		<?php endif; ?>
+				<?php
+					echo $this->tag->linkTo(array(
+			          'projects/create',
+			          '<i class="icon-plus"></i>Ajouter un projet',
+			          'class' => 'btn btn-sm btn-danger pull-right'
+			          ));
+				?>
+			<?php endif; ?>
+			<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'propose')): ?>
+				<?php
+					echo $this->tag->linkTo(array(
+			          'projects/propose',
+			          '<i class="icon-plus"></i>Proposer un projet',
+			          'class' => 'btn btn-sm btn-danger pull-right'
+			          ));
+				?>
+			<?php endif; ?>
 		</small>
 	</h1>
 </div><!-- /.page-header -->

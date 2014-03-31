@@ -74,14 +74,14 @@ class ProjectsController extends ControllerBase
 
 public function proposeAction(){
 
-    $this->tag->prependTitle('proposer un projet - ');                                      
+    $this->tag->prependTitle('Proposer un projet - ');                                      
     $this->assets->addJs('js/fuelux/fuelux.spinner.min.js');
     $this->view->setVar('activeClass', 'projects');
     $this->view->setVar('breadcrumbs', array(
       'Projets' => array(
         'controller' => 'projects',
         'action' => 'index'),
-      'proposer un projet' => array(
+      'Proposer un projet' => array(
         'last' => true)
 
 
@@ -96,7 +96,7 @@ public function proposeAction(){
       $data = $this->request->getPost();
       $project = new Projects();
       $project->assign($data);
-      $project->valide='Y';
+      $project->valide='N';
       $project->project_master=$this->auth->getId();
 
           //transforme la variable start_date format fr en array
@@ -110,14 +110,18 @@ public function proposeAction(){
 
       if ($start <= $end) {
         if ($project->save()) {
-          $this->flash->success('votre projet à bien été proposé');
+          $this->flash->success('Votre projet a bien été proposé. Un administrateur doit encore le valider.');
           return $this->response->redirect('projects/view/'.$project->_id);
           return true;
         }  
-            $this->flash->error('Une erreur est survenue lors de l\'enregistrement de votre projet; Veuillez recomencer.');
-       
+        else{
+          $this->flash->error('Une erreur est survenue lors de l\'enregistrement de votre projet; Veuillez recomencer.');
         }
-           $this->flash->error('Vous ne pouvez pas proposer un projet avec une date de début supérieure à la date de fin.');         
+      }
+      else{
+        $this->flash->error('Vous ne pouvez pas proposer un projet avec une date de début supérieure à la date de fin.');   
+      }
+                 
     }
 }
 

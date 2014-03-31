@@ -1,0 +1,74 @@
+
+<div class="page-header">
+    <?php if($identity['profile_name'] == 'Utilisateur'): ?>
+    <h1>
+        Proposer un nouveau projet
+        <small>
+            <i class="icon-double-angle-right"></i>
+        </small>
+    </h1>
+    <?php else: ?>
+     <h1>
+        Ajouter un nouveau projet
+        <small>
+            <i class="icon-double-angle-right"></i>
+        </small>
+    </h1>
+    <?php endif; ?>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+            <?php echo Phalcon\Tag::form(array("projects/propose", "method" => "post", "class" =>"form-horizontal")); ?>
+            <fieldset>
+                <label class="block clearfix">
+                    <span class="block input-icon input-icon-right">
+                        <label for="name" class="col-sm-3 control-label ">Nom du projet</label>
+                        <?php echo $formCreate->render('name') ?>
+                    </span>
+                </label>
+                
+                <label class="block clearfix">
+                    <label for="spinner" class="col-sm-3 control-label ">Nombre de participants</label>
+                    <div id="spinner"class="ace-spinner touch-spinner">
+                        <div class="input-group">
+                            <?php echo $formCreate->render('nb_users_max') ?>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="block clearfix">
+                    <span class="block input-icon input-icon-right">
+                        <label for="start_date" class="col-sm-3 control-label ">Date de début</label>
+                        <?php echo $formCreate->render('start_date') ?>
+                    </span>
+                </label>
+
+                <label class="block clearfix">
+                    <span class="block input-icon input-icon-right">
+                         <label for="end_date" class="col-sm-3 control-label ">Date de fin</label>
+                        <?php echo $formCreate->render('end_date') ?>
+                    </span>
+                </label>
+
+                <label class="block clearfix">
+                    <span class="block input-icon input-icon-right">
+                         <label for="description" class="col-sm-3 control-label ">Description</label>
+                        <?php echo $formCreate->render('description') ?>
+                    </span>
+                </label>
+                
+                    <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                        <i class="icon-ok"></i>
+                        Valider
+                    </button>
+                </div>
+
+                <div class="space-4"></div>
+            </fieldset>
+        <?php echo Phalcon\Tag::endForm(); ?>
+       
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

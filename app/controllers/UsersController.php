@@ -20,7 +20,7 @@ class UsersController extends ControllerBase
 {
 
   /**
-   * Users must use this action to change its password
+   * Changement du mot de passe
    */
   public function changePasswordAction()
   {
@@ -68,6 +68,9 @@ class UsersController extends ControllerBase
       $this->view->form = $form;
   }
 
+  /**
+   * visualisation d'un profile. possibilité de le modifier si l'utilisateur courant et l'utilisateur loggué
+   */
   public function viewAction($id = null){
 
     $this->assets->addJs('js/jquery.slimscroll.min.js');
@@ -161,6 +164,9 @@ class UsersController extends ControllerBase
     $this->view->setVar('skills', $skills);
   }
 
+  /**
+   * Visualisation et modification d'un profile par un admin
+   */
   public function editAction($id){
 
     $this->assets->addJs('js/jquery.slimscroll.min.js');
@@ -250,6 +256,10 @@ class UsersController extends ControllerBase
     $this->view->setVar('user', $user);
   }
 
+
+  /**
+   * Modification de ses infos perso via requete ajax
+   */
     public function ajaxProfileEditorAction() {
       if($this->request->isPost()){
         if ($this->request->isAjax()) {
@@ -280,6 +290,10 @@ class UsersController extends ControllerBase
       $this->response->redirect('dashboard');
     }
 
+
+    /**
+     * Modification des infos perso du utilisateur par un admin
+     */
     public function ajaxAdminProfileEditorAction() {
       if($this->request->isPost()){
         if ($this->request->isAjax()) {
@@ -305,6 +319,10 @@ class UsersController extends ControllerBase
       $this->response->redirect('dashboard');
     }
 
+
+    /**
+     * Modification de la photo de profile via requete ajax
+     */
     public function ajaxImageEditorAction(){
       if($this->request->hasFiles()){
         $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
@@ -387,6 +405,9 @@ class UsersController extends ControllerBase
       }
     }
 
+    /**
+     * Redimensionnement de la photo de profile lors de l'upload pour le thumbnail
+     */
     private function resize($img, $ext, $dest, $largeur = 0, $hauteur = 0) {
 
         $useGD = true; // On utilise la librairie GD ?
@@ -463,7 +484,9 @@ class UsersController extends ControllerBase
         return true;
     }
 
-  
+    /**
+    * Suppression d'un utilisateur
+    */
     public function deleteAction($id){
       if($id != null){
         if(self::validateMongoId($id)){
@@ -481,6 +504,9 @@ class UsersController extends ControllerBase
       $this->response->redirect('users');
     }
 
+    /**
+     * Liste des utilisateurs
+     */
  public function indexAction(){
     $this->tag->prependTitle('Manager d\'utilisateurs - ');
     $user = $this->auth->getUser();
@@ -517,6 +543,9 @@ class UsersController extends ControllerBase
     $this->view->setVar('schools', Schools::find());
  }
 
+ /**
+  * Ajout de compétences à son profil
+  */
  public function skillsAction(){
 
     $this->tag->prependTitle('Mes compétences - ');
@@ -545,6 +574,9 @@ class UsersController extends ControllerBase
     }
   }
 
+  /**
+  * Suppression de compétence de son profile
+  */
   public function skillDeleteAction($id){
     if(!empty($id)){
       if(self::validateMongoId($id)){
@@ -573,6 +605,9 @@ class UsersController extends ControllerBase
     $this->response->redirect('users/view');
   }
 
+  /**
+   * Méthode d'import d'utilisateurs via csv et de creation d'un administrateur
+   */
   public function importAction(){
 
     $this->tag->prependTitle('Import d\'utilisateurs - ');

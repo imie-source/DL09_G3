@@ -21,37 +21,22 @@ class ControllerBase extends Controller
      */
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
-        $controllerName = $dispatcher->getControllerName();
-
-        // Only check permissions on private controllers
-        /*if ($this->acl->isPrivate($controllerName)) {*/
-
-            // Get the current identity
+            //Check l'identité du gars
             $identity = $this->auth->getIdentity();
 
-            // If there is no identity available the user is redirected to index/index
+            //Si il n'y a pas d'identité ,c'est un Invité
             if (!is_array($identity)) {
-                //$profile = Profiles::find(array(array('name' => 'Guest')));
                 $identity['profile_name'] = 'Invite';
-/*
-                $this->flash->error('Vous devez être connecté pour accéder à cette partie du site!');
-
-                $dispatcher->forward(array(
-                    'controller' => 'index',
-                    'action' => 'index'
-                ));
-                return false;*/
-            //}
             }
-            // Check if the user have permission to the current option
-            $actionName = $dispatcher->getActionName();
 
-            /*var_dump($controllerName).'<br/>';
-            var_dump($actionName).'<br/>';
-            var_dump($identity).'<br/>';
-            die();*/
+            // Récupère le controller et l'action
+            $actionName = $dispatcher->getActionName();
+            $controllerName = $dispatcher->getControllerName();
+
+            //Test si le gars n'est pas autorisé
             if (!$this->acl->isAllowed($identity['profile_name'], $controllerName, $actionName)) {
 
+                //Renvoie vers le dashboard si le gars est authentifié
                 if($this->session->has('auth-identity')){
                     $this->flash->error('Vous n\'avez pas accès à cette partie du site');
                     $dispatcher->forward(array(
@@ -59,6 +44,8 @@ class ControllerBase extends Controller
                         'action' => 'index'
                     ));
                 }
+
+                //sinon vers la page de login
                 else{
                     $this->flash->error('Vous n\'avez pas accès à cette partie du site');
                     $dispatcher->forward(array(
@@ -89,7 +76,7 @@ class ControllerBase extends Controller
         		->addCss('css/bootstrap.min.css', true)
                 ->addCss('css/jquery.gritter.css', true)
         		->addCss('css/font-awesome.min.css', true)
-        		/*->addCss('//fonts.googleapis.com/css?family=Ubuntu', false)*/;
+        		->addCss('//fonts.googleapis.com/css?family=Ubuntu', false);
 
 		//Theme collection of CSS files
         $this->assets
@@ -126,6 +113,7 @@ class ControllerBase extends Controller
 
     }
 
+    //Methode de validation d'un MongoId
     public static function validateMongoId($id){
         if(preg_match('/^[0-9a-z]{24}$/', $id)){
             return true;
@@ -135,6 +123,7 @@ class ControllerBase extends Controller
         }
     }
 
+    //Renvoie la date et/ou l'heure formatées
     public static function returnDateTime($date = null, $what = null) {
         if($date != null){
             if($what == 'date'){
@@ -152,6 +141,7 @@ class ControllerBase extends Controller
         }
     }
 
+    //Génère un UUID
     public static function uuidV4() {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
                 // 32 bits for "time_low"

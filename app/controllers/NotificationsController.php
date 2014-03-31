@@ -11,7 +11,10 @@ class NotificationsController extends ControllerBase
 		
 	}
 
+
 	public static function finder(){
+
+		//Renvoie le nb de compétences à valider
 		$skillsToValide = Skills::find(array(array(
 			'valide' => 'N')
 		));
@@ -21,6 +24,8 @@ class NotificationsController extends ControllerBase
 		else{
 			$skillsToValide = count($skillsToValide);
 		}
+
+		//Renvoie le nb de projets à valider
 		$projectToValide = Projects::find(array(array(
 			'valide' => 'N')
 		));
