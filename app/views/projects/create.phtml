@@ -20,57 +20,55 @@
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-            <?php if($identity['profile_name'] == 'Utilisateur'): ?>
-            <?php echo Phalcon\Tag::form(array("projects/propose", "method" => "post", "class" =>"form-horizontal")); ?>
-            <?php else: ?>
             <?php echo Phalcon\Tag::form(array("projects/create", "method" => "post", "class" =>"form-horizontal")); ?>
-            <?php endif; ?>
-                                            <fieldset>
-                                                <label class="block clearfix">
-                                                    <span class="block input-icon input-icon-right">
-                                                        <label for="name" class="col-sm-3 control-label ">Nom du projet</label>
-                                                        <?php echo $formCreate->render('name') ?>
-                                                    </span>
-                                                </label>
-                                                
+                <fieldset>
+                    <input type="hidden" name="_id" value="<?php echo $project->_id ?>">
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            <label for="name" class="col-sm-3 control-label ">Nom du projet</label>
+                            <?php echo $formCreate->render('name') ?>
+                        </span>
+                    </label>
+                    
+                    <label class="block clearfix">
+                        <label for="spinner2" class="col-sm-3 control-label ">Nombre de participants</label>
+                        <div id="spinner"class="ace-spinner touch-spinner" style="width: 140px;">
+                            <div class="input-group">
+                                <?php echo $formCreate->render('nb_users_max') ?>
+                            </div>
+                        </div>
+                    </label>
 
-                                                <label for="spinner2" class="col-sm-3 control-label ">Nombre de participants</label>
-                                                <div id="spinner"class="ace-spinner touch-spinner" style="width: 140px;">
-                                                    <div class="input-group">
-                                                        <?php echo $formCreate->render('nb_users_max') ?>
-                                                    </div>
-                                                </div>
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            <label for="start_date" class="col-sm-3 control-label ">Date de début</label>
+                            <?php echo $formCreate->render('start_date') ?>
+                        </span>
+                    </label>
 
-                                                <label class="block clearfix">
-                                                    <span class="block input-icon input-icon-right">
-                                                        <label for="start_date" class="col-sm-3 control-label ">date de début de projet</label>
-                                                        <?php echo $formCreate->render('start_date') ?>
-                                                    </span>
-                                                </label>
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                             <label for="end_date" class="col-sm-3 control-label ">Date de fin</label>
+                            <?php echo $formCreate->render('end_date') ?>
+                        </span>
+                    </label>
 
-                                                <label class="block clearfix">
-                                                    <span class="block input-icon input-icon-right">
-                                                         <label for="end_date" class="col-sm-3 control-label ">date de fin de projet</label>
-                                                        <?php echo $formCreate->render('end_date') ?>
-                                                    </span>
-                                                </label>
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                             <label for="description" class="col-sm-3 control-label ">Description</label>
+                            <textarea type="text" cols="50" rows="10" name="description"></textarea>
+                        </span>
+                    </label>
+                    
+                        <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                            <i class="icon-ok"></i>
+                            Créer
+                        </button>
+                    </div>
 
-                                                <label class="block clearfix">
-                                                    <span class="block input-icon input-icon-right">
-                                                         <label for="description" class="col-sm-3 control-label ">déscription</label>
-                                                        <?php echo $formCreate->render('description') ?>
-                                                    </span>
-                                                </label>
-                                                
-                                                    <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
-                                                        <i class="icon-ok"></i>
-                                                        valider
-                                                    </button>
-                                                </div>
-
-                                                <div class="space-4"></div>
-                                            </fieldset>
-                                        <?php echo Phalcon\Tag::endForm(); ?>
+                    <div class="space-4"></div>
+                </fieldset>
+            <?php echo Phalcon\Tag::endForm(); ?>
        
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->

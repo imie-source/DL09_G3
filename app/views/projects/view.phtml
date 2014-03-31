@@ -1,36 +1,260 @@
- <div class="page-header">
-    <?php if($updateAllowed): ?>
-    <h1>
-        Mon Projet
-        <small>
-            <i class="icon-double-angle-right"></i>
-            Voir et modifier les informations de mon projet
-        </small>
-    </h1>
-<?php else: ?>
-	<h1>
-        <?php echo ucwords($projects->name)?>
-        <small>
-            <i class="icon-double-angle-right"></i>
-            <?php echo $projects->status_name ?>
-        </small>
-    </h1>
-<?php endif; ?>
-</div><!-- /.page-header -->
-<div class="widget-body">
-    <div class="itemdiv dialogdiv">
-        <div class="user">
-            <img alt="John's Avatar" src="assets/avatars/avatar.png">
-        </div>
+ <?php
+    $isChef = false;
+    for ($i=0; $i < sizeof($users); $i++) { 
+        if((string) $this->auth->getId() == $project->project_master){
+            
+            $isChef = true;
 
-        <div class="body">
-            <?php foreach ($userProject as $usersProject){ 
-                    if($usersProject->user_id == $users->_id){
-                     echo '<div class="name">'.$users->name.'</div>';
-                     break;
-                    }
-                 }   
-                ?>
+        }
+    }
+    for ($i=0; $i < sizeof($users); $i++) { 
+        if((string) $users[$i]->_id == $project->project_master){
+            
+            $chef = $users[$i];
+
+        }
+    }
+    $isInProject = false;
+    for ($i=0; $i < sizeof($userProject); $i++) { 
+        if((string) $userProject[$i]->user_id == (string) $this->auth->getId()){
+            $isInProject = true;
+            
+        }
+    }
+?>
+ <div class="page-header">
+	<h1>
+        <?php echo ucfirst($project->name)?>
+    </h1>
+</div><!-- /.page-header -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 infobox-container">
+                <div class="infobox infobox-green  ">
+                    <div class="infobox-icon">
+                        <?php 
+                            echo $this->tag->image(array(
+                                'img/avatars/thumbs/'.$chef->avatar,
+                                'alt' => ucwords($chef->name).' '.strtoupper($chef->surname),
+                                'class' => 'img-responsive'
+                            )); 
+                        ?>
+                    </div>
+
+                    <div class="infobox-data">
+                        <div class="infobox-content"><?php echo ucwords($chef->name).'<br/>'.strtoupper($chef->surname) ?></div>
+                    </div>
+                </div>
+
+                <div class="infobox infobox-blue2  ">
+                    <div class="infobox-progress">
+                        <div class="easy-pie-chart percentage" data-percent="<?php echo $project->progress ?>" data-size="46">
+                            <span class="percent"><?php echo $project->progress ?></span>%
+                        </div>
+                    </div>
+
+                    <div class="infobox-data">
+                        <span class="infobox-text">Avancement du<br/>projet</span>
+                    </div>
+                </div>
+
+                <div class="infobox infobox-red">
+                    <div class="infobox-icon">
+                        <i class="icon-user"></i>
+                    </div>
+
+                    <div class="infobox-data">
+                        <span class="infobox-data-number"><?php echo $project->nb_users_max ?></span>
+                        <div class="infobox-content">Personne<?php echo $project->nb_users_max > 1 ? 's' : '' ?> requise<?php echo $project->nb_users_max > 1 ? 's' : '' ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="infobox infobox-green  ">
+                    <div class="infobox-icon">
+                        <i class="icon-user"></i>
+                    </div>
+
+                    <div class="infobox-data">
+                        <span class="infobox-data-number"><?php echo count($userProject) ?></span>
+                        <div class="infobox-content">Personne<?php echo count($userProject) > 1 ? 's' : '' ?> inscrite<?php echo count($userProject) > 1 ? 's' : '' ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h3>Description du projet</h3>
+                <div class="hr hr-dotted"></div>
+                <?php echo $project->description ?>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <h3>
+                    Liste des participants
+                    <?php
+                        if(!$isChef){
+                            if($isInProject){
+                                echo $this->tag->linkTo(array(
+                                  'projects/removeUser/'.$project->_id,
+                                  'Je ne veux plus participer',
+                                  'class' => 'btn btn-danger pull-right btn-xs'
+                                  ));
+                            }
+                            else{
+                                echo $this->tag->linkTo(array(
+                                  'projects/addUser/'.$project->_id,
+                                  'Je veux participer',
+                                  'class' => 'btn btn-success pull-right btn-xs'
+                                  ));
+                            }
+                        }
+                    ?>
+                </h3>
+                <div class="hr hr-dotted"></div>
+                <?php if($userProject): ?>
+                <?php for($j = 0; $j < sizeof($userProject); $j++): ?>
+                <li>
+                    <?php
+                        for ($i=0; $i < sizeof($users); $i++) { 
+                            if((string) $users[$i]->_id == $userProject[$j]->user_id){
+                                
+                                echo $this->tag->linkTo(array(
+                                'users/view/'.$users[$i]->_id,
+                                ucwords($users[$i]->name.' '.$users[$i]->surname)
+                                ));
+                            }
+                        }
+                    ?>
+                    <?php
+                        if($isChef){
+                            echo $this->tag->linkTo(array(
+                                'projects/masterRemoveUser/'.$userProject[$j]->_id,
+                                '<i class="icon-trash bigger-130"></i>',
+                                'class' => 'red',
+                                'data-rel' => 'tooltip',
+                                'id' => 'del-user',
+                                'title' => 'Supprimer ce participant'
+                              ));
+                        }
+                    ?>
+                </li>
+                <?php endfor; ?>
+                <?php else: ?>
+                Aucun participant
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h3>
+                    Wiki wiki
+                    <?php
+                        if($isInProject || $isChef){
+                            echo $this->tag->linkTo(array(
+                                'projects/addWiki/'.$project->_id,
+                                'Ajouter un message',
+                                'class' => 'btn btn-danger pull-right btn-xs',
+                                'id' => 'bootbox-wiki'
+                            ));
+                        }
+                    ?>
+                </h3>
+                <div class="hr hr-dotted"></div>
+                <div class="wiki">
+                    <?php 
+                        if($project->wiki != null){
+                            echo $project->wiki;
+                        }
+                        else{
+                            echo 'Aucun message';
+                        }
+                    ?>
+                </div>
+            </div>
+            <?php if($isChef): ?>
+            <div class="col-xs-12 col-md-6">
+                <h3>Gérer mon projet</h3>
+                <div class="hr hr-dotted"></div>
+                <?php echo Phalcon\Tag::form(array("projects/view/".$project->_id, "method" => "post", "class" =>"form-horizontal")); ?>
+                    <fieldset>
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <label for="name" class="col-sm-3 control-label ">Nom du projet</label>
+                                <input type="text" name="name" value="<?php echo $project->name ?>">
+                            </span>
+                        </label>
+                        
+                        <label class="block clearfix">
+                            <label for="spinner2" class="col-sm-3 control-label ">Nombre de participants</label>
+                            <div id="spinner"class="ace-spinner touch-spinner" style="width: 140px;">
+                                <div class="input-group">
+                                    <input class="input-mini spinner-input form-control" id="spinner2" type="text" name="nb_users_max">
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="block clearfix">
+                            <label for="avancement" class="col-sm-3 control-label ">Avancement</label>
+                            <div id="spinner"class="ace-spinner touch-spinner" style="width: 140px;">
+                                <div class="input-group">
+                                    <input class="input-mini spinner-input form-control" id="avancement" type="text" name="progress">
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <label for="status_name" class="col-sm-3 control-label ">Status</label>
+                                <select name="status_name" id="status_name">
+                                    <?php 
+                                        foreach ($status as $stat) {
+                                            echo '<option value="'.$stat->name.'"'.($stat->name == $project->status_name ? 'selected' : '').'>'.$stat->name.'</option>';
+                                        }
+                                     ?>
+                                </select>
+                            </span>
+                        </label>
+
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <label for="start_date" class="col-sm-3 control-label ">Date de début de projet</label>
+                                <input type="text" name="start_date" id="date-start" value="<?php echo $project->start_date ?>">
+                            </span>
+                        </label>
+
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                 <label for="end_date" class="col-sm-3 control-label ">Date de fin de projet</label>
+                                <input type="text" name="end_date" id="date-end" value="<?php echo $project->end_date ?>">
+                            </span>
+                        </label>
+
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                 <label for="description" class="col-sm-3 control-label ">Description</label>
+                                <textarea type="text" cols="50" rows="10" name="description"><?php echo $project->description ?></textarea>
+                            </span>
+                        </label>
+                        
+                            <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                <i class="icon-ok"></i>
+                                Mettre à jour
+                            </button>
+                        </div>
+
+                        <div class="space-4"></div>
+                    </fieldset>
+                <?php echo Phalcon\Tag::endForm(); ?>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function() {
+    $('#spinner2').ace_spinner({value:<?php echo $project->nb_users_max ?>,min:0,max:999,step:1, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+    $('#avancement').ace_spinner({value:<?php echo $project->progress ?>,min:0,max:100,step:1, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+});
+</script>

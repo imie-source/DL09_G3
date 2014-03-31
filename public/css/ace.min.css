@@ -1,6 +1,9 @@
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     font-family: 'Ubuntu' !important;
 }
+.wiki{
+    max-height: 250px;
+}
 .no-skills{
     height: 100px;
     font-size: 30px;
@@ -4318,7 +4321,6 @@ button.btn:active {
 .dropdown-navbar>li:last-child>a {
     border-bottom: 0 solid #DDD;
     border-top: 1px dotted transparent;
-    color: #4f99c6;
     text-align: center;
     font-size: 13px;
 }

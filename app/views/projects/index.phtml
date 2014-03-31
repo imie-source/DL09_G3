@@ -28,6 +28,113 @@
 <div class="row">
 	<div class="col-xs-12">
 		<!-- PAGE CONTENT BEGINS -->
+		<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'valide')): ?>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="widget-box">
+					<div class="widget-header header-color-orange">
+						<h4 class="lighter smaller">Projets en attente de validation</h4>
+					</div>
+
+					<div class="widget-body">
+						<div class="widget-main padding-8">
+							<?php if($projectsToValide): ?>
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>Titre du projet</th>
+											<th>Proposé par</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<?php for($i = 0; $i < sizeof($projectsToValide); $i++): ?>
+										<tr>
+											<td>
+												<?php
+													echo $projectsToValide[$i]->name;
+												?>
+											</td>
+											<td>
+												<?php
+													for ($j = 0; $j < sizeof($users); $j++) { 
+														if((string) $users[$j]->_id == $projectsToValide[$i]->project_master){
+															
+															echo $this->tag->linkTo(array(
+													        'users/view/'.$users[$j]->_id,
+														    ucwords($users[$j]->name.' '.$users[$j]->surname)
+													        ));
+														}
+													}
+												?>
+											</td>
+											<td>
+												<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+													<?php
+														echo $this->tag->linkTo(array(
+												          	'projects/valide/'.$projectsToValide[$i]->_id,
+													      	'<i class="icon-ok bigger-130"></i> Valider',
+													      	'class' => 'btn btn-xs btn-success'
+												          ));
+													?>
+													<?php
+														echo $this->tag->linkTo(array(
+												          	'projects/delete/'.$projectsToValide[$i]->_id,
+													      	'<i class="icon-remove bigger-130"></i> Supprimer',
+													      	'class' => 'btn btn-xs btn-danger'
+												          ));
+													?>
+												</div>
+
+												<div class="visible-xs visible-sm hidden-md hidden-lg">
+													<div class="inline position-relative">
+														<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+															<i class="icon-caret-down icon-only bigger-120"></i>
+														</button>
+
+														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+															
+															<li>
+																<?php
+																	echo $this->tag->linkTo(array(
+															          	'skills/valide/'.$projectsToValide[$i]->_id,
+																      	'<i class="icon-ok bigger-130"></i> Valider',
+																      	'class' => 'btn btn-xs btn-success'
+															          ));
+																?>
+															</li>
+															<li>
+																<?php
+																	echo $this->tag->linkTo(array(
+															          	'skills/delete/'.$projectsToValide[$i]->_id,
+																      	'<i class="icon-remove bigger-130"></i> Supprimer',
+																      	'class' => 'btn btn-xs btn-danger'
+															          ));
+																?>
+															</li>
+
+															<li>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<?php endfor; ?>
+									</tbody>
+								</table>
+							</div>
+							<?php else: ?>
+							<div class="no-skills">Aucun projet à valider</div>
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
 		<!--Liste des projets -->
 		<div class="row">
 			<div class="col-xs-12">
