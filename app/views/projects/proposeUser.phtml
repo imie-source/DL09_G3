@@ -1,0 +1,141 @@
+<div class="page-header">
+    <h1>
+        Liste des utilisateurs
+        <small>
+            <i class="icon-double-angle-right"></i>
+
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table id="user-table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Prénom NOM</th>
+                                <th>
+                                    Compétences
+                                </th>
+                                <th>Disponible pour des projets</th>
+                                <th class="hidden-480">Type</th>
+                                <th>
+                                    Promotions / Ecole
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php for ($i = 0; $i < sizeof($users); $i++): ?>
+                                <tr>
+                                    <td>
+                                        <?php
+                                        echo $this->tag->linkTo(array(
+                                            'users/view/' . $users[$i]->_id,
+                                            ucwords($users[$i]->name) . ' ' . strtoupper($users[$i]->surname),
+                                            'target' => '_blank'
+                                        ));
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $star = $this->tag->image(array(
+                                            'images/star-on.png',
+                                            'alt' => 'star',
+                                            'style' => 'vertical-align: text-top;'
+                                        ));
+                                        $skills = '';
+                                        $skillsTooltip = '';
+                                        for ($j = 0; $j < sizeof($usersSkills[$i]); $j++) {
+                                            $last = (($j < sizeof($usersSkills[$i]) - 1) ? ', ' : '');
+                                            $skills .= $skillName[$i][$j]->name . ' (' . $usersSkills[$i][$j]->rate . $star . ')' . $last;
+                                            $skillsTooltip .= '<span style="display: block;">' . $skillName[$i][$j]->name . ' (' . $usersSkills[$i][$j]->rate . $star . ')' . $last . '</span>';
+                                        }
+                                        echo '<span data-rel="tooltip" data-original-title=\'' . $skills . '\'>' . $skills . '</span>';
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        if ($users[$i]->available == 'y') {
+                                            echo '<span class="label label-success">Oui</span>';
+                                        }
+                                        else {
+                                            echo '<span class="label label-danger">Non</span>';
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><?php
+                                        foreach ($profiles as $profile) {
+                                            if ($users[$i]->profile_id == $profile->_id) {
+                                                echo '<span class="label label-sm label-' . $profile->style . '">' . $profile->name . '</span>';
+                                                break;
+                                            }
+                                        }
+                                        ?></td>
+                                    <td><?php
+                                        foreach ($promotions as $promotion) {
+                                            if ($users[$i]->promotion_id == $promotion->_id) {
+                                                echo $promotion->name . ' / ';
+                                                break;
+                                            }
+                                        }
+
+                                        foreach ($schools as $school) {
+                                            if ($users[$i]->school_id == $school->_id) {
+                                                echo ucfirst($school->name);
+                                                break;
+                                            }
+                                        }
+                                        ?></td>
+
+
+                                    <td>
+                                        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                            <?php
+                                            if ($users[$i]->_id != $this->auth->getId()) {
+                                                echo $this->tag->linkTo(array(
+                                                    'projects/addProposition/' . $users[$i]->_id . '/' . $project_id,
+                                                    'Lui proposer',
+                                                    'class' => 'btn btn-success btn-xs'
+                                                ));
+                                            }
+                                            ?>
+                                        </div>
+
+                                        <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                            <div class="inline position-relative">
+                                                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="icon-caret-down icon-only bigger-120"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <?php
+                                                        if ($users[$i]->_id != $this->auth->getId()) {
+                                                            echo $this->tag->linkTo(array(
+                                                                'projects/addProposition/' . $users[$i]->_id . '/' . $project_id,                                                             '<i class="icon-plus-sign bigger-130"></i>',
+                                                                'class' => 'green',
+                                                                'data-rel' => 'tooltip',
+                                                                'title' => 'Lui proposer'
+                                                            ));
+                                                        }
+                                                        ?>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endfor; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.col -->
+</div><!-- /.row -->

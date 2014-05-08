@@ -23,15 +23,15 @@
                         <div class="widget-toolbar no-border">
                             <ul class="nav nav-tabs" id="recent-tab">
                                 <li class="active">
+                                    <a data-toggle="tab" href="#member-tab">Mes projets</a>
+                                </li>
+                                
+                                <li>
                                     <a data-toggle="tab" href="#task-tab">Les projets</a>
                                 </li>
 
                                 <li>
                                     <a data-toggle="tab" href="#contributions-tab">Mes contributions</a>
-                                </li>
-
-                                <li>
-                                    <a data-toggle="tab" href="#member-tab">Mes projets</a>
                                 </li>
                             </ul>
                         </div>
@@ -39,7 +39,7 @@
                     <div class="widget-body">
                         <div class="widget-main padding-4">
                             <div class="tab-content padding-8 overflow-visible">
-                                <div id="task-tab" class="tab-pane active">
+                                <div id="task-tab" class="tab-pane">
                                     <ul id="tasks" class="item-list">
                                         <?php foreach ($projects as $project): ?>
                                             <?php if ($project->valide == 'Y'): ?>
@@ -100,7 +100,7 @@
                                     </ul>
                                 </div>
 
-                                <div id="member-tab" class="tab-pane">
+                                <div id="member-tab" class="tab-pane active">
                                     <ul id="tasks" class="item-list">
                                         <?php foreach ($projects as $project): ?>
                                             <?php if ((string) $project->project_master == $this->auth->getId()): ?>

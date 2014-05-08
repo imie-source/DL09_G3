@@ -59,7 +59,9 @@ class Acl extends Component
             'addUser',
             'removeUser',
             'masterRemoveUser',
-            'addWiki'
+            'addWiki',
+            'proposeUser',
+            'addProposition'
         ),
         'profiles' => array(
             'index',

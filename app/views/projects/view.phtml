@@ -111,11 +111,13 @@
                             }
                         }
                         else{
-                            echo $this->tag->linkTo(array(
-                                'projects/proposeUser/'.$project->_id,
-                                'Proposer ce projet',
-                                'class' => 'btn btn-danger pull-right btn-xs'
-                            ));
+                            if($project->valide == 'y'){
+                                echo $this->tag->linkTo(array(
+                                    'projects/proposeUser/'.$project->_id,
+                                    'Proposer ce projet',
+                                    'class' => 'btn btn-danger pull-right btn-xs'
+                                ));
+                            }
                         }
                     ?>
                 </h3>
@@ -136,9 +138,10 @@
                     ?>
                     <?php
                         if($isChef){
+                            echo $users[$i]->valide == 'y' ? '<span class="label label-success label-xs">Valide</span>' : '<span class="label label-warning label-xs">Invitation non validée</span>';
                             echo $this->tag->linkTo(array(
                                 'projects/masterRemoveUser/'.$userProject[$j]->_id,
-                                '<i class="icon-trash bigger-130"></i>',
+                                ' <i class="icon-trash bigger-130"></i>',
                                 'class' => 'red',
                                 'data-rel' => 'tooltip',
                                 'id' => 'del-user',
