@@ -41,7 +41,7 @@ class Auth extends Component
         }
 
         $profile = Profiles::findById(new \MongoId($user->profile_id));
-        $user = (array) $user;
+        $user = get_object_vars($user);
         $user['profile_name'] = $profile->name;
 
         $this->session->set('auth-identity', $user);

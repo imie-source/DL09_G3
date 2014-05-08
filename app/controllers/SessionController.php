@@ -3,7 +3,6 @@
 namespace Nannyster\Controllers;
 
 use Nannyster\Forms\LoginForm;
-use Nannyster\Forms\SignUpForm;
 use Nannyster\Forms\ForgotPasswordForm;
 use Nannyster\Auth\Exception as AuthException;
 use Nannyster\Models\Users;

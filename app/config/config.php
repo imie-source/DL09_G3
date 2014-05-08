@@ -28,5 +28,12 @@ return new \Phalcon\Config(array(
     'amazon' => array(
         'AWSAccessKeyId' => '',
         'AWSSecretKey' => ''
+    ),
+    'db' => array(
+        'username' => null,
+        'password' => null,
+        'host' => null,
+        'port' => 32172,
+        'database' => 'spasm'
     )
 ));

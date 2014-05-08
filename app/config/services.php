@@ -85,9 +85,15 @@ $di->set('collectionManager', function(){
 /**
  * Register Mongo service
  */
-$di->set('mongo', function() {
-    $mongo = new Mongo();
-    return $mongo->selectDb("spasm");
+$di->set('mongo', function() use ($config) {
+    $user = ($config->db->username !== null && $config->db->password !== null) ? 
+        $config->db->username.':'.$config->db->password.'@' :
+        '';
+    $host = ($config->db->host !== null) ? $config->db->host : 'localhost';
+    $port = ($config->db->port !== null) ? ':'.$config->db->port : ':27017';
+    $database = ($config->db->database !== null) ? $config->db->database : 'test';
+    $mongo = new \MongoClient('mongodb://'.$user.$host.$port);
+    return $mongo->selectDB($database);
 }, true);
 
 /**

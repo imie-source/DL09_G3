@@ -1,232 +1,232 @@
 <div class="page-header">
-	<h1>
-		Projets
-		<small>
-			<i class="icon-double-angle-right"></i> Tous les projets
-			<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'create')): ?>
-				<?php
-					echo $this->tag->linkTo(array(
-			          'projects/create',
-			          '<i class="icon-plus"></i>Ajouter un projet',
-			          'class' => 'btn btn-sm btn-danger pull-right'
-			          ));
-				?>
-			<?php endif; ?>
-			<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'propose')): ?>
-				<?php
-					echo $this->tag->linkTo(array(
-			          'projects/propose',
-			          '<i class="icon-plus"></i>Proposer un projet',
-			          'class' => 'btn btn-sm btn-danger pull-right'
-			          ));
-				?>
-			<?php endif; ?>
-		</small>
-	</h1>
+    <h1>
+        Projets
+        <small>
+            <i class="icon-double-angle-right"></i> Tous les projets
+            <?php if ($this->acl->isAllowed($identity['profile_name'], 'projects', 'create')): ?>
+                <?php
+                echo $this->tag->linkTo(array(
+                    'projects/create',
+                    '<i class="icon-plus"></i>Ajouter un projet',
+                    'class' => 'btn btn-sm btn-danger pull-right'
+                ));
+                ?>
+            <?php endif; ?>
+            <?php if ($this->acl->isAllowed($identity['profile_name'], 'projects', 'propose')): ?>
+                <?php
+                echo $this->tag->linkTo(array(
+                    'projects/propose',
+                    '<i class="icon-plus"></i>Proposer un projet',
+                    'class' => 'btn btn-sm btn-danger pull-right'
+                ));
+                ?>
+            <?php endif; ?>
+        </small>
+    </h1>
 </div><!-- /.page-header -->
 
 <div class="row">
-	<div class="col-xs-12">
-		<!-- PAGE CONTENT BEGINS -->
-		<?php if($this->acl->isAllowed($identity['profile_name'], 'projects', 'valide')): ?>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="widget-box">
-					<div class="widget-header header-color-orange">
-						<h4 class="lighter smaller">Projets en attente de validation</h4>
-					</div>
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <?php if ($this->acl->isAllowed($identity['profile_name'], 'projects', 'valide')): ?>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="widget-box">
+                        <div class="widget-header header-color-orange">
+                            <h4 class="lighter smaller">Projets en attente de validation</h4>
+                        </div>
 
-					<div class="widget-body">
-						<div class="widget-main padding-8">
-							<?php if($projectsToValide): ?>
-							<div class="table-responsive">
-								<table class="table table-striped table-bordered table-hover">
-									<thead>
-										<tr>
-											<th>Titre du projet</th>
-											<th>Proposé par</th>
-											<th></th>
-										</tr>
-									</thead>
+                        <div class="widget-body">
+                            <div class="widget-main padding-8">
+                                <?php if ($projectsToValide): ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Titre du projet</th>
+                                                    <th>Proposé par</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
 
-									<tbody>
-										<?php for($i = 0; $i < sizeof($projectsToValide); $i++): ?>
-										<tr>
-											<td>
-												<?php
-													echo $projectsToValide[$i]->name;
-												?>
-											</td>
-											<td>
-												<?php
-													for ($j = 0; $j < sizeof($users); $j++) { 
-														if((string) $users[$j]->_id == $projectsToValide[$i]->project_master){
-															
-															echo $this->tag->linkTo(array(
-													        'users/view/'.$users[$j]->_id,
-														    ucwords($users[$j]->name.' '.$users[$j]->surname)
-													        ));
-														}
-													}
-												?>
-											</td>
-											<td>
-												<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-													<?php
-														echo $this->tag->linkTo(array(
-												          	'projects/valide/'.$projectsToValide[$i]->_id,
-													      	'<i class="icon-ok bigger-130"></i> Valider',
-													      	'class' => 'btn btn-xs btn-success'
-												          ));
-													?>
-													<?php
-														echo $this->tag->linkTo(array(
-												          	'projects/delete/'.$projectsToValide[$i]->_id,
-													      	'<i class="icon-remove bigger-130"></i> Supprimer',
-													      	'class' => 'btn btn-xs btn-danger'
-												          ));
-													?>
-												</div>
+                                            <tbody>
+                                                <?php for ($i = 0; $i < sizeof($projectsToValide); $i++): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php
+                                                            echo $this->tag->linkTo(array(
+                                                                'projects/view/' . $projectsToValide[$i]->_id,
+                                                                ucwords($projectsToValide[$i]->name)
+                                                            ));
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php
+                                                            for ($j = 0; $j < sizeof($users); $j++) {
+                                                                if ((string) $users[$j]->_id == $projectsToValide[$i]->project_master) {
+                                                                    echo $this->tag->linkTo(array(
+                                                                        'users/view/' . $users[$j]->_id,
+                                                                        ucwords($users[$j]->name . ' ' . $users[$j]->surname)
+                                                                    ));
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                                                <?php
+                                                                echo $this->tag->linkTo(array(
+                                                                    'projects/valide/' . $projectsToValide[$i]->_id,
+                                                                    '<i class="icon-ok bigger-130"></i> Valider',
+                                                                    'class' => 'btn btn-xs btn-success'
+                                                                ));
+                                                                ?>
+                                                                <?php
+                                                                echo $this->tag->linkTo(array(
+                                                                    'projects/delete/' . $projectsToValide[$i]->_id,
+                                                                    '<i class="icon-remove bigger-130"></i> Supprimer',
+                                                                    'class' => 'btn btn-xs btn-danger'
+                                                                ));
+                                                                ?>
+                                                            </div>
 
-												<div class="visible-xs visible-sm hidden-md hidden-lg">
-													<div class="inline position-relative">
-														<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-															<i class="icon-caret-down icon-only bigger-120"></i>
-														</button>
+                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                <div class="inline position-relative">
+                                                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                                                        <i class="icon-caret-down icon-only bigger-120"></i>
+                                                                    </button>
 
-														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-															
-															<li>
-																<?php
-																	echo $this->tag->linkTo(array(
-															          	'skills/valide/'.$projectsToValide[$i]->_id,
-																      	'<i class="icon-ok bigger-130"></i> Valider',
-																      	'class' => 'btn btn-xs btn-success'
-															          ));
-																?>
-															</li>
-															<li>
-																<?php
-																	echo $this->tag->linkTo(array(
-															          	'skills/delete/'.$projectsToValide[$i]->_id,
-																      	'<i class="icon-remove bigger-130"></i> Supprimer',
-																      	'class' => 'btn btn-xs btn-danger'
-															          ));
-																?>
-															</li>
+                                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 
-															<li>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<?php endfor; ?>
-									</tbody>
-								</table>
-							</div>
-							<?php else: ?>
-							<div class="no-skills">Aucun projet à valider</div>
-							<?php endif; ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php endif; ?>
-		<!--Liste des projets -->
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="table-responsive">
-					<table id="user-table" class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>Nom du projet</th>
-								<th>Chef de projet</th>
-								<th>Avancement</th>
-								<th>Date de fin</th>
-								<th>Nbr Pers. Requises / Inscrites</th>
-								<th>Statut</th>
-							</tr>
-						</thead>
+                                                                        <li>
+                                                                            <?php
+                                                                            echo $this->tag->linkTo(array(
+                                                                                'skills/valide/' . $projectsToValide[$i]->_id,
+                                                                                '<i class="icon-ok bigger-130"></i> Valider',
+                                                                                'class' => 'btn btn-xs btn-success'
+                                                                            ));
+                                                                            ?>
+                                                                        </li>
+                                                                        <li>
+                                                                            <?php
+                                                                            echo $this->tag->linkTo(array(
+                                                                                'skills/delete/' . $projectsToValide[$i]->_id,
+                                                                                '<i class="icon-remove bigger-130"></i> Supprimer',
+                                                                                'class' => 'btn btn-xs btn-danger'
+                                                                            ));
+                                                                            ?>
+                                                                        </li>
 
-						<tbody>
-							<?php foreach($projects as $project): ?>
-							<tr>
-								
-								<!-- /.col Nom du projet -->
-								<td>
-									<?php
-										echo $this->tag->linkTo(array(
-								          'projects/view/'.$project->_id,
-									      ucwords($project->name),
-									      'data-rel' => 'tooltip',
-									      'data-original-title' => $project->description
-								          ));
-									?>
-								</td>
+                                                                        <li>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endfor; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="no-skills">Aucun projet à valider</div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        <!--Liste des projets -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table id="user-table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nom du projet</th>
+                                <th>Chef de projet</th>
+                                <th>Avancement</th>
+                                <th>Date de fin</th>
+                                <th>Nbr Pers. Requises / Inscrites</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
 
-								<!-- /.col Chef de projet -->
-								<td>
-									<?php
-										for ($i=0; $i < sizeof($users); $i++) { 
-											if((string) $users[$i]->_id == $project->project_master){
-												
-												echo $this->tag->linkTo(array(
-										        'users/view/'.$users[$i]->_id,
-											    ucwords($users[$i]->name.' '.$users[$i]->surname)
-										        ));
-											}
-										}
-									?>
+                        <tbody>
+                            <?php foreach ($projects as $project): ?>
+                                <tr>
 
-								 </td>
+                                    <!-- /.col Nom du projet -->
+                                    <td>
+                                        <?php
+                                        echo $this->tag->linkTo(array(
+                                            'projects/view/' . $project->_id,
+                                            ucwords($project->name),
+                                            'data-rel' => 'tooltip',
+                                            'data-original-title' => $project->description
+                                        ));
+                                        ?>
+                                    </td>
 
-								<!-- /.col Avancement -->
-								<td>
-									<div class="progress progress-striped" data-percent="<?php echo $project->progress.'%'?>">
-										<div class="progress-bar progress-bar-success" style="width: <?php echo $project->progress.'%'?>;"></div>
-									</div>
-								</td>
-								
-								<!-- /.col Date de Fin -->
-								<td><?php
+                                    <!-- /.col Chef de projet -->
+                                    <td>
+                                        <?php
+                                        for ($i = 0; $i < sizeof($users); $i++) {
+                                            if ((string) $users[$i]->_id == $project->project_master) {
 
-									echo $project->end_date;
+                                                echo $this->tag->linkTo(array(
+                                                    'users/view/' . $users[$i]->_id,
+                                                    ucwords($users[$i]->name . ' ' . $users[$i]->surname)
+                                                ));
+                                            }
+                                        }
+                                        ?>
 
-								 ?>
-								</td>
-								
-								<!-- /.col Nbr. Personne dans le projet -->
-								<td>
-									<?php
-										echo $project->nb_users_max.' personne'.($project->nb_users_max > 1 ? 's' : '');
-									?>
-									 / 
-									<?php
-										$cpt = 0;
-										for ($i=0; $i < sizeof($usersProjects); $i++) { 
-											if((string) $usersProjects[$i]->project_id == $project->_id){
-												$cpt++;
-											}
-										}
-										echo $cpt.' personne'.($cpt > 1 ? 's' : '').' inscrite'.($cpt > 1 ? 's' : '');
-									?>
-								</td>
-								
-								<!-- /.col Statut -->
-								<td><?php
-										echo $project->status_name;
-									?>
-								</td>
+                                    </td>
 
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div><!-- /.col -->
+                                    <!-- /.col Avancement -->
+                                    <td>
+                                        <div class="progress progress-striped" data-percent="<?php echo $project->progress . '%' ?>">
+                                            <div class="progress-bar progress-bar-success" style="width: <?php echo $project->progress . '%' ?>;"></div>
+                                        </div>
+                                    </td>
+
+                                    <!-- /.col Date de Fin -->
+                                    <td><?php
+                                        echo $project->end_date;
+                                        ?>
+                                    </td>
+
+                                    <!-- /.col Nbr. Personne dans le projet -->
+                                    <td>
+    <?php
+    echo $project->nb_users_max . ' personne' . ($project->nb_users_max > 1 ? 's' : '');
+    ?>
+                                        / 
+                                        <?php
+                                        $cpt = 0;
+                                        for ($i = 0; $i < sizeof($usersProjects); $i++) {
+                                            if ((string) $usersProjects[$i]->project_id == $project->_id) {
+                                                $cpt++;
+                                            }
+                                        }
+                                        echo $cpt . ' personne' . ($cpt > 1 ? 's' : '') . ' inscrite' . ($cpt > 1 ? 's' : '');
+                                        ?>
+                                    </td>
+
+                                    <!-- /.col Statut -->
+                                    <td><?php
+                                    echo $project->status_name;
+                                    ?>
+                                    </td>
+
+                                </tr>
+<?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.col -->
 </div><!-- /.row -->

@@ -61,9 +61,17 @@ class Acl extends Component
             'masterRemoveUser',
             'addWiki'
         ),
+        'profiles' => array(
+            'index',
+            'create',
+            'search',
+            'delete',
+            'edit'
+        ),
         'session' => array(
             'login',
-            'logout'
+            'logout',
+            'forgotPassword'
         ),
         'skills' => array(
             'index',
@@ -87,8 +95,12 @@ class Acl extends Component
             'ajaxProfileEditor',
             'ajaxAdminProfileEditor',
             'ajaxImageEditor',
-            'import'
-
+            'import',
+            'manage'
+        ),
+        'user_control' => array(
+            'resetPassword',
+            
         )
     );
 
@@ -150,7 +162,7 @@ class Acl extends Component
      */
     public function isAllowed($profile, $controller, $action)
     {
-        //return true;
+//        return true;
         return $this->getAcl()->isAllowed($profile, $controller, $action);
     }
 

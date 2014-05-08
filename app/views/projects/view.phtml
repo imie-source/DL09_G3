@@ -110,6 +110,13 @@
                                   ));
                             }
                         }
+                        else{
+                            echo $this->tag->linkTo(array(
+                                'projects/proposeUser/'.$project->_id,
+                                'Proposer ce projet',
+                                'class' => 'btn btn-danger pull-right btn-xs'
+                            ));
+                        }
                     ?>
                 </h3>
                 <div class="hr hr-dotted"></div>

@@ -1,139 +1,144 @@
 <div class="page-header">
-	<h1>
-		Tableau de bord
-		<small>
-			<i class="icon-double-angle-right"></i>
-			Toutes les infos essentielles
-		</small>
-	</h1>
+    <h1>
+        Tableau de bord
+        <small>
+            <i class="icon-double-angle-right"></i>
+            Toutes les infos essentielles
+        </small>
+    </h1>
 </div><!-- /.page-header -->
 
 <div class="row">
-	<div class="col-xs-12">
-		<!-- PAGE CONTENT BEGINS -->
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="widget-box transparent" id="recent-box">
-					<div class="widget-header">
-						<h4 class="lighter smaller">
-							<i class="icon-rss orange"></i>
-							Projets
-						</h4>
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="widget-box transparent" id="recent-box">
+                    <div class="widget-header">
+                        <h4 class="lighter smaller">
+                            <i class="icon-rss orange"></i>
+                            Projets
+                        </h4>
 
-						<div class="widget-toolbar no-border">
-							<ul class="nav nav-tabs" id="recent-tab">
-								<li class="active">
-									<a data-toggle="tab" href="#task-tab">Les projets</a>
-								</li>
+                        <div class="widget-toolbar no-border">
+                            <ul class="nav nav-tabs" id="recent-tab">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#task-tab">Les projets</a>
+                                </li>
 
-								<li>
-									<a data-toggle="tab" href="#member-tab">Mes projets</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="widget-body">
-						<div class="widget-main padding-4">
-							<div class="tab-content padding-8 overflow-visible">
-								<div id="task-tab" class="tab-pane active">
-									<ul id="tasks" class="item-list">
-										<?php foreach($projects as $project):?>
-										<li class="item-orange clearfix">
-											<label class="inline">
-												<input type="checkbox" class="ace" />
-												<span class="lbl"> 
-													<?php
-													echo $this->tag->linkTo(array(
-														'projects/view/'.$project->_id,
-														ucwords($project->name),
-														'data-rel' => 'tooltip',
-														'data-original-title' => $project->description
-														));?>
-													</span>
-												</label>
-												<div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
-													<span class="percent"><?php echo $project->progress.'%'?></span>
-												</div>
-											</li>
-										</li>
+                                <li>
+                                    <a data-toggle="tab" href="#contributions-tab">Mes contributions</a>
+                                </li>
 
-									<?php endforeach; ?>
-								</div>
+                                <li>
+                                    <a data-toggle="tab" href="#member-tab">Mes projets</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main padding-4">
+                            <div class="tab-content padding-8 overflow-visible">
+                                <div id="task-tab" class="tab-pane active">
+                                    <ul id="tasks" class="item-list">
+                                        <?php foreach ($projects as $project): ?>
+                                            <?php if ($project->valide == 'Y'): ?>
+                                                <li class="item-orange clearfix">
+                                                    <label class="inline">
+                                                        <span class="lbl"> 
+                                                            <?php
+                                                            echo $this->tag->linkTo(array(
+                                                                'projects/view/' . $project->_id,
+                                                                ucwords($project->name),
+                                                                'data-rel' => 'tooltip',
+                                                                'data-original-title' => $project->description
+                                                            ));
+                                                            ?>
+                                                        </span>
+                                                        <span class="label label-success"><?php echo $project->status_name; ?></span>
+                                                    </label>
+                                                    <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                                        <span class="percent"><?php echo $project->progress . '%' ?></span>
+                                                    </div>
+                                                </li>
+                                                </li>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                
+                                <div id="contributions-tab" class="tab-pane">
+                                    <ul id="tasks" class="item-list">
+                                        <?php for ($i = 0; $i < sizeof($projects); $i++): ?>
+                                            <?php for ($j = 0; $j < sizeof($usersProjects); $j++): ?>
+                                                <?php if ((string) $projects[$i]->_id == $usersProjects[$j]->project_id): ?>
+                                                    <li class="item-orange clearfix">
+                                                        <label class="inline">
+                                                            <span class="lbl"> 
+                                                                <?php
+                                                                echo $this->tag->linkTo(array(
+                                                                    'projects/view/' . $projects[$i]->_id,
+                                                                    ucwords($projects[$i]->name),
+                                                                    'data-rel' => 'tooltip',
+                                                                    'data-original-title' => $projects[$i]->description
+                                                                ));
+                                                                ?>
+                                                            </span>
+                                                            <?php if ($projects[$i]->valide == 'Y'): ?>
+                                                                <span class="label label-success"><?php echo $projects[$i]->status_name; ?></span>
+                                                            <?php else: ?>
+                                                                <span class="label label-danger">Pas encore validé</span>
+                                                            <?php endif; ?>
+                                                        </label>
+                                                        <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                                            <span class="percent"><?php echo $projects[$i]->progress . '%' ?></span>
+                                                        </div>
+                                                    </li>
+                                                <?php endif; ?>
+                                            <?php endfor; ?>
+                                        <?php endfor; ?>
+                                    </ul>
+                                </div>
 
-								<div id="member-tab" class="tab-pane">
-									<ul id="tasks" class="item-list">
-										<div class="widget-body">
-											<div class="widget-main padding-4">
-												<div class="tab-content padding-8 overflow-visible">
-													<div id="task-tab" class="tab-pane active">
-														<ul id="tasks" class="item-list">
-															<?php for($i=0; $i < sizeof($usersProjects); $i++){
-																if ((string) $usersProjects[$i]->user_id == $this->auth->getId()) {
-															?>
-															<li class="item-orange clearfix">
-																<label class="inline">
-																	<input type="checkbox" class="ace" />
-																	<span class="lbl"> 
-																		<?php
-																		echo $this->tag->linkTo(array(
-																			'projects/view/'.$project->_id,
-																			ucwords($project->name),
-																			'data-rel' => 'tooltip',
-																			'data-original-title' => $project->description
-																			));?>
-																		</span>
-																	</label>
-																	<div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
-																		<span class="percent"><?php echo $project->progress.'%'?></span>
-																	</div>
-																</li>
-															<?php }}; ?>
-														</div>
+                                <div id="member-tab" class="tab-pane">
+                                    <ul id="tasks" class="item-list">
+                                        <?php foreach ($projects as $project): ?>
+                                            <?php if ((string) $project->project_master == $this->auth->getId()): ?>
+                                                <li class="item-orange clearfix">
+                                                    <label class="inline">
+                                                        <span class="lbl"> 
+                                                            <?php
+                                                            echo $this->tag->linkTo(array(
+                                                                'projects/view/' . $project->_id,
+                                                                ucwords($project->name),
+                                                                'data-rel' => 'tooltip',
+                                                                'data-original-title' => $project->description
+                                                            ));
+                                                            ?>
+                                                        </span>
+                                                        <?php if ($project->valide == 'Y'): ?>
+                                                            <span class="label label-success"><?php echo $project->status_name; ?></span>
+                                                        <?php else: ?>
+                                                            <span class="label label-danger">Pas encore validé</span>
+                                                        <?php endif; ?>
+                                                    </label>
+                                                    <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                                        <span class="percent"><?php echo $project->progress . '%' ?></span>
+                                                    </div>
+                                                </li>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div><!-- /widget-body -->
+                            </div><!-- /widget-box -->
+                        </div><!-- /span -->
+
+                    </div>
 
 
-
-
-														<div class="inline pull-right position-relative dropdown-hover">
-
-														</div>
-
-
-													</ul>
-												</div><!-- member-tab -->
-											</div>
-										</div><!-- /widget-main -->
-									</div><!-- /widget-body -->
-								</div><!-- /widget-box -->
-							</div><!-- /span -->
-
-							<div class="col-sm-3 col-xs-12">
-				<div class="widget-box">
-					<div class="widget-header header-color-green2">
-						<h4 class="lighter smaller">Compétences aléatoires</h4>
-					</div>
-
-					<div class="widget-body">
-						<div class="widget-main padding-8">
-							<form action="" method="post">
-							<?php for($i=0; $i < sizeof($skills); $i++){ ?>
-								<div class="tags" id="skills-tags">
-									<?php
-													echo $this->tag->linkTo(array(
-														'skills/view/'.$skills[$i]->_id,
-														ucwords($skills[$i]->name),
-														'data-rel' => 'tooltip',
-														'data-original-title' => $skills[$i]->description
-														));?>
-								</div>
-								<?php }; ?>
-								<button id="submit-skills" type="submit" class="btn btn-sm btn-danger ">M'ajouter ces compétences</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-											<!-- PAGE CONTENT ENDS -->
-										</div><!-- /.col -->
-									</div><!-- /.row -->
+                    <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div>
+    </div>
+</div>
