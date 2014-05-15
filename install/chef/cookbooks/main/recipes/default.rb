@@ -37,7 +37,7 @@ end
 
 execute "restoring mongodb" do
     command "cd /var/www/spasm/install/mongo/ && mongorestore --port #{node['mongodb']['config']['port']}"
-    user "vagrant"
+    user "root"
 end
 
 execute "restarting services" do
