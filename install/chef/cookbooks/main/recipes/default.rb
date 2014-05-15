@@ -25,7 +25,7 @@ execute "installing phalcon" do
         print "phalcon already installed"
     else
         print "installing phalcon"
-        command "cd / && git clone git://github.com/phalcon/cphalcon.git && cd cphalcon/build && ./install && cd / && echo 'extension=phalcon.so' > /etc/php5/conf.d/phalcon.ini"
+        command "cd / && git clone git://github.com/phalcon/cphalcon.git && cd cphalcon/build && ./install && cd / && echo 'extension=phalcon.so' > /etc/php5/conf.d/phalcon.ini && cd / && rm -R /cphalcon"
         user "root"
     end
 end
