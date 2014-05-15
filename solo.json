@@ -1,0 +1,27 @@
+{
+    "mongodb": {
+        "config": {
+            "port": 32172,
+            "auth": true
+        }
+    },
+    "nginx_test_conf": {
+        "default_root": "/var/www/nannyster/public",
+        "hostname": "188.226.255.13",
+        "ssl_hostname" : "188.226.255.13",
+        "ssl_hostname_redirect" : "188.226.255.13",
+        "ssl" : true,
+        "ssl_key_path" : "/var/www/nannyster/ssl/server",
+        "ssl_unified_key" : "/var/www/nannyster/ssl/server"
+    },
+    "nginx": {
+        "default_root": "/var/www/nannyster/public",
+        "hostname": "nannyster.fr www.nannyster.fr",
+        "ssl_hostname" : "nannyster.fr www.nannyster.fr",
+        "ssl_hostname_redirect" : "www.nannyster.fr",
+        "ssl" : true,
+        "ssl_key_path" : "/var/www/nannyster/ssl/server",
+        "ssl_unified_key" : "/var/www/nannyster/ssl/server"
+    },
+    "run_list": ["recipe[main::default]"]
+}

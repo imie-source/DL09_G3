@@ -24,6 +24,8 @@ class Skills extends Collection
 	public $additionalParameters;
 
 	public $children = 0;
+    
+    public $created;
 
     public function assign($data){
         foreach ($data as $k => $v) {
@@ -38,6 +40,7 @@ class Skills extends Collection
     	if($this->parent_id == ''){
     		$this->parent_id = null;
     	}
+        $this->created = time();
     }
 
 }

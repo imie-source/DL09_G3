@@ -16,13 +16,13 @@
                 <div class="widget-box transparent" id="recent-box">
                     <div class="widget-header">
                         <h4 class="lighter smaller">
-                            <i class="icon-rss orange"></i>
-                            Projets
+                            <i class="icon-folder-open orange"></i>
+                            Les derniers projets
                         </h4>
 
                         <div class="widget-toolbar no-border">
                             <ul class="nav nav-tabs" id="recent-tab">
-                                <li class="active">
+                                <li<?php echo ($notifications['invitations'] > 0) ? '' : ' class="active"' ?>>
                                     <a data-toggle="tab" href="#member-tab">Mes projets</a>
                                 </li>
                                 
@@ -30,7 +30,7 @@
                                     <a data-toggle="tab" href="#task-tab">Les projets</a>
                                 </li>
 
-                                <li>
+                                <li<?php echo ($notifications['invitations'] > 0) ? ' class="active"' : '' ?>>
                                     <a data-toggle="tab" href="#contributions-tab">Mes contributions</a>
                                 </li>
                             </ul>
@@ -41,7 +41,8 @@
                             <div class="tab-content padding-8 overflow-visible">
                                 <div id="task-tab" class="tab-pane">
                                     <ul id="tasks" class="item-list">
-                                        <?php foreach ($projects as $project): ?>
+                                        <?php $all_project = 0; foreach ($projects as $project): ?>
+                                            <?php $all_project++; ?>
                                             <?php if ($project->valide == 'Y'): ?>
                                                 <li class="item-orange clearfix">
                                                     <label class="inline">
@@ -61,17 +62,26 @@
                                                         <span class="percent"><?php echo $project->progress . '%' ?></span>
                                                     </div>
                                                 </li>
-                                                </li>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
+                                        <?php if($all_project == 0): ?>
+                                            <li class="item-orange clearfix">
+                                                <label class="inline center">
+                                                    <span class="lbl">
+                                                        Aucun projet à afficher
+                                                    </span>
+                                                </label>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                                 
-                                <div id="contributions-tab" class="tab-pane">
+                                <div id="contributions-tab" class="tab-pane<?php echo ($notifications['invitations'] > 0) ? ' active' : '' ?>">
                                     <ul id="tasks" class="item-list">
-                                        <?php for ($i = 0; $i < sizeof($projects); $i++): ?>
+                                        <?php $contributed_project = 0; for ($i = 0; $i < sizeof($projects); $i++): ?>
                                             <?php for ($j = 0; $j < sizeof($usersProjects); $j++): ?>
-                                                <?php if ((string) $projects[$i]->_id == $usersProjects[$j]->project_id): ?>
+                                                <?php if ((string) $projects[$i]->_id == $usersProjects[$j]->project_id && $usersProjects[$j]->user_id == $this->auth->getId()): ?>
+                                                    <?php $contributed_project++; ?>
                                                     <li class="item-orange clearfix">
                                                         <label class="inline">
                                                             <span class="lbl"> 
@@ -84,26 +94,36 @@
                                                                 ));
                                                                 ?>
                                                             </span>
-                                                            <?php if ($projects[$i]->valide == 'Y'): ?>
-                                                                <span class="label label-success"><?php echo $projects[$i]->status_name; ?></span>
+                                                            <?php if ($usersProjects[$j]->is_valid == 'n'): ?>
+                                                                <a href="/projects/valideProposition/<?php echo (string) $usersProjects[$j]->_id; ?>" class="btn btn-minier btn-success">Valider ma participation</a> <a href="/projects/denyProposition/<?php echo $usersProjects[$j]->_id ?>" class="btn btn-danger btn-minier">Refuser</a>
                                                             <?php else: ?>
-                                                                <span class="label label-danger">Pas encore validé</span>
+                                                                <span class="label label-success"><?php echo $projects[$i]->status_name; ?></span>
                                                             <?php endif; ?>
                                                         </label>
-                                                        <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                                        <div class="pull-right easy-pie-chart percentage" data-size="<?php echo $projects[$i]->progress . '%' ?>" data-color="#ECCB71" data-percent="<?php echo $projects[$i]->progress . '%' ?>">
                                                             <span class="percent"><?php echo $projects[$i]->progress . '%' ?></span>
                                                         </div>
                                                     </li>
                                                 <?php endif; ?>
                                             <?php endfor; ?>
                                         <?php endfor; ?>
+                                        <?php if($contributed_project == 0): ?>
+                                            <li class="item-orange clearfix">
+                                                <label class="inline center">
+                                                    <span class="lbl">
+                                                        Aucun projet à afficher
+                                                    </span>
+                                                </label>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
 
                                 <div id="member-tab" class="tab-pane active">
                                     <ul id="tasks" class="item-list">
-                                        <?php foreach ($projects as $project): ?>
+                                        <?php $my_project = 0; foreach ($projects as $project): ?>
                                             <?php if ((string) $project->project_master == $this->auth->getId()): ?>
+                                                <?php $my_project++; ?>
                                                 <li class="item-orange clearfix">
                                                     <label class="inline">
                                                         <span class="lbl"> 
@@ -122,21 +142,55 @@
                                                             <span class="label label-danger">Pas encore validé</span>
                                                         <?php endif; ?>
                                                     </label>
-                                                    <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                                    <div class="pull-right easy-pie-chart percentage" data-size="<?php echo $projects[$i]->progress . '%' ?>" data-color="#ECCB71" data-percent="<?php echo $projects[$i]->progress . '%' ?>">
                                                         <span class="percent"><?php echo $project->progress . '%' ?></span>
                                                     </div>
                                                 </li>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
+                                        <?php if($my_project == 0): ?>
+                                            <li class="item-orange clearfix">
+                                                <label class="inline">
+                                                    <span class="lbl">
+                                                        Aucun projet à afficher
+                                                    </span>
+                                                </label>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div><!-- /widget-body -->
                             </div><!-- /widget-box -->
                         </div><!-- /span -->
-
                     </div>
-
-
                     <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="col-sm-6">
+                <div class="widget-box transparent" id="recent-box">
+                    <div class="widget-header">
+                        <h4 class="lighter smaller">
+                            <i class="icon-signal orange"></i>
+                            Dernières compétences ajoutées
+                        </h4>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main padding-12">
+                            <ul id="tasks" class="item-list">
+                                <?php foreach ($skills as $skill): ?>
+                                    <li class="item-orange clearfix">
+                                        <label class="inline">
+                                            <span class="lbl"> 
+                                                <strong><?php echo $skill->name; ?></strong>
+                                            </span>
+                                            <span class="lbl">
+                                                    <?php echo '(Le '.date('d-m-Y à H:i:s', $skill->created).')' ?>
+                                            </span>
+                                        </label>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div><!-- /span -->
+                    </div>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div>

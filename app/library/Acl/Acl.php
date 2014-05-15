@@ -61,19 +61,13 @@ class Acl extends Component
             'masterRemoveUser',
             'addWiki',
             'proposeUser',
-            'addProposition'
-        ),
-        'profiles' => array(
-            'index',
-            'create',
-            'search',
-            'delete',
-            'edit'
+            'addProposition',
+            'valideProposition',
+            'denyProposition'
         ),
         'session' => array(
             'login',
-            'logout',
-            'forgotPassword'
+            'logout'
         ),
         'skills' => array(
             'index',
@@ -82,9 +76,6 @@ class Acl extends Component
             'propose',
             'delete',
             'valide'
-        ),
-        'team' => array(
-            'index'
         ),
         'users' => array(
             'index',
@@ -99,10 +90,6 @@ class Acl extends Component
             'ajaxImageEditor',
             'import',
             'manage'
-        ),
-        'user_control' => array(
-            'resetPassword',
-            
         )
     );
 

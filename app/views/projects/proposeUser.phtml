@@ -1,9 +1,9 @@
 <div class="page-header">
     <h1>
-        Liste des utilisateurs
+        Proposer de participer à son projet
         <small>
             <i class="icon-double-angle-right"></i>
-
+            <?php echo $project->name; ?>
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -97,13 +97,19 @@
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                             <?php
-                                            if ($users[$i]->_id != $this->auth->getId()) {
-                                                echo $this->tag->linkTo(array(
-                                                    'projects/addProposition/' . $users[$i]->_id . '/' . $project_id,
-                                                    'Lui proposer',
-                                                    'class' => 'btn btn-success btn-xs'
-                                                ));
-                                            }
+                                                $already_registred = false;
+                                                foreach ($users_registred as $user) {
+                                                    if((string) $users[$i]->_id == $user->user_id){
+                                                        $already_registred = true;
+                                                    }
+                                                }
+                                                if ($users[$i]->_id != $this->auth->getId() && !$already_registred) {
+                                                    echo $this->tag->linkTo(array(
+                                                        'projects/addProposition/' . $users[$i]->_id . '/' . $project_id,
+                                                        'Lui proposer',
+                                                        'class' => 'btn btn-success btn-xs'
+                                                    ));
+                                                }
                                             ?>
                                         </div>
 

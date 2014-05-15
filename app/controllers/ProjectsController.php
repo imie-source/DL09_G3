@@ -337,7 +337,7 @@ class ProjectsController extends ControllerBase
             return false;
         }
     }
-    
+
     public function addPropositionAction($id = null, $project_id = null)
     {
         if ($id != null && $project_id != null) {
@@ -348,15 +348,17 @@ class ProjectsController extends ControllerBase
                 $userProject->is_valid = 'n';
 
                 if ($userProject->save()) {
-                    $this->flash->success('Votre proposition a bien été envoyée');
-                    $this->response->redirect('projects/view/' . $project_id);
-                    return true;
+                    $this->flashSession->success('Votre proposition a bien été envoyée');
+                    $this->response->redirect('projects/proposeUser/' . $project_id);
+//                    $this->dispatcher->forward(array(
+//                        'controller' => 'projects',
+//                        'action' => 'proposeUser',
+//                        $project_id));
                 }
             }
             else {
                 $this->flash->error('L\'identifiant du projet ou de l\'utilisateur n\'est pas valide!');
                 $this->response->redirect('projects');
-                return false;
             }
         }
         else {
@@ -371,9 +373,8 @@ class ProjectsController extends ControllerBase
      */
     public function proposeUserAction($id = null)
     {
-        if($id != null){
+        if ($id != null) {
             $this->tag->prependTitle('Proposer son projet - ');
-            $user = $this->auth->getUser();
             $this->view->setVar('breadcrumbs', array(
                 'Projets' => array(
                     'controller' => 'projects',
@@ -397,17 +398,61 @@ class ProjectsController extends ControllerBase
                     }
                 }
             }
+
             $this->view->setVar('users', $users);
             $this->view->setVar('usersSkills', $usersSkills);
             $this->view->setVar('skillName', $skillName);
             $this->view->setVar('profiles', Profiles::find());
             $this->view->setVar('promotions', Promotions::find());
+            $this->view->setVar('project', Projects::findById($id));
             $this->view->setVar('schools', Schools::find());
             $this->view->setVar('project_id', $id);
+            $this->view->setVar('users_registred', UsersProjects::find(array(array('project_id' => $id))));
         }
-        else{
+        else {
             $this->flash->error('L\'identifiant du projet est invalide!');
             $this->response->redirect('projects');
+        }
+    }
+
+    public function validePropositionAction($id = null)
+    {
+        if ($id != null) {
+
+            $user_project = UsersProjects::findById(new \MongoId($id));
+            if ($user_project) {
+                $user_project->is_valid = 'y';
+                $user_project->save();
+                $this->response->redirect('projects/view/' . $user_project->project_id);
+            }
+            else {
+                $this->flash->error('Aucun projet a confirmer');
+                $this->response->redirect('projects');
+            }
+        }
+        else {
+            $this->flash->error('L\'identifiant du projet est invalide!');
+            $this->response->redirect('projects');
+        }
+    }
+
+    public function denyPropositionAction($id = null)
+    {
+        if ($id != null) {
+
+            $user_project = UsersProjects::findById(new \MongoId($id));
+            if ($user_project) {
+                $user_project->delete();
+                $this->response->redirect('dashboard');
+            }
+            else {
+                $this->flash->error('Aucun projet');
+                $this->response->redirect('dashboard');
+            }
+        }
+        else {
+            $this->flash->error('L\'identifiant du projet est invalide!');
+            $this->response->redirect('dashboard');
         }
     }
 

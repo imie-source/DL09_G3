@@ -73,4 +73,14 @@ $(document).ready(function() {
 			railVisible:true
 		});
 	});
+    
+    $(document).on('click', 'a#delete-project', function(event) {
+        event.preventDefault();
+        var location = $(this).attr('href');
+        bootbox.confirm("Etes-vous sûr de vouloir supprimer ce projet?", function(confirmed) {
+            if(confirmed) {
+            window.location.replace(location);
+            }
+        });
+    });
 });

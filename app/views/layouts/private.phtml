@@ -194,7 +194,7 @@
 									<i class="icon-warning-sign"></i>
 									<?php echo $notifications['total'] ?> Notification<?php echo $notifications['total'] > 1 ? 's' : ''; ?>
 								</li>
-
+                                <?php if($identity['profile_name'] == 'Super Administrateur' || $identity['profile_name'] == 'Administrateur'): ?>
 								<li>
 									<a href="/skills">
 										<div class="clearfix">
@@ -212,6 +212,17 @@
 											<span class="pull-left">
 												<?php echo $notifications['projects'] > 0 ? '<i class="btn btn-xs no-hover btn-danger icon-folder-open"></i>' : '<i class="btn btn-xs no-hover btn-default icon-folder-open"></i>'; ?>
 												<?php  echo $notifications['projects'] ?> projet<?php echo $notifications['projects'] > 1 ? 's' : ''; ?> à valider
+											</span>
+										</div>
+									</a>
+								</li>
+                                <?php endif; ?>
+                                <li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<?php echo $notifications['invitations'] > 0 ? '<i class="btn btn-xs no-hover btn-danger icon-gift"></i>' : '<i class="btn btn-xs no-hover btn-default icon-signal"></i>'; ?>
+												<?php  echo $notifications['invitations'] ?> invitations<?php echo $notifications['invitations'] > 1 ? 's' : ''; ?> à un projet
 											</span>
 										</div>
 									</a>

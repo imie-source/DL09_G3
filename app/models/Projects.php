@@ -16,14 +16,21 @@ class Projects extends Collection
     public $start_date;
     public $end_date;
     public $status_name = 'En attente de participants';
-    public $valide='N';
+    public $valide = 'N';
     public $project_master;
     public $wiki = null;
+    public $created;
 
-
-public function assign($data){
+    public function assign($data)
+    {
         foreach ($data as $k => $v) {
             $this->$k = $v;
         }
     }
+
+    public function beforeValidationOnCreate()
+    {
+        $this->created = time();
+    }
+
 }

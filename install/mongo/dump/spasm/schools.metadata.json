@@ -1,1 +1,0 @@
-{ "options" : { "create" : "schools" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "spasm.schools", "name" : "_id_" } ] }

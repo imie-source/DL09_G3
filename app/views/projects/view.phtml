@@ -25,6 +25,23 @@
  <div class="page-header">
 	<h1>
         <?php echo ucfirst($project->name)?>
+        <?php
+        if($isChef || $this->acl->isAllowed($identity['profile_name'], 'projects', 'delete')){
+            echo $this->tag->linkTo(array(
+                'projects/delete/'.$project->_id,
+                'Supprimer ce projet',
+                'class' => 'btn btn-danger pull-right',
+                'id' => 'delete-project'
+            ));
+        }
+        if($this->acl->isAllowed($identity['profile_name'], 'projects', 'valide') && $project->valide == 'N'){
+            echo $this->tag->linkTo(array(
+                'projects/valide/'.$project->_id,
+                'Valider ce projet',
+                'class' => 'btn btn-success pull-right'
+            ));
+        }
+    ?>
     </h1>
 </div><!-- /.page-header -->
 <div class="row">
@@ -94,24 +111,24 @@
                 <h3>
                     Liste des participants
                     <?php
-                        if(!$isChef){
-                            if($isInProject){
-                                echo $this->tag->linkTo(array(
-                                  'projects/removeUser/'.$project->_id,
-                                  'Je ne veux plus participer',
-                                  'class' => 'btn btn-danger pull-right btn-xs'
-                                  ));
+                        if($project->valide == 'Y'){
+                            if(!$isChef){
+                                if($isInProject){
+                                    echo $this->tag->linkTo(array(
+                                      'projects/removeUser/'.$project->_id,
+                                      'Je ne veux plus participer',
+                                      'class' => 'btn btn-danger pull-right btn-xs'
+                                      ));
+                                }
+                                else{
+                                    echo $this->tag->linkTo(array(
+                                      'projects/addUser/'.$project->_id,
+                                      'Je veux participer',
+                                      'class' => 'btn btn-success pull-right btn-xs'
+                                      ));
+                                }
                             }
                             else{
-                                echo $this->tag->linkTo(array(
-                                  'projects/addUser/'.$project->_id,
-                                  'Je veux participer',
-                                  'class' => 'btn btn-success pull-right btn-xs'
-                                  ));
-                            }
-                        }
-                        else{
-                            if($project->valide == 'y'){
                                 echo $this->tag->linkTo(array(
                                     'projects/proposeUser/'.$project->_id,
                                     'Proposer ce projet',
@@ -148,6 +165,11 @@
                                 'title' => 'Supprimer ce participant'
                               ));
                         }
+                        else{
+                            if($this->auth->getId() == $userProject[$j]->user_id){
+                                echo $userProject[$j]->is_valid == 'y' ? '' : '<a href="/projects/valideProposition/'.$userProject[$j]->_id.'" class="btn btn-success btn-minier">Accepter cet invitation</a> <a href="/projects/denyProposition/'.$userProject[$j]->_id.'" class="btn btn-danger btn-minier">Refuser</a>';
+                            }
+                        }
                     ?>
                 </li>
                 <?php endfor; ?>
@@ -161,7 +183,7 @@
                 <h3>
                     Wiki wiki
                     <?php
-                        if($isInProject || $isChef){
+                        if(($isInProject || $isChef) && $project->valide == 'Y'){
                             echo $this->tag->linkTo(array(
                                 'projects/addWiki/'.$project->_id,
                                 'Ajouter un message',

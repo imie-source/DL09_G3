@@ -4,11 +4,6 @@ namespace Nannyster\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
-use Nannyster\Auth\Auth;
-use Nannyster\Models\Mailboxes;
-use Nannyster\Forms\LoginForm;
-use Nannyster\Forms\ForgotPasswordForm;
-use Nannyster\Controllers\Notifications;
 
 class ControllerBase extends Controller
 {
@@ -65,7 +60,7 @@ class ControllerBase extends Controller
             $identity = $this->auth->getIdentity();
             $this->view->identity = $identity;
             $this->view->setTemplateBefore('private');
-            $this->view->setVar('notifications', NotificationsController::finder());
+            $this->view->setVar('notifications', NotificationsController::finder($identity['_id'], $identity['profile_name']));
         }
     	//Last part of the title
         $this->tag->setTitle($this->config->application->siteTitle);
