@@ -25,15 +25,6 @@ class Users extends \Phalcon\Mvc\Collection
     public $first_connection = 'y';
     public $avatar = 'default.jpg';
 
-
-    /**
-     * Send a confirmation e-mail to the user if the account is not active
-     */
-    public function afterSave()
-    {
-
-    }
-
     public function assign($data){
         foreach ($data as $k => $v) {
             $this->$k = strtolower($v);
